@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block blogactive %}active{% endblock blogactive %}
+<title>{% block title %}Poster | Blog | Home{% endblock title %}</title>
+{% block css %}
+<style>
+  .crayon {
+    background: #ebebeb;
+  }
+</style>
+{% endblock css %}
+{% block script %}
+<script>
+  let previews = document.getElementsByClassName('previews');
+  Array.from(previews).forEach((element) => {
+    element.innerHTML = element.innerText;
+  })
+
+</script>
+{% endblock script %}
+{% block body %}
+<main class="bg-black0  text-light py-5">
+  <div class="container">
+    <h2>All Blogs</h2>
+    {% for post in allPosts %}
+    <div
+      class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-4 position-relative  bg-black1 text-light p-1 mx-auto">
+      <div class="col p-4 d-flex flex-column position-static bg-black1 text-light col-10">
+        <strong class="d-inline-block mb-2 text-primary">{{post.category}}</strong>
+        <h3 class="mb-0"><a href="/blog/{{post.slug}}" class="text-decoration-none text-light">{{ post.title }}</a></h3>
+        <div class="mb-1 text-muted">{{post.timestamp}}</div>
+        <div class="card-text text-trunate mb-3" style="height: 75px; overflow: hidden;">
+          <div class="previews text-muted text-justify">{{post.content|safe}}</div>
+        </div>
+        <div class="col-12">
+          <a href="/blog/{{post.slug}}" role="button" class="btn btn-primary">Continue reading</a>
+        </div>
+      </div>
+      <div class="col-auto d-none d-lg-block col-2 p-0 m-0">
+        <img src="https://pixselo.com/wp-content/uploads/2018/03/dummy-placeholder-image-400x400-300x300.jpg"
+          alt="Thumbnail" height="250" style="width:100%; max-height: 100%">
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</main>
+{% endblock body %}

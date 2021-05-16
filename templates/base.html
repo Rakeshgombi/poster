@@ -1,0 +1,316 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+  <script type="text/javascript" src='https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'
+    referrerpolicy="origin">
+    </script>
+      {% comment %} <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" /> {% endcomment %}
+<link rel="stylesheet" href="{% static "prism/prism.css" %}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+    crossorigin="anonymous" />
+  <title>{% block title %}{% endblock title %}</title>
+  {% block css %}{% endblock css %}
+
+  <style>
+    body {
+      min-height: 100vh;
+    }
+
+    /* .container-fluid img {
+      max-width: 40px;
+    } */
+
+    .active {
+      display: inline-block;
+      border-bottom: 0.5px solid #fff;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 50px;
+      height: 50px;
+      top: 0;
+
+    }
+
+    .navbar-brand::before {
+      position: absolute;
+      content: "";
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: url('{% static "logo/p1.png" %}') no-repeat center center/cover;
+      /* filter: hue-rotate(20deg); */
+    }
+
+    .navbar-brand::after {
+      position: absolute;
+      content: "";
+      z-index: 20;
+      width: 100%;
+      left: 1px;
+      top: 1px;
+      height: 100%;
+      background: url('{% static "logo/p2.png" %}')no-repeat center center/cover;
+      animation: animate 1s linear infinite;
+    }
+
+    @keyframes animate {
+      0% {
+        transform: rotate(0deg), center;
+      }
+
+      50% {
+        transform: rotate(180deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    .bg-black0{
+    background-color: #090c10 !important;
+    }
+    .bg-black1{
+    background-color: #0d1117 !important;
+    }
+    .bg-black2{
+    background-color: #161b22 !important;
+    }
+    .border{
+      border: 1px solid #807f7f !important ;
+    }
+    .border-bottom{
+      border-bottom: 1px solid #9999997c !important ;
+    }
+    .border-top{
+      border-top: 1px solid #999999 !important ;
+    }
+    .border-left{
+      border-left: 1px solid #999999 !important ;
+    }
+    .border-right{
+      border-right: 1px solid #999999 !important ;
+    }
+    .text-light{
+      color: #c9d1d9 !important;
+    }
+    .text-muted{
+      color:#b3b3b3 !important;
+    }
+    .text-link{
+    color: #58a6ff !important;
+    text-decoration: none;
+    }
+    .text-light{
+      color: #c9d1d9;
+    }
+    .text-link:hover{
+    color: #58a6ff !important;
+    text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body class="bg-black0">
+  <header class="border-bottom">
+    <nav class="navbar navbar-expand-md navbar-dark text-light bg-black2">
+      <div class="container-fluid px-4 ">
+        <a class="navbar-brand logo" href="/"> </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link {% block homeactive %}{% endblock homeactive %}" aria-current="page" href="/"><i
+                  class="fa fa-home" aria-hidden="true"></i> Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% block blogactive %}{% endblock blogactive %}" aria-current="page" href="/blog/"><i
+                  class="fas fa-server"></i> Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% block contactactive %}{% endblock contactactive %}" aria-current="page"
+                href="/contact/"><i class="fa fa-question-circle" aria-hidden="true"></i> Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% block aboutactive %}{% endblock aboutactive %}" aria-current="page"
+                href="/about/"><i class="far fa-address-card"></i> About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% block composeactive %}{% endblock composeactive %}" aria-current="page"
+              href="/blog/composeblog/"><i class="far fa-edit"></i> Compose Blog</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav mb-2">
+            <li class="nav-item ">
+              <form class="d-flex" action="/search/" method="GET">{% csrf_token %}
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query"
+                  id="query">
+                <button class="btn btn-outline-success" type="submit"> Search</button>
+              </form>
+            </li>
+            <li class="nav-item mt-2 mx-md-2 mt-md-0">
+              {% if user.is_authenticated %}
+              <div class="dropdown mx-1">
+                <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="far fa-user"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-lg-end bg-black1 p-3 border"  aria-labelledby="dropdownMenuLink">
+                  <li class="py-2"><a class="text-decoration-none text-light" href="/usersettings/{{request.user}}/"><i class="fas fa-cog"></i>
+                      {{request.user}}</a>
+                  </li>
+                  <li class="py-2"><a class="text-decoration-none text-light" href="/blog/composeblog/"><i class="far fa-edit"></i> Compose Blog</a></li>
+                  <li class="py-2"><a class="text-decoration-none text-light" href="/logout/"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+              </div>
+              {% else %}
+              <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasSignUp" aria-controls="offcanvasRight"><i class="fas fa-user-plus"></i>
+                SignUp</button>
+
+              <div class="offcanvas offcanvas-end  bg-dark text-white " tabindex="-1" id="offcanvasSignUp"
+                aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                  <h5 id="offcanvasRightLabel">SIGNUP</h5>
+                  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body form-group-sm">
+                  <form class="form-signup needs-validation" method="POST" action="/signup/">{% csrf_token %}
+                    <a class="navbar-brand logo d-flex mx-auto" href="/"> </a>
+                    <h3 class="h3 mb-3 text-center font-weight-normal">Please sign up</h3>
+                    <div class="row">
+                      <div class="col-md-6 mb-1">
+                        <label for="fName">First name</label>
+                        <input type="text" class="form-control input-sm" id="fname" placeholder="First Name"
+                          name="fname" required="">
+                      </div>
+                      <div class="col-md-6 mb-1">
+                        <label for="lname">Last name</label>
+                        <input type="text" class="form-control input-lg" id="lname" placeholder="Last Name" name="lname"
+                          required="">
+                      </div>
+                    </div>
+                    <div class="mb-1">
+                      <label for="username">Username</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">@</span>
+                        </div>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username"
+                          required="">
+                      </div>
+                    </div>
+                    <div class="mb-1">
+                      <label for="email">Email</label>
+                      <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com">
+                    </div>
+                    <div class="mb-1">
+                      <label for="pass1">Enter Password</label>
+                      <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Enter Password"
+                        required="">
+                    </div>
+                    <div class="mb-3">
+                      <label for="pass2">Re-enter Password</label>
+                      <input type="password" class="form-control" id="pass2" name="pass2"
+                        placeholder="Confirm Password">
+                    </div>
+                    <button class="btn btn-outline-primary btn-block" type="submit">Sign up</button>
+                  </form>
+                </div>
+              </div>
+              <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasSignIn" aria-controls="offcanvasRight"><i class="fas fa-sign-in-alt"></i>
+                SignIn</button>
+
+              <div class="offcanvas offcanvas-end bg-dark text-white" tabindex="-1" id="offcanvasSignIn"
+                aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                  <h5 id="offcanvasRightLabel">SIGNIN</h5>
+                  <button type="button" class="btn-close text-reset btn-success" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                  <form class="form-signin" method="POST" action="/login/">{% csrf_token %}
+                    <a class="navbar-brand logo d-flex mx-auto" href="/"> </a>
+                    <h3 class="h3 mb-3 text-center font-weight-normal">Please sign in</h3>
+                    <div class="mb-1">
+                      <label for="loginusername">Username</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">@</span>
+                        </div>
+                        <input type="text" class="form-control" id="loginusername" name="loginusername"
+                          placeholder="Username" required="">
+                      </div>
+                    </div>
+                    <div class="mb-1">
+                      <label for="loginPassword">Enter Password</label>
+                      <input type="password" class="form-control" id="loginPassword" name="loginPassword"
+                        placeholder="Enter Password" required="">
+                    </div>
+
+                    <button class="btn btn-lg btn-outline-primary btn-block mt-3" type="submit">Sign in</button>
+                  </form>
+                </div>
+              </div>
+              {% endif %}
+            </li>
+        </div>
+      </div>
+    </nav>
+  </header>
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-0" role="alert">
+    <strong>Mesage: </strong>{{ message }}<button type="button" class="btn-close" data-bs-dismiss="alert"
+      aria-label="Close"></button>
+  </div>
+  {% endfor %}
+
+
+  {% block body %}{% endblock body %}
+
+
+  <footer class="container-fluid bg-black3 my-0 py-3 text-light border-top">
+    <p class="mb-0 text-center">© 2021 Poster.com</p>
+    <p class="mb-0 text-center">
+      <a href="#">Back to top</a>
+    </p>
+
+  </footer>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+    crossorigin="anonymous"></script>
+  {% block script %}{% endblock script %}
+<script>
+window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+        $(this).remove(); 
+    });
+}, 4000);
+</script>
+</body>
+
+</html>

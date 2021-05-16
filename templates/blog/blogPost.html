@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load humanize %}
+
+{% block css %}
+<style>
+  .crayon {
+    background: #ebebeb;
+  }
+
+  main form .form-control,
+  form textarea {
+    background-color: #161b22 !important;
+    color: #fff !important;
+    border: 1px solid #807f7f !important;
+  }
+
+  .control-img img,
+  .resource__image__img,
+  .lazyloaded {
+    max-width: 99% !important;
+    height: auto !important;
+    border: 2px solid rgb(63, 63, 63);
+    margin: 2rem 0;
+  }
+
+  .control-img div {
+    /* white-space: nowrap; */
+    text-align: justify;
+    color: #c9d1d9 !important;
+    font-size: 16px !important;
+  }
+
+  pre[class*="language-"]::-webkit-scrollbar {
+    display: none;
+  }
+
+  .popup img {
+  width: 100%;
+  height: auto;
+
+  border-radius: 50%;
+}
+</style>
+{% endblock css %}
+
+{% block body %}
+
+<main class="bg-black0 text-light">
+  <div class="container py-5 mx-auto">
+    <div class="row g-5">
+      <div class="col-md-9 border shadow-lg rounded py-4">
+        <article class="blog-post">
+          <h2 class="fst-italic ">{{post.title}}</h2>
+          <p class=" blog-post-meta">{{post.timestamp}} by <span class="text-muted">{{ post.author }} ({{post.views}}
+              views so far</span>)</p>
+          <hr class="m-0 p-0">
+          <p class="pt-3 control-img text-sm-left text-light " style="max-width: 100%;">
+            {{ post.content|safe }}
+          </p>
+        </article>
+        <nav class="blog-pagination" aria-label="Pagination">
+          <a class="btn btn-outline-primary btn-sm" href="#">Older</a>
+          <a class="btn btn-outline-secondary disabled btn-sm" href="#" tabindex="-1" aria-disabled="true">Newer</a>
+        </nav>
+      </div>
+      <div class="col-md-3">
+        <div class="position-sticky" style="top: 2rem;">
+          <h4 class="fst-italic">About the Author</h4>
+          <div class="p-3 bg-black1 border rounded shadow popup">
+            <h4 class="fst-italic">{{author.first_name}} {{author.last_name}}</h4>
+            {% if profile.display_pic %}
+            <img src="{{ profile.display_pic.url}}" width="200" height="200">
+  
+            {% else %}
+            <img src="{% static 'logo/Plogo.png' %}" class="" width="200" height="200">
+            {% endif %}
+            <p class="mb-0">{{author.profile.bio}}</p>
+            <p class="mb-0">{{author.profile.country}}</p>
+            <p class="mb-0">{{author.profile.organisation}}</p>
+            <div class="">
+              <h5 class="fst-italic">Elsewhere</h5>
+              <p class="text-justify text-center m-0 p-0 py-2">
+                {% if user.email %}
+                <a href="mailto:{{user.email}}" target="_blank" class="border-right pe-2 ms-1 text-link"><i
+                    class="far fa-envelope"></i></a>
+                {% endif %}
+                {% if user.profile.facebook %}
+                <a href="{{user.profile.facebook}}" target="_blank" class="border-right pe-2 ms-1 text-link"><i
+                    class="fab fa-facebook"></i></a>
+                {% endif %}
+                {% if user.profile.instagram %}
+                <a href="{{user.profile.instagram}}" target="_blank" class="border-right pe-2 ms-1 text-link"><i
+                    class="fab fa-instagram"></i></a>
+                {% endif %}
+                {% if user.profile.github %}
+                <a href="{{user.profile.github}}" target="_blank" class="border-right pe-2 ms-1 text-link"><i
+                    class="fab fa-github"></i></a>
+                {% endif %}
+                {% if user.profile.twitter %}
+                <a href="{{user.profile.twitter}}" target="_blank" class="border-right pe-2 ms-1 text-link"><i
+                    class="fab fa-twitter"></i></a>
+                {% endif %}
+                {% if user.profile.website %}
+                <a href=" {{user.profile.website}}" class="ms-1 text-link"><i class="fas fa-globe-asia"></i></a>
+                {% endif %}
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-md-9 card mb-4 bg-black1 text-light border shadow-sm mt-3 ">
+        <div class="card-body">
+          <!-- comments -->
+          <h2>{{ comments.count }} comments</h2>
+          <button type="button" class="btn btn-primary btn-sm" id="comment">Comment</button>
+          <div class="col-md-9 mb-4  mt-3 ">
+            <div class="card-body bg-black2 text-light border" id="comment-form">
+              <h3>Leave a comment</h3>
+              <form method="post" style="margin-top: 1.3em;">
+                {{ comment_form | crispy }}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-primary btn-sm mt-3">Submit</button>
+                <button type="button" class="btn btn-outline-primary btn-sm mt-3" id="hideComment">cancel</button>
+              </form>
+            </div>
+
+          </div>
+
+
+          {% for comment in comments %}
+          <div class="comments border mt-2 bg-black2 text-light" style="padding: 10px;">
+            <p class="font-weight-bold">
+              {{ comment.name }}
+              <span class=" text-muted font-weight-normal">
+                {{ comment.created_on |naturaltime }}
+              </span>
+            </p>
+            <p class="font-weight-bold">
+              {{ comment.body | linebreaks }}
+            </p>
+
+            <button type="button" class="btn btn-link text-light btn-sm" id="make-reply{{ comment.id }}">Reply</button>
+            {% if comment.replies.count > 1 %}
+            <button type="button" class="btn btn-link text-light btn-sm " id="show-reply{{ comment.id }}"> Show
+              {{comment.replies.count}} Replies</button>
+            {% endif %}
+            <div class="col-md-9 my-4">
+              <div class="card-body bg-black2 border" id="reply-form{{ comment.id }}">
+                <h5>Reply for this comment</h5>
+                <form method="post" style="margin-top: 1.3em;">
+                  {{ comment_form.as_p }}
+                  {% csrf_token %}
+                  <!-- Hidden input for parent comment.id -->
+                  <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                  <input class="btn btn-outline-primary  btn-sm" type="submit" value="Reply">
+                  <button type="button" class="btn btn-outline-primary btn-sm"
+                    id="hide-reply{{ comment.id }}">Cancel</button>
+                </form>
+              </div>
+            </div>
+            <div class="container" id="reply-box{{ comment.id }}">
+
+              {% for replay in comment.replies.all %}
+              <div class="col mb-3">
+                <p class="font-weight-bold mb-0">
+                  {{ replay.name }}<span class=" text-muted font-weight-normal">
+                    {{ replay.created_on|naturaltime }}
+                  </span>
+                </p>
+                {{ replay.body }}
+              </div>
+              {% empty %}
+              {% endfor %}
+              <button type="button" class="btn text-light btn-link" id="hide-replies{{ comment.id }}">Hide all
+                replies</button>
+            </div>
+
+          </div>
+          {% empty %}
+          <h4>There are no comments yet.</h4>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock body %}
+
+{% block script %}
+
+<script>
+  var commentBtn = document.querySelector("#comment")
+  var commentForm = document.querySelector("#comment-form")
+  var hide = document.querySelector("#hideComment")
+  commentForm.style.display = "none"
+
+  commentBtn.addEventListener('click', function () {
+    commentForm.style.display = "block"
+    commentForm.classList.add("card")
+    commentBtn.setAttribute('disabled', "")
+  })
+
+  hide.addEventListener('click', function () {
+    commentForm.style.display = "none"
+    commentBtn.style.display = 'block'
+    commentBtn.removeAttribute('disabled');
+  })
+
+  {% for comment in comments %}
+  
+  let makeReply{{ comment.id }} = document.querySelector("#make-reply{{ comment.id }}")
+  let replyForm{{ comment.id }} = document.querySelector("#reply-form{{ comment.id }}")
+  let hideReply{{ comment.id }} = document.querySelector("#hide-reply{{ comment.id }}")
+
+  let showReply{{ comment.id }} = document.querySelector("#show-reply{{ comment.id }}")
+  let replyBox{{ comment.id }} = document.querySelector("#reply-box{{ comment.id }}")
+  let hideReplies{{ comment.id }} = document.querySelector("#hide-replies{{ comment.id }}")
+
+  replyForm{{comment.id }}.style.display = 'none'
+  makeReply{{comment.id }}.addEventListener('click', function () {
+    replyForm{{comment.id }}.style.display = 'block'
+    replyForm{{comment.id }}.classList.add("card")
+    makeReply{{comment.id }}.setAttribute('disabled', "")
+  })
+
+  hideReply{{comment.id }}.addEventListener('click', function () {
+    makeReply{{comment.id }}.removeAttribute('disabled');
+    replyForm{{comment.id }}.style.display = 'none'
+  })
+
+  replyBox{{comment.id }}.style.display = "none"
+  showReply{{comment.id }}.addEventListener('click', function () {
+    replyBox{{comment.id }}.style.display = 'block'
+    showReply{{comment.id }}.setAttribute('disabled', "")
+  })
+
+  hideReplies{{comment.id }}.addEventListener('click', function () {
+    replyBox{{comment.id }}.style.display = 'none'
+    showReply{{comment.id }}.removeAttribute('disabled');
+  })
+  {% endfor %}
+
+
+</script>
+<script src="{% static 'prism/prism.js' %}"></script>
+{% endblock script %}

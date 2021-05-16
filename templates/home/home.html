@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+<title>{% block title %}Home{% endblock title %}</title>
+{% block homeactive %}active{% endblock homeactive %}
+{% block css %}
+<style>
+  .land-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+  }
+
+  .land-bg .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: aliceblue;
+  }
+
+  .land-bg h1 {
+    text-align: center;
+    font-size: 3rem;
+  }
+
+  .land-bg p {
+    text-align: center;
+    font-size: 2rem;
+  }
+
+  .land-bg::before {
+    position: absolute;
+    content: "";
+    z-index: -10;
+    width: 100%;
+    height: 100%;
+    background: url("https://images.pexels.com/photos/1181330/pexels-photo-1181330.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")no-repeat center center/cover;
+    /* opacity: 0.9; */
+  }
+
+  .crayon {
+    background: #FAFBFC;
+  }
+
+  /* 
+  section {
+  width: 100%;
+  margin: 0 auto;
+  padding: 60px 15px;
+  transition: transform 0.25s;
+  will-change: transform;
+  }
+  
+  .row {
+    background: #FFF;
+    margin-bottom: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.row:last-child{ margin-bottom: 0; } */
+  /* 
+  [aos="fade"] {
+    opacity: 0;
+    transition-property: opacity;
+  }
+
+  [aos="fade"].aos-animate {
+    opacity: 1;
+  } */
+</style>
+{% endblock css %}
+{% block body %}
+<div class="land-bg">
+  <div class="content">
+    <h1>Poster</h1>
+    <p>Find the blogs that are best in contents</p>
+  </div>
+</div>
+
+<section class="bg-black0 text-light py-5">
+
+  <div class="container">
+    <h2>Popular Blogs</h2>
+    {% for post in allPosts %}
+    <div
+      class="row no-gutters border rounded overflow-hidden flex-md-row  shadow-sm h-md-250 my-4 position-relative bg-black2 p-1 mx-auto ps-3">
+      <div class="col d-flex flex-column position-static col-10 p-2">
+        <strong class="d-inline-block mb-2 text-primary">{{post.category}}</strong>
+        <h3 class="mb-0"><a href="/blog/{{post.slug}}" class="text-decoration-none text-light">{{ post.title }}</a></h3>
+        <div class="mb-1 text-muted">{{post.timestamp}}</div>
+        <div class="card-text text-trunate mb-3" style="height: 75px; overflow: hidden;">
+          <div class="previews text-muted text-justify">{{post.content|safe}}</div>
+        </div>
+        <div class="col-12">
+          <a href="/blog/{{post.slug}}" role="button" class="btn btn-primary">Continue reading</a>
+        </div>
+      </div>
+      <div class="col-auto d-none d-lg-block col-2 p-0 m-0">
+        <img src="https://pixselo.com/wp-content/uploads/2018/03/dummy-placeholder-image-400x400-300x300.jpg"
+          alt="Thumbnail" height="250" style="width:100%; max-height: 100%">
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock body %}
+{% block script %}
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  let previews = document.querySelectorAll('.previews');
+  Array.from(previews).forEach((element) => {
+    text = element.innerText.trim();
+    element.innerHTML = text;
+    console.log("hixzzc");
+  })
+
+  // // AOS.init();
+
+  // // You can also pass an optional settings object
+  // // below listed default settings
+  // AOS.init({
+  //   // Global settings:
+  //   disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+  //   startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+  //   initClassName: 'aos-init', // class applied after initialization
+  //   animatedClassName: 'aos-animate', // class applied on animation
+  //   useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+  //   disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+  //   debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+  //   throttleDelay: 10, // the delay on throttle used while scrolling the page (advanced)
+
+  //   // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+  //   offset: 120, // offset (in px) from the original trigger point
+  //   delay: 0, // values from 0 to 3000, with step 50ms
+  //   duration: 400, // values from 0 to 3000, with step 50ms
+  //   easing: 'ease', // default easing for AOS animations
+  //   once: false, // whether animation should happen only once - while scrolling down
+  //   mirror: false, // whether elements should animate out while scrolling past them
+  //   anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
+
+  // });
+
+
+</script>
+{% endblock script %}

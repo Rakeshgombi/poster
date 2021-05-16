@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+<title>{% block title %}Poster | Contact Us{% endblock title %}</title>
+{% block contactactive %}active{% endblock contactactive %}
+
+{% block body %}
+<div class="container my-5">
+
+  <div class="col-lg-8 offset-lg-2 p-4 shadow-lg bg-black1 rounded text-light border">
+    <h2>Contact Us!</h2>
+    <form action="/contact/" method="POST">{% csrf_token %}
+      <div class="input-group mb-3">
+        <span class="input-group-text   bg-black2 text-light border">Name</span>
+        <input type="text" aria-label="name" class="form-control   bg-black2 text-light border" name="name" placeholder="Enter Yout Name">
+      </div>
+      <div class="input-group mb-3">
+        <input type="email" aria-label="First name" class="form-control   bg-black2 text-light border" placeholder="Enter Email Address" name="email">
+        <span class="input-group-text   bg-black2 text-light border">@example.com</span>
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text   bg-black2 text-light border">Phone No</span>
+        <input type="tel" aria-label="First name" class="form-control   bg-black2 text-light border" placeholder="Enter Email Address" name="phone">
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-text   bg-black2 text-light border">Your Query?</span>
+        <textarea class="form-control   bg-black2 text-light border" aria-label="With textarea" name="content" rows="3"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-outline-success mt-2">Submit</button>
+    </form>
+  </div>
+</div>
+{% endblock body %}

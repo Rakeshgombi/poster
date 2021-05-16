@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<style>
+  @media screen and (max-width:1000px) {
+    .divider {
+      display: none;
+    }
+
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+  .popup{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .popup img {
+  width: 100%;
+  height: auto;
+
+  border-radius: 50%;
+}
+
+  /*End style*/
+</style>
+{% endblock css %}
+
+{% block body %}
+{% if user.is_authenticated %}
+{% if user.username == profile.user.username %}
+<main class="bg-black0 text-light row mx-0 py-3">
+  <div class="divider" style="width:20px"></div>
+  <div class="card px-4 mt-4 bg-black0 col col-lg-3">
+    <div class="col">
+      <div class="bg-black0 row ">
+        <div class="popup col-2 col-lg-12 col-sm-2 p-0 ">
+          {% if profile.display_pic %}
+          <img src="{{ profile.display_pic.url}}" width="400" height="400">
+
+          {% else %}
+          <img src="{% static 'logo/Plogo.png' %}" class="" alt="...">
+          {% endif %}
+        </div>
+        <div class="card bg-black0 text-muted col col-10 col-lg-12 p-2 px-3 col-sm-10">
+          <h3 class="text-light">{{user.first_name}} {{user.last_name}}</h3>
+          <h4>{{user.username}}</h4>
+        </div>
+        <button type="button" class="btn btn-outline-dark my-1 bg-black2 text-light" id="edit-details">Edit Details <i
+            class="fas fa-pencil-alt"></i></button>
+      </div>
+      <div class="card bg-black0 text-muted " id="user-details">
+        <h6 class="mt-3">{{profile.bio}}</h6>
+
+        <h6><i class="fa fa-building" aria-hidden="true"></i> {{profile.organisation}}</h6>
+        <h6><i class="fas fa-map-marker-alt"></i> {{profile.country}}</h6>
+        <ul class="navbar-nav">
+
+          {% if user.email %}
+          <li class="nav-item text-truncate mb-1"><a href="mailto:{{user.email}}" target="_blank"
+              class="text-muted text-decoration-none"><i class="far fa-envelope"></i> {{user.email}}</a></li>
+          {% endif %}
+          {% if profile.facebook %}
+          <li class="nav-item text-truncate mb-1"><a href="{{profile.facebook}}" target="_blank"
+              class="text-muted text-decoration-none"><i class="fab fa-facebook"></i> {{profile.facebook}}</a></li>
+          {% endif %}
+          {% if profile.instagram %}
+          <li class="nav-item text-truncate mb-1"><a href="{{profile.instagram}}" target="_blank"
+              class="text-muted text-decoration-none"><i class="fab fa-instagram"></i> {{profile.instagram}}</a></li>
+          {% endif %}
+          {% if profile.github %}
+          <li class="nav-item text-truncate mb-1"><a href="{{profile.github}}" target="_blank"
+              class="text-muted text-decoration-none"><i class="fab fa-github"></i> {{profile.github}}</a></li>
+          {% endif %}
+          {% if profile.twitter %}
+          <li class="nav-item text-truncate mb-1">
+            <a href="{{profile.twitter}}" target="_blank" class="text-muted text-decoration-none"><i
+                class="fab fa-twitter"></i>
+              {{profile.twitter}}</a>
+          </li>
+          {% endif %}
+          {% if profile.website %}
+          <li class="nav-item text-truncate mb-1"><a href="{{profile.website}}"
+              class="text-muted text-decoration-none"><i class="fas fa-globe-asia"></i> {{profile.website}}</a></li>
+          {% endif %}
+        </ul>
+      </div>
+
+    </div>
+    <div class="position-relative" id="edit-user-details">
+
+      <div class="col-md-12 my-1 form-control bg-black2 text-muted border">
+        <a role="button" class=" text-decorartion-none text-secondary text-decoration-none" data-bs-toggle="modal"
+          data-bs-target="#deleteDispPic"><i class="far fa-trash-alt"></i> Remove Profile Picture</a>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="deleteDispPic" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-black2 border">
+              <div class="modal-header border-bottom-0 my-0 pb-0">
+                <h5 class="modal-title" id="staticBackdropLabel"><i
+                    class="fas fa-exclamation-triangle text-warning"></i>Remove Profile Picture</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body my-0 py-0">
+                <hr class="">
+                <h5> Are You sure that want to Remove this Picture</h5>
+
+                <p>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This will permanently deletes your Picture and you will not be able to retrive it back...!
+                </p>
+                <hr class="">
+              </div>
+              <div class="modal-footer border-top-0 pt-0">
+                <form action="/deleteprofilepicture/" method="POST">{% csrf_token %}
+                  <input type="hidden" name="profile" value="{{request.user}}">
+                  <button type="submit" class="btn btn-danger btn-sm">yes</button>
+                </form>
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="col-md-12 my-1 form-control bg-black2 text-light border">
+          <label for="selectfile" class=" bg-black2 text-secondary" style="cursor: pointer;"><i class="fa fa-camera"
+              aria-hidden="true"></i> Add Profile picture</label>
+          <input id="selectfile" type="file" name="display_pic" accept="image/*">
+        </div>
+        <div class="col-md-12 my-1">
+          <input type="text" class="form-control bg-black2 text-light border" id="first_name" name="first_name" value=""
+            placeholder="Enter First Name">
+
+        </div>
+        <div class="col-md-12 my-1">
+          <input type="text" class="form-control bg-black2 text-light border" id="last_name" name="last_name" value=""
+            placeholder="Enter Last Name">
+        </div>
+
+        <div class="col-12 my-1">
+          <input type="text" class="form-control bg-black2 text-light border" id="organisaation" name="organisaation"
+            value="" placeholder="Enter Your organisaation Name">
+        </div>
+        <div class="col-12 my-1">
+          <input type="text" class="form-control bg-black2 text-light border" id="country" name="country" value=""
+            placeholder="Enter Your Country Name">
+        </div>
+        <div class="col-12 my-1">
+          <input type="url" class="form-control bg-black2 text-light border" id="website" name="website" value=""
+            placeholder="Enter your website url">
+        </div>
+        <div class="col-12 my-1">
+          <input type="url" class="form-control bg-black2 text-light border" id="facebook" name="facebook" value=""
+            placeholder="Enter your facebook url">
+        </div>
+        <div class="col-12 my-1">
+          <input type="url" class="form-control bg-black2 text-light border" id="instagram" name="instagram" value=""
+            placeholder="Enter your instagram url">
+        </div>
+        <div class="col-12 my-1">
+          <input type="url" class="form-control bg-black2 text-light border" id="github" name="github" value=""
+            placeholder="Enter your github url">
+        </div>
+        <div class="col-12 my-1">
+          <input type="url" class="form-control bg-black2 text-light border" id="twitter" name="twitter" value=""
+            placeholder="Enter your twitter url">
+        </div>
+        <div class="col-12 my-1">
+          <textarea class="form-control bg-black2 text-light border" name="bio" id="bio" rows="3"
+            placeholder="Add a bio"></textarea>
+        </div>
+        <div class="col-12 my-1">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" required>
+            <label class="form-check-label" for="gridCheck">
+              Confirm Changes
+            </label>
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-success text-white" id="save-changes">Save</button>
+          <button type="button" class="btn btn-outline-dark text-muted" id="cancel-changes">cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="container mt-5 col-lg-8">
+    {% if allPosts.count > 0 %}
+    <h2 class="">Your Posts</h2>
+    <hr>
+    {% for post in allPosts %}
+    <div
+      class="row no-gutters rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-2 position-relative  bg-black0 text-light p-1 col-lg-12 mx-auto">
+      <div class="col p-2 d-flex flex-column position-static  text-light justify col-12 col-sm-10">
+        <strong class="d-inline-block mb-2 text-primary">{{post.category}}</strong>
+        <h5 class="mb-1"><a href="/blog/{{post.slug}}" class="text-link">{{ post.title }}</a></h5>
+        <div class="mb-1 text-muted">{{post.timestamp}}</div>
+      </div>
+      <div class="d-flex text-light justify col col-lg-2 d-flex justify-content-between align-items-center">
+        <a href="/blog/{{request.user}}/editpost/{{post.slug}}/" role="button"
+          class="text-light text-decoration-none "><i class="fas fa-edit"></i> Edit</a>
+        <a role="button" class=" text-decorartion-none text-light text-decoration-none" data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"><i class="far fa-trash-alt"></i> Delete</a>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-black2 border">
+              <div class="modal-header border-bottom-0 my-0 pb-0">
+                <h5 class="modal-title" id="staticBackdropLabel"><i
+                    class="fas fa-exclamation-triangle text-warning"></i> Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body my-0 py-0">
+                <hr class="">
+                <h5> Are You sure that want to delete this post?</h5>
+
+                <p>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This will permanently deletes your post and you will not be able
+                  to retrive it back...!
+                </p>
+                <hr class="">
+              </div>
+              <div class="modal-footer border-top-0 pt-0">
+                <form action="/blog/deletepost/" method="POST">{% csrf_token %}
+                  <input type="hidden" name="owner" value="{{request.user}}">
+                  <input type="hidden" name="slug" value="{{post.slug}}">
+                  <button type="submit" class="btn btn-outline-success mt-2">yes</button>
+                </form>
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+    {% endfor %}
+  </div>
+  {% else %}
+
+  <h5>No Posts Yet</h5>
+  <li class="py-2"><a class="text-decoration-none text-light" href="/blog/composeblog/"><i class="far fa-edit"></i>
+      Compose
+      Blog</a></li>
+  {% endif %}
+</main>
+{% else %}
+you Are not allowed to here! (and you know it)
+{% endif %}
+{% else %}
+You are not the correct user to edit this page...
+{% endif %}
+
+{% endblock body %}
+{% block script %}
+<script>
+
+  $("#edit-user-details").hide()
+  $("#edit-details").click(function () {
+    $("#edit-details").hide()
+    $("#user-details").hide()
+    $("#edit-user-details").show();
+  })
+  $("#cancel-changes").click(function () {
+    $("#edit-details").show()
+    $("#user-details").show();
+    $("#edit-user-details").hide();
+  })
+  let previews = document.getElementsByClassName('previews');
+  Array.from(previews).forEach((element) => {
+    element.innerHTML = element.innerText;
+    console.log("hixzzc");
+  })
+
+</script>
+
+{% endblock script %}

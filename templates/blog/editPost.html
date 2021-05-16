@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block composeactive %}active{% endblock composeactive %}
+{% block body %}
+
+{% if user.is_authenticated %}
+<div class="container my-5 bg-black1 text-light">
+  <h3 class="mb-4">Edit Blog</h3>
+  
+  <form action="#" method="POST"> {% csrf_token %}
+    <div class="input-group mb-3">
+      <label class="input-group-text  bg-black2 text-light border" for="inputGroupSelect01">Category</label>
+
+      <select class="form-select  bg-black2 text-light border" id="inputGroupSelect01" name="category" required value="">
+        <option selected value="{{post.category}}" class="text-muted">{{post.category}}</option>
+        <option value="Tech">Tech Blog</option>
+        <option value="Nature">Nature</option>
+        <option value="Political">Political</option>
+      </select>
+    </div>
+
+
+    <div class="input-group mb-3">
+      <input type="text" class="form-control   bg-black2 text-light border" placeholder="Enter the Title" aria-label="Recipient's username"
+        aria-describedby="basic-addon2" name="title" value="{{post.title}}">
+      <span class="input-group-text bg-black2 text-light border" id="basic-addon2">Title</span>
+    </div>
+    <input type="hidden" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="author" value="{{request.user}}">
+
+    <div class="input-group mb-3">
+      <textarea id="default" class="form-control" aria-label="With textarea" name="content">{{post.content}}</textarea>
+    </div>
+
+    <div class="input-group">
+      <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+  </form>
+</div>
+{% else %}
+<div class="container my-5 bg-black2 p-4 border shadow-lg rounded text-light">
+  <h3>Sign in To Compose your own blog</h3>
+  <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSignUp"
+    aria-controls="offcanvasRight">SignUp</button>
+
+  <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSignIn"
+    aria-controls="offcanvasRight">SignIn</button>
+</div>
+{% endif %}
+
+{% endblock body %}
+{% block script %}
+
+
+<script type="text/javascript">
+  tinymce.init({
+    selector: 'textarea#default',
+    width: 5000,
+    height:280,
+
+    plugins: [
+      'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+      'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+      'table emoticons template paste help'
+    ],
+    toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+      'bullist numlist outdent indent | link image | print preview media fullpage | ' +
+      'forecolor backcolor emoticons | help',
+    menu: {
+      favs: { title: 'POSTER', items: 'code visualaid | searchreplace | emoticons' }
+    },
+    menubar: 'favs file edit view insert format tools table help',
+    content_css: 'css/content.css'
+  });
+
+</script>
+{% endblock script %}
