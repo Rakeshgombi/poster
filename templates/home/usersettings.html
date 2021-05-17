@@ -233,7 +233,7 @@
                 <form action="/blog/deletepost/" method="POST">{% csrf_token %}
                   <input type="hidden" name="owner" value="{{request.user}}">
                   <input type="hidden" name="slug" value="{{post.slug}}">
-                  <button type="submit" class="btn btn-outline-success mt-2">yes</button>
+                  <button type="submit" class="btn btn-danger btn-sm">yes</button>
                 </form>
                 <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">cancel</button>
               </div>

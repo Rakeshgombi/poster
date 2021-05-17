@@ -9,11 +9,11 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-  <script type="text/javascript" src='https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'
-    referrerpolicy="origin">
-    </script>
-      {% comment %} <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" /> {% endcomment %}
-<link rel="stylesheet" href="{% static "prism/prism.css" %}">
+  <script src="https://cdn.tiny.cloud/1/11ddu8bq9gxdm71uo0x3fw08yg016jvgxcwpg1ch29mgzoq9/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
+  </script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="stylesheet" href="{% static 'prism/prism.css'%}" prism/prism.css" %}">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
     integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
     crossorigin="anonymous"></script>
@@ -85,46 +85,59 @@
         transform: rotate(360deg);
       }
     }
-    .bg-black0{
-    background-color: #090c10 !important;
+
+    .bg-black0 {
+      background-color: #090c10 !important;
     }
-    .bg-black1{
-    background-color: #0d1117 !important;
+
+    .bg-black1 {
+      background-color: #0d1117 !important;
     }
-    .bg-black2{
-    background-color: #161b22 !important;
+
+    .bg-black2 {
+      background-color: #161b22 !important;
     }
-    .border{
-      border: 1px solid #807f7f !important ;
+
+    .border {
+      border: 1px solid #807f7f !important;
     }
-    .border-bottom{
-      border-bottom: 1px solid #9999997c !important ;
+
+    .border-bottom {
+      border-bottom: 1px solid #9999997c !important;
     }
-    .border-top{
-      border-top: 1px solid #999999 !important ;
+
+    .border-top {
+      border-top: 1px solid #999999 !important;
     }
-    .border-left{
-      border-left: 1px solid #999999 !important ;
+
+    .border-left {
+      border-left: 1px solid #999999 !important;
     }
-    .border-right{
-      border-right: 1px solid #999999 !important ;
+
+    .border-right {
+      border-right: 1px solid #999999 !important;
     }
-    .text-light{
+
+    .text-light {
       color: #c9d1d9 !important;
     }
-    .text-muted{
-      color:#b3b3b3 !important;
+
+    .text-muted {
+      color: #b3b3b3 !important;
     }
-    .text-link{
-    color: #58a6ff !important;
-    text-decoration: none;
+
+    .text-link {
+      color: #58a6ff !important;
+      text-decoration: none;
     }
-    .text-light{
+
+    .text-light {
       color: #c9d1d9;
     }
-    .text-link:hover{
-    color: #58a6ff !important;
-    text-decoration: underline;
+
+    .text-link:hover {
+      color: #58a6ff !important;
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -158,7 +171,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link {% block composeactive %}{% endblock composeactive %}" aria-current="page"
-              href="/blog/composeblog/"><i class="far fa-edit"></i> Compose Blog</a>
+                href="/blog/composeblog/"><i class="far fa-edit"></i> Compose Blog</a>
             </li>
           </ul>
           <ul class="navbar-nav mb-2">
@@ -176,12 +189,15 @@
                   data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="far fa-user"></i>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-lg-end bg-black1 p-3 border"  aria-labelledby="dropdownMenuLink">
-                  <li class="py-2"><a class="text-decoration-none text-light" href="/usersettings/{{request.user}}/"><i class="fas fa-cog"></i>
+                <ul class="dropdown-menu dropdown-menu-lg-end bg-black1 p-3 border" aria-labelledby="dropdownMenuLink">
+                  <li class="py-2"><a class="text-decoration-none text-light" href="/usersettings/{{request.user}}/"><i
+                        class="fas fa-cog"></i>
                       {{request.user}}</a>
                   </li>
-                  <li class="py-2"><a class="text-decoration-none text-light" href="/blog/composeblog/"><i class="far fa-edit"></i> Compose Blog</a></li>
-                  <li class="py-2"><a class="text-decoration-none text-light" href="/logout/"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                  <li class="py-2"><a class="text-decoration-none text-light" href="/blog/composeblog/"><i
+                        class="far fa-edit"></i> Compose Blog</a></li>
+                  <li class="py-2"><a class="text-decoration-none text-light" href="/logout/"><i
+                        class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
               </div>
               {% else %}
@@ -304,13 +320,13 @@
     integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
     crossorigin="anonymous"></script>
   {% block script %}{% endblock script %}
-<script>
-window.setTimeout(function() {
-    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-        $(this).remove(); 
-    });
-}, 4000);
-</script>
+  <script>
+    window.setTimeout(function () {
+      $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
+        $(this).remove();
+      });
+    }, 4000);
+  </script>
 </body>
 
 </html>

@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% load humanize %}
+{% block title %}Poster | {{ post.title }}{% endblock title %}
 
 {% block css %}
 <style>
@@ -145,7 +146,7 @@
             </p>
 
             <button type="button" class="btn btn-link text-light btn-sm" id="make-reply{{ comment.id }}">Reply</button>
-            {% if comment.replies.count > 1 %}
+            {% if comment.replies.count >= 1 %}
             <button type="button" class="btn btn-link text-light btn-sm " id="show-reply{{ comment.id }}"> Show
               {{comment.replies.count}} Replies</button>
             {% endif %}
@@ -192,7 +193,7 @@
 {% endblock body %}
 
 {% block script %}
-
+<script src="{% static 'prism/prism.js' %}"></script>
 <script>
   var commentBtn = document.querySelector("#comment")
   var commentForm = document.querySelector("#comment-form")
@@ -244,8 +245,7 @@
     showReply{{comment.id }}.removeAttribute('disabled');
   })
   {% endfor %}
-
-
 </script>
-<script src="{% static 'prism/prism.js' %}"></script>
+
+
 {% endblock script %}

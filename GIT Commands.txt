@@ -14,5 +14,6 @@ git push -u origin master
 // Once the repository is created only use
 
 git status
-git comment -m "<comment>"
+git commit -m "<comment>"
+git remote add origin <https/ssh>
 git push -u origin master
