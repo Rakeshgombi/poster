@@ -15,5 +15,5 @@ git push -u origin master
 
 git status
 git commit -m "<comment>"
-git remote add origin <https/ssh>
+// git remote add origin <https/ssh>
 git push -u origin master

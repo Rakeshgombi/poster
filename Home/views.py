@@ -7,11 +7,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
+import itertools 
 # Create your views here.
 
 
 def index(request):
-    allPost = Post.objects.all()
+    allPost = Post.objects.all().order_by('-views')[:10:1]
     context = {"allPosts": allPost}
     return render(request, 'home/home.html', context)
 
@@ -29,7 +30,7 @@ def search(request):
         allPostsContent = Post.objects.filter(content__icontains=query)
         allPostsAuthor = Post.objects.filter(author__icontains=query)
         allPosts = allPostsTitle.union(allPostsAuthor, allPostsContent)
-    context = {'allposts': allPosts}
+    context = {'allposts': allPosts, 'query':query}
     return render(request, 'home/search.html', context)
 
 

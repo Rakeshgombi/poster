@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block blogactive %}active{% endblock blogactive %}
-<title>{% block title %}Poster | Blog | Search{% endblock title %}</title>
+<title>{% block title %}Poster | Search : {{query}}{% endblock title %}</title>
 {% block css %}
 <style>
   .crayon {
@@ -9,38 +9,43 @@
 </style>
 {% endblock css %}
 {% block body %}
-<main class="crayon py-4">
-  <div class="container">
-    <div class="row">
-    {% if allposts|length < 1  %}
-    hi
-    {% else %}
-    <h2 class="mb-3">All Posts</h2>
 
+<main class="bg-black0  text-light py-5">
+  <div class="container">
+    {% if allposts.count < 1 %} 
+    Your search - <b>{{query}}</b> - did not match any documents.
+     <p>Suggestions:</p>
+     <ul>
+    <li> Make sure that all words are spelled correctly.</li>
+    <li> Try different keywords.</li>
+    <li> Try more general keywords. </li>
+    </ul>
+     {% else %}
+       <h2 class="mb-3">About ({{allposts.count}}) results found</h2>
       {% for post in allposts %}
-      <div class="">
-        <div
-          class="row g-0 rounded overflow-hidden flex-md-row mb-4 h-md-250 position-relative shadow-lg border p-1 mb-3 bg-white rounded">
-          <div class="col p-4 d-flex flex-column position-static">
-            <strong class="d-inline-block mb-2 text-primary">{{ post.category }}</strong>
-            <h3 class="mb-0">{{ post.title}}</h3>
-            <div class="mb-1 text-muted">{{ post.timestamp }}</div>
-            <p class="card-text mb-auto">{{ post.content |safe|escape| truncatechars:300}}</p>
-            <a href="/blog/{{post.slug}}/" class="stretched-link">Continue reading</a>
+      <div
+        class="row no-gutters border rounded overflow-hidden flex-md-row  shadow-sm h-md-250 my-4 position-relative bg-black2 p-1 mx-auto ps-3">
+        <div class="col d-flex flex-column position-static col-10 p-2">
+          <strong class="d-inline-block mb-2 text-primary">{{post.category}}</strong>
+          <h3 class="mb-0"><a href="/blog/{{post.slug}}" class="text-decoration-none text-light">{{ post.title }}</a>
+          </h3>
+          <div class="mb-1 text-muted">{{post.timestamp}}</div>
+          <div class="card-text mb-3  overflow-hidden">
+            <p class="previews text-muted text-justify overflow-hidden">{{post.content|escape|safe|truncatewords:50}}
+            </p>
           </div>
-          <div class="col-auto d-none d-lg-block">
-            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img"
-              aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
-                dy=".3em">Thumbnail</text>
-            </svg>
+          <div class="col-12">
+            <a href="/blog/{{post.slug}}" role="button" class="btn btn-primary">Continue reading</a>
           </div>
+        </div>
+        <div class="col-auto d-none d-lg-block col-2 p-0 m-0">
+          <img src="https://source.unsplash.com/400x700/?{{post.title}}" alt="Thumbnail" height="250"
+            style="width:100%; max-height: 100%">
         </div>
       </div>
       {% endfor %}
       {% endif %}
-    </div>
   </div>
 </main>
+
 {% endblock body %}

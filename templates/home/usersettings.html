@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}{{request.user}}({{user.first_name}} {{user.last_name}}){% endblock title %}
 {% block css %}
+
 <style>
   @media screen and (max-width:1000px) {
     .divider {
@@ -12,17 +14,19 @@
   input[type="file"] {
     display: none;
   }
-  .popup{
+
+  .popup {
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .popup img {
-  width: 100%;
-  height: auto;
 
-  border-radius: 50%;
-}
+  .popup img {
+    width: 100%;
+    height: auto;
+
+    border-radius: 50%;
+  }
 
   /*End style*/
 </style>
@@ -33,7 +37,7 @@
 {% if user.username == profile.user.username %}
 <main class="bg-black0 text-light row mx-0 py-3">
   <div class="divider" style="width:20px"></div>
-  <div class="card px-4 mt-4 bg-black0 col col-lg-3">
+  <div class="col px-4 mt-4 bg-black0 col col-lg-3">
     <div class="col">
       <div class="bg-black0 row ">
         <div class="popup col-2 col-lg-12 col-sm-2 p-0 ">
@@ -44,15 +48,15 @@
           <img src="{% static 'logo/Plogo.png' %}" class="" alt="...">
           {% endif %}
         </div>
-        <div class="card bg-black0 text-muted col col-10 col-lg-12 p-2 px-3 col-sm-10">
+        <div class="col bg-black0 text-muted col col-10 col-lg-12 p-2 px-3 col-sm-10">
           <h3 class="text-light">{{user.first_name}} {{user.last_name}}</h3>
           <h4>{{user.username}}</h4>
         </div>
-        <button type="button" class="btn btn-outline-dark my-1 bg-black2 text-light" id="edit-details">Edit Details <i
-            class="fas fa-pencil-alt"></i></button>
       </div>
-      <div class="card bg-black0 text-muted " id="user-details">
+      <div class="col bg-black0 text-muted " id="user-details">
         <h6 class="mt-3">{{profile.bio}}</h6>
+        <button type="button" class="btn btn-outline-dark my-1 col-lg-12 bg-black2 text-light my-3"
+          id="edit-details">Edit Details <i class="fas fa-pencil-alt"></i></button>
 
         <h6><i class="fa fa-building" aria-hidden="true"></i> {{profile.organisation}}</h6>
         <h6><i class="fas fa-map-marker-alt"></i> {{profile.country}}</h6>
@@ -111,7 +115,8 @@
                 <h5> Are You sure that want to Remove this Picture</h5>
 
                 <p>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This will permanently deletes your Picture and you will not be able to retrive it back...!
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This will permanently deletes your Picture and you will not be
+                  able to retrive it back...!
                 </p>
                 <hr class="">
               </div>

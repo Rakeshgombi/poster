@@ -125,7 +125,7 @@ def editPost(request, slug, owner):
                 return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
         return render(request, "blog/editPost.html", context)
     else:
-        messages.warning(request, 'Sorry, Username already taken')
+        messages.warning(request, 'You are not authorised to visit this page')
         return redirect('/')
 
 

@@ -37,12 +37,14 @@
     display: none;
   }
 
-  .popup img {
-  width: 100%;
-  height: auto;
 
-  border-radius: 50%;
-}
+  .popup img {
+    width: 60%;
+    height: auto;
+    margin: auto;
+    display: block;
+    border-radius: 50%;
+  }
 </style>
 {% endblock css %}
 
@@ -70,14 +72,14 @@
         <div class="position-sticky" style="top: 2rem;">
           <h4 class="fst-italic">About the Author</h4>
           <div class="p-3 bg-black1 border rounded shadow popup">
-            <h4 class="fst-italic">{{author.first_name}} {{author.last_name}}</h4>
-            {% if profile.display_pic %}
-            <img src="{{ profile.display_pic.url}}" width="200" height="200">
-  
+            <h4 class="fst-italic mb-3">{{author.first_name}} {{author.last_name}}</h4>
+            {% if author.profile.display_pic %}
+            <img src="{{ author.profile.display_pic.url}}" width="400" height="400">
+
             {% else %}
-            <img src="{% static 'logo/Plogo.png' %}" class="" width="200" height="200">
+            <img src="{% static 'logo/favicon.png' %}" class="" alt="...">
             {% endif %}
-            <p class="mb-0">{{author.profile.bio}}</p>
+            <p class="mb-0 mt-3">{{author.profile.bio}}</p>
             <p class="mb-0">{{author.profile.country}}</p>
             <p class="mb-0">{{author.profile.organisation}}</p>
             <div class="">
@@ -213,7 +215,7 @@
   })
 
   {% for comment in comments %}
-  
+
   let makeReply{{ comment.id }} = document.querySelector("#make-reply{{ comment.id }}")
   let replyForm{{ comment.id }} = document.querySelector("#reply-form{{ comment.id }}")
   let hideReply{{ comment.id }} = document.querySelector("#hide-reply{{ comment.id }}")
@@ -222,27 +224,27 @@
   let replyBox{{ comment.id }} = document.querySelector("#reply-box{{ comment.id }}")
   let hideReplies{{ comment.id }} = document.querySelector("#hide-replies{{ comment.id }}")
 
-  replyForm{{comment.id }}.style.display = 'none'
-  makeReply{{comment.id }}.addEventListener('click', function () {
-    replyForm{{comment.id }}.style.display = 'block'
-    replyForm{{comment.id }}.classList.add("card")
-    makeReply{{comment.id }}.setAttribute('disabled', "")
+  replyForm{ { comment.id } }.style.display = 'none'
+  makeReply{ { comment.id } }.addEventListener('click', function () {
+    replyForm{ { comment.id } }.style.display = 'block'
+    replyForm{ { comment.id } }.classList.add("card")
+    makeReply{ { comment.id } }.setAttribute('disabled', "")
   })
 
-  hideReply{{comment.id }}.addEventListener('click', function () {
-    makeReply{{comment.id }}.removeAttribute('disabled');
-    replyForm{{comment.id }}.style.display = 'none'
+  hideReply{ { comment.id } }.addEventListener('click', function () {
+    makeReply{ { comment.id } }.removeAttribute('disabled');
+    replyForm{ { comment.id } }.style.display = 'none'
   })
 
-  replyBox{{comment.id }}.style.display = "none"
-  showReply{{comment.id }}.addEventListener('click', function () {
-    replyBox{{comment.id }}.style.display = 'block'
-    showReply{{comment.id }}.setAttribute('disabled', "")
+  replyBox{ { comment.id } }.style.display = "none"
+  showReply{ { comment.id } }.addEventListener('click', function () {
+    replyBox{ { comment.id } }.style.display = 'block'
+    showReply{ { comment.id } }.setAttribute('disabled', "")
   })
 
-  hideReplies{{comment.id }}.addEventListener('click', function () {
-    replyBox{{comment.id }}.style.display = 'none'
-    showReply{{comment.id }}.removeAttribute('disabled');
+  hideReplies{ { comment.id } }.addEventListener('click', function () {
+    replyBox{ { comment.id } }.style.display = 'none'
+    showReply{ { comment.id } }.removeAttribute('disabled');
   })
   {% endfor %}
 </script>

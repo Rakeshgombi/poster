@@ -4,6 +4,10 @@
 {% block homeactive %}active{% endblock homeactive %}
 {% block css %}
 <style>
+  * {
+    scroll-behavior: smooth;
+  }
+
   .land-bg {
     display: flex;
     justify-content: center;
@@ -88,16 +92,18 @@
   <div class="content">
     <h1>Poster</h1>
     <p>Find the blogs that are best in contents</p>
+    <a href="#blogs" class="btn btn-outline-success">Exploare</a>
   </div>
 </div>
 
-<section class="bg-black0 text-light py-5">
+<section class="bg-black0 text-light py-5" id="blogs">
 
   <div class="container">
     <h2>Popular Blogs</h2>
     {% for post in allPosts %}
     <div
-      class="row no-gutters border rounded overflow-hidden flex-md-row  shadow-sm h-md-250 my-4 position-relative bg-black2 p-1 mx-auto ps-3" data-aos="fade-up">
+      class="row no-gutters border rounded overflow-hidden flex-md-row  shadow-sm h-md-250 my-4 position-relative bg-black2 p-1 mx-auto ps-3"
+      data-aos="fade-up">
       <div class="col d-flex flex-column position-static col-10 p-2">
         <strong class="d-inline-block mb-2 text-primary">{{post.category}}</strong>
         <h3 class="mb-0"><a href="/blog/{{post.slug}}" class="text-decoration-none text-light">{{ post.title }}</a></h3>
@@ -115,6 +121,11 @@
       </div>
     </div>
     {% endfor %}
+  </div>
+  <div class="container text-center">
+    {% if allPosts.count > 10 %}
+    <a href="/blog/" class="text-muted">Load More</a>
+    {% endif %}
   </div>
 </section>
 {% endblock body %}

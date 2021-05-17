@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% block title %}{{user.username}}({{user.first_name}} {{user.last_name}}){% endblock title %}
+{% load static %}
 {% block css %}
 <style>
   @media screen and (max-width:1000px) {
@@ -12,6 +14,19 @@
     display: none;
   }
 
+  .popup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .popup img {
+    width: 100%;
+    height: auto;
+
+    border-radius: 50%;
+  }
+
   /*End style*/
 </style>
 {% endblock css %}
@@ -19,19 +34,23 @@
 {% block body %}
 <main class="bg-black0 text-light row mx-0 py-5">
   <div class="divider" style="width:20px"></div>
-  <div class="card px-4 mt-4 bg-black0 col col-lg-3">
+  <div class="col px-4 mt-4 bg-black0 col col-lg-3">
     <div class="" id="user-details">
       <div class="bg-black0 row ">
         <div class="popup col-2 col-lg-12 col-sm-2  p-0">
-          <img src="https://lh3.google.com/u/0/ogw/ADGmqu92Jkl5zBtlU00IfuWMO6dUSC8DTy23M9QfJR16=s83-c-mo"
-            class="rounded-circle w-100 mx-auto mt-2" alt="...">
+          {% if profile.display_pic %}
+          {% comment %} <img src="{{ profile.display_pic.url}}" width="400" height="400"> {% endcomment %}
+          <img src="{% static 'logo/favicon.png' %}" class="" alt="...">
+
+          {% else %}
+          {% endif %}
         </div>
-        <div class="card bg-black0 text-muted col col-10 col-lg-12 p-2 px-3 col-sm-10">
+        <div class="col bg-black0 text-muted col col-10 col-lg-12 p-2 px-3 col-sm-10">
           <h3 class="text-light">{{user.first_name}} {{user.last_name}}</h3>
           <h4>{{user.username}}</h4>
         </div>
       </div>
-      <div class="card bg-black0 text-muted ">
+      <div class="col bg-black0 text-muted ">
         <h6 class="mt-3">{{profile.bio}}</h6>
         <h6><i class="fa fa-building" aria-hidden="true"></i> {{profile.organisation}}</h6>
         <h6><i class="fas fa-map-marker-alt"></i> {{profile.country}}</h6>
@@ -48,7 +67,7 @@
           {% if profile.instagram %}
           <li class="nav-item text-truncate mb-1"><a href="{{profile.instagram}}" target="_blank"
               class="text-muted text-decoration-none"><i class="fab fa-instagram"></i> {{profile.instagram}}</a></li>
-              {% endif %}
+          {% endif %}
           {% if profile.github %}
           <li class="nav-item text-truncate mb-1"><a href="{{profile.github}}" target="_blank"
               class="text-muted text-decoration-none"><i class="fab fa-github"></i> {{profile.github}}</a></li>
@@ -70,7 +89,7 @@
   </div>
   <div class="container mt-5 col-lg-8">
     <h2 class="">Your Posts</h2>
-  {% if allPosts.count > 0 %}
+    {% if allPosts.count > 0 %}
     {% for post in allPosts %}
     <div
       class="row no-gutters border-top  overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-2 position-relative  bg-black0 text-light p-1 col-lg-12 mx-auto">
@@ -86,8 +105,8 @@
   </div>
   {% else %}
   <h3>No Posts Yet</h3>
-  
-  
+
+
   {% endif %}
 </main>
 
