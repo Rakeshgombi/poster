@@ -1,0 +1,18 @@
+touch .gitignore
+git config --global user.name "<your-name>"
+git config --global user.email "<your_email@example.com>"
+git init
+git add .
+git commit -m "Initial Commit"
+git status						// optional
+git remote add origin <ssh url.git>
+ssh-keygen -t ed25519 -C "<your_email@example.com>"
+cat <path id_rsa.pub> 					// Add this to your github account
+git push -u origin master
+
+
+// Once the repository is created only use
+
+git status
+git comment -m "<comment>"
+git push -u origin master

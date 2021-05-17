@@ -67,7 +67,7 @@ def userSettings(request, slug):
     if request.method == "POST":
         if request.FILES['display_pic']:
             profile.display_pic = request.FILES['display_pic']
-            fs = FileSystemStorage(f'{request.user}')
+            fs = FileSystemStorage(f'/media/pic_folder/{request.user}')
             fs.save(profile.display_pic.name, profile.display_pic)
         if request.POST['first_name']:
             user.first_name = request.POST['first_name']
