@@ -38,11 +38,11 @@
     <div class="" id="user-details">
       <div class="bg-black0 row ">
         <div class="popup col-2 col-lg-12 col-sm-2  p-0">
-          {% if profile.display_pic %}
-          {% comment %} <img src="{{ profile.display_pic.url}}" width="400" height="400"> {% endcomment %}
-          <img src="{% static 'logo/favicon.png' %}" class="" alt="...">
+         {% if profile.display_pic %}
+          <img src="{{ profile.display_pic.url}}" width="400" height="400">
 
           {% else %}
+          <img src="{% static 'logo/favicon.png' %}" class="" alt="...">
           {% endif %}
         </div>
         <div class="col bg-black0 text-muted col col-10 col-lg-12 p-2 px-3 col-sm-10">
@@ -88,7 +88,7 @@
     </div>
   </div>
   <div class="container mt-5 col-lg-8">
-    <h2 class="">Your Posts</h2>
+    <h2 class="">Posts</h2>
     {% if allPosts.count > 0 %}
     {% for post in allPosts %}
     <div
@@ -114,22 +114,6 @@
 {% endblock body %}
 {% block script %}
 <script>
-  // $(function () {
-
-
-  //   "use strict";
-
-  //   $(".popup img").click(function () {
-  //     var $src = $(this).attr("src");
-  //     $(".show").fadeIn();
-  //     $(".img-show img").attr("src", $src);
-  //   });
-
-  //   $("span, .overlay").click(function () {
-  //     $(".show").fadeOut();
-  //   });
-
-  // });
 
 
   $("#edit-user-details").hide()

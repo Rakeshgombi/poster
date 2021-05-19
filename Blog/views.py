@@ -75,7 +75,7 @@ def blogPost(request, slug):
                     target="_blank">Click to view</a></p>
                 <p>Good luck! Have a nice day😊</p>
               </div>
-              <p style="text-align: center; color: rgb(93, 93, 93);">Thanks for blogging with poster</p>
+              <p style="text-align: center; color: rgb(93, 93, 93);">Thank you for blogging with poster</p>
             </div>
             '''
             msg = EmailMultiAlternatives(

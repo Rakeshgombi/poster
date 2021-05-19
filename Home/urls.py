@@ -12,10 +12,9 @@ urlpatterns = [
     path('about/', views.about, name="About"),
     path('contact/', views.contact, name="Contact"),
     path('search/', views.search, name="Search"),
-    path('usersettings/<str:slug>/', views.userSettings, name="userSettings"),
     path('deleteprofilepicture/', views.deleteProfilePicture, name="deleteProfilePicture"),
-    path('userprofile/<str:slug>/', views.userProfile, name="userProfile"),
     path('signup/', views.handleSignUp, name="SignUp"),
+    path('otp/', views.sendOtp, name="sendOtp"),
     path('login/', views.handleSignIn, name="SignIn"),
     path('logout/', views.handleLogout, name="SignIn"),
     path('password_reset/', auth_views.PasswordResetView.as_view(template_name='passwordReset/password_reset_form.html'), name='password_reset'),
@@ -25,4 +24,5 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='passwordReset/password_reset_confirm.html'), name='password_reset_confirm'),
 
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='passwordReset/password_reset_complete.html'), name='password_reset_complete'),
+    path('<str:slug>/', views.userSettings, name="userSettings"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

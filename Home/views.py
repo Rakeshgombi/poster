@@ -7,7 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
-import itertools 
+from django.core.mail import EmailMultiAlternatives
+import random
 # Create your views here.
 
 
@@ -30,7 +31,7 @@ def search(request):
         allPostsContent = Post.objects.filter(content__icontains=query)
         allPostsAuthor = Post.objects.filter(author__icontains=query)
         allPosts = allPostsTitle.union(allPostsAuthor, allPostsContent)
-    context = {'allposts': allPosts, 'query':query}
+    context = {'allposts': allPosts, 'query': query}
     return render(request, 'home/search.html', context)
 
 
@@ -45,18 +46,11 @@ def contact(request):
         else:
             contact = Contact(name=name, email=email,
                               phone=phone, content=content)
-            messages.warning(request, "Your query has been submitted successfully!")
+            messages.warning(
+                request, "Your query has been submitted successfully!")
             contact.save()
     return render(request, 'home/contact.html')
 
-
-def userProfile(request, slug):
-    username = get_object_or_404(User, username=slug)
-    user = User.objects.filter(username=username).first()
-    allPost = Post.objects.filter(author=username)
-    profile = Profile.objects.filter(user=user).first()
-    context = {"user": user, "profile": profile, "allPosts": allPost}
-    return render(request, 'home/userProfile.html', context)
 
 
 def userSettings(request, slug):
@@ -65,37 +59,41 @@ def userSettings(request, slug):
     allPost = Post.objects.filter(author=username)
     profile = Profile.objects.filter(user=user).first()
     context = {"user": user, "profile": profile, "allPosts": allPost}
-    if request.method == "POST":
-        if request.FILES['display_pic']:
-            profile.display_pic = request.FILES['display_pic']
-            fs = FileSystemStorage(f'/media/pic_folder/{request.user}')
-            fs.save(profile.display_pic.name, profile.display_pic)
-        if request.POST['first_name']:
-            user.first_name = request.POST['first_name']
-        if request.POST['last_name']:
-            user.last_name = request.POST['last_name']
-        if request.POST['organisaation']:
-            profile.organisaation = request.POST['organisaation']
-        if request.POST['country']:
-            profile.country = request.POST['country']
-        if request.POST['website']:
-            profile.website = request.POST['website']
-        if request.POST['facebook']:
-            profile.facebook = request.POST['facebook']
-        if request.POST['instagram']:
-            profile.instagram = request.POST['instagram']
-        if request.POST['github']:
-            profile.github = request.POST['github']
-        if request.POST['twitter']:
-            profile.twitter = request.POST['twitter']
-        if request.POST['bio']:
-            profile.bio = request.POST['bio']
-        profile.save()
-        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
-    if request.user.is_authenticated and request.user == username:
-        return render(request, 'home/usersettings.html', context)
+    if not(request.user.is_authenticated and request.user == username):
+        context['flag'] = True
+        return render(request, "home/userProfile.html", context)
     else:
-        return render(request, 'home/userProfile.html', context)
+        if request.method == "POST":
+            if request.FILES['display_pic']:
+                profile.display_pic = request.FILES['display_pic']
+                fs = FileSystemStorage(f'/media/pic_folder/{request.user}')
+                fs.save(profile.display_pic.name, profile.display_pic)
+            if request.POST['first_name']:
+                user.first_name = request.POST['first_name']
+            if request.POST['last_name']:
+                user.last_name = request.POST['last_name']
+            if request.POST['organisaation']:
+                profile.organisaation = request.POST['organisaation']
+            if request.POST['country']:
+                profile.country = request.POST['country']
+            if request.POST['website']:
+                profile.website = request.POST['website']
+            if request.POST['facebook']:
+                profile.facebook = request.POST['facebook']
+            if request.POST['instagram']:
+                profile.instagram = request.POST['instagram']
+            if request.POST['github']:
+                profile.github = request.POST['github']
+            if request.POST['twitter']:
+                profile.twitter = request.POST['twitter']
+            if request.POST['bio']:
+                profile.bio = request.POST['bio']
+            profile.save()
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+        return render(request, "home/userSettings.html", context)
+    
+
+        
 
 
 def deleteProfilePicture(request):
@@ -106,35 +104,78 @@ def deleteProfilePicture(request):
         print(profile.display_pic.delete())
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
+
+email = ""
+sentOtp = ""
+
+
+def sendOtp(request):
+    if request.method == "POST":
+        global email
+        email = request.POST.get('email', "")
+        global sentOtp
+        sentOtp = ""
+        for i in range(6):
+            sentOtp += str(random.randrange(0, 10))
+        print(sentOtp)
+
+        subject, from_email, to = f"Otp for your Blogging account at Poster", 'rakeshgombi18@gmail.com', f'{email}'
+        text_content = f'Your OTP for email verification at Poster is <strong>{sentOtp}'
+        html_content = f''' <div style="background: #eee; padding: 15px; margin: 0; display: inline-block; border-radius:10px ">
+                    <div class="container"
+                    style="padding: 10px; border-radius: 10px; background-color: rgb(255, 255, 255); display: inline-block; margin:0 auto">
+                    <h4>Hi There,</h4>
+                    <p>Your OTP for email verification at Poster is <strong>{sentOtp} </strong></p>
+                    <p>Good luck! Have a nice day😊</p>
+                    </div>
+                    <p style="text-align: center; color: rgb(93, 93, 93);">Thank you for blogging with poster</p>
+                    </div>'''
+        msg = EmailMultiAlternatives(
+            subject, text_content, from_email, [to])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+    return redirect("/")
+
+
 def handleSignUp(request):
     if request.method == "POST":
         fname = request.POST['fname']
         lname = request.POST['lname']
         username = request.POST['username']
-        email = request.POST['email']
+        global email
+        global sentOtp
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
-        if pass1 == pass2:
-            if len(pass1) < 8:
-                messages.warning(
-                    request, 'Sorry, Minimum length of the password must be 8')
-            elif not(username.isalnum()):
-                messages.warning(
-                    request, 'Sorry, useranme can only be combinations of alphabets and numbers')
-            elif User.objects.filter(username=username).exists():
-                messages.warning(request, 'Sorry, Username already taken')
-            elif User.objects.filter(email=email).exists():
-                messages.warning(
-                    request, 'Sorry, Account with the same email already exists')
+        otp = request.POST['otp']
+        if otp == sentOtp:
+            if pass1 == pass2:
+                if len(pass1) < 8:
+                    messages.warning(
+                        request, 'Sorry, Minimum length of the password must be 8')
+                elif not(username.isalnum()):
+                    messages.warning(
+                        request, 'Sorry, useranme can only be combinations of alphabets and numbers')
+                elif User.objects.filter(username=username).exists():
+                    messages.warning(request, 'Sorry, Username already taken')
+                elif User.objects.filter(email=email).exists():
+                    messages.warning(
+                        request, 'Sorry, Account with the same email already exists')
+                else:
+                    user = User.objects.create_user(
+                        first_name=fname, last_name=lname,  username=username, email=email, password=pass1)
+                    user = authenticate(username=username, password=pass1)
+                    if user is not None:
+                        login(request, user)
+                    user.save()
+                    profile = Profile(user=user)
+                    profile.save()
+                    messages.success(
+                        request, 'Congratulations😊 Account created Successfully!')
             else:
-                user = User.objects.create_user(
-                    first_name=fname, last_name=lname,  username=username, email=email, password=pass1)
-                user.save()
-                messages.success(
-                    request, 'Congratulations😊 Account created Successfully!')
+                messages.warning(
+                    request, 'Sorry😌, Passwords do not match! Try again')
         else:
-            messages.warning(
-                request, 'Sorry😌, Passwords do not match! Try again')
+            messages.warning(request, "OTP Does'nt match")
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
     else:
         return HttpResponse("404 Error")
@@ -159,4 +200,4 @@ def handleSignIn(request):
 def handleLogout(request):
     logout(request)
     messages.success(request, "Successfully logged out")
-    return redirect('/')
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))

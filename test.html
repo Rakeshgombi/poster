@@ -7,22 +7,18 @@
   <title>Simple Transactional Email</title>
 </head>
 
-<div style="background: #eee; padding: 15px; margin: 0; display: inline-block; ">
+<body>
 
-  <div class="container"
-    style="padding: 10px; border-radius: 10px; background-color: rgb(255, 255, 255); display: inline-block; margin:0 auto">
-    <h4>Hi {author.first_name} {author.last_name},</h4>
-    <p><strong>{request.POST['name']}</strong> has just now commeted <b>{request.POST['body']} </b> On your post
-      <strong>{post.title}</strong>
-    </p>
-    <p style="text-align: center;"><a href="http://127.0.0.1:8000/blog/61-Blog-Home/"
-        style="padding: 5px 10px; background: #ff7300; color: white; text-decoration: none; border-radius: 15px; display: inline-block; margin: 0 auto; text-align: center; font-size: large;"
-        target="_blank">Click to view</a></p>
-    <p>Good luck! Have a nice day😊</p>
+  <div style="background: #eee; padding: 15px; margin: 0; display: inline-block; border-radius:10px ">
+    <div class="container"
+      style="padding: 10px; border-radius: 10px; background-color: rgb(255, 255, 255); display: inline-block; margin:0 auto">
+      <h4>Hi There,</h4>
+      <p>Your OTP for email verification at Poster is <strong>{sentOtp} </strong></p>
+      <p>Good luck! Have a nice day😊</p>
+    </div>
+    <p style="text-align: center; color: rgb(93, 93, 93);">Thanks for blogging with poster</p>
   </div>
-  <p style="text-align: center; color: rgb(93, 93, 93);">Thanks for blogging with poster</p>
 
-</div>
-
+</body>
 
 </html>
