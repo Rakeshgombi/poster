@@ -9,11 +9,6 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-  <script src="https://cdn.tiny.cloud/1/11ddu8bq9gxdm71uo0x3fw08yg016jvgxcwpg1ch29mgzoq9/tinymce/5/tinymce.min.js"
-    referrerpolicy="origin"></script>
-  </script>
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-  <link rel="stylesheet" href="{% static 'prism/prism.css'%}" prism/prism.css" %}">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
     integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
     crossorigin="anonymous"></script>
@@ -217,15 +212,15 @@
                   <form class="form-signup needs-validation" method="POST" action="/signup/">{% csrf_token %}
                     <a class="navbar-brand logo d-flex mx-auto" href="/"> </a>
                     <h3 class="h3 mb-3 text-center font-weight-normal">Please sign up</h3>
-                    <div class="row">
+                    <div class="row mb-1 bg-dark">
                       <div class="col-md-6 mb-1">
                         <label for="fName">First name</label>
                         <input type="text" class="form-control input-sm" id="fname" placeholder="First Name"
                           name="fname" required="">
                       </div>
-                      <div class="col-md-6 mb-1">
+                      <div class="col-md-6 mb-1 ">
                         <label for="lname">Last name</label>
-                        <input type="text" class="form-control input-lg" id="lname" placeholder="Last Name" name="lname"
+                        <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname"
                           required="">
                       </div>
                     </div>
@@ -316,7 +311,6 @@
     </p>
 
   </footer>
-  <!-- Option 1: Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
     crossorigin="anonymous"></script>

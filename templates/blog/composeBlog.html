@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block composeactive %}active{% endblock composeactive %}
 {% block body %}
 
@@ -8,7 +9,9 @@
   <form action="#" method="POST"> {% csrf_token %}
     <div class="input-group mb-3">
       <label class="input-group-text  bg-black2 text-light border" for="inputGroupSelect01">Category</label>
-      <select class="form-select  bg-black2 text-light border" id="inputGroupSelect01" name="category" required>
+      <input type="text" name="category" list="category" required list="citynames"
+        class="form-select bg-black2 text-light border">
+      <datalist id="category" >
         <option selected value="" class="text-muted">Choose category...</option>
         <option value="Tech">Tech</option>
         <option value="Programming">Programming</option>
@@ -16,7 +19,7 @@
         <option value="Personal Experiences">Personal Experiences</option>
         <option value="Nature">Nature</option>
         <option value="Political">Political</option>
-        <!-- <option value="Fashion">Fashion</option>
+        <option value="Fashion">Fashion</option>
         <option value="Food">Food</option>
         <option value="Travel">Travel</option>
         <option value="Music">Music</option>
@@ -46,16 +49,17 @@
         <option value="Debates">Debates</option>
         <option value="Myth vs. Facts">Myth vs. Facts</option>
         <option value="Cheatsheats">Cheatsheats</option>
-        <option value="Quotes">Quotes</option> -->
-      </select>
-    </div>
+        <option value="Quotes">Quotes</option>
+      </datalist>
 
+    </div>
 
     <div class="input-group mb-3">
       <input type="text" class="form-control   bg-black2 text-light border" placeholder="Enter the Title"
         aria-label="Recipient's username" aria-describedby="basic-addon2" name="title" required>
       <span class="input-group-text   bg-black2 text-light border" id="basic-addon2">Title</span>
     </div>
+
     <input type="hidden" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="author"
       value="{{request.user}}">
 
@@ -81,147 +85,8 @@
 
 {% endblock body %}
 {% block script %}
+<script src="https://cdn.tiny.cloud/1/11ddu8bq9gxdm71uo0x3fw08yg016jvgxcwpg1ch29mgzoq9/tinymce/5/tinymce.min.js"
+  referrerpolicy="origin"></script>
 
-<script type="text/javascript">
-  tinymce.init({
-    selector: 'textarea#default',
-    width: 5000,
-    height: 280,
-
-    plugins: 'codesample',
-    // Custom dimensions
-    codesample_dialog_height: 400,
-    codesample_dialog_width: 600,
-    codesample_languages: [
-      { text: 'HTML/XML', value: 'markup' },
-      { text: "XML", value: "xml" },
-      { text: "HTML", value: "html" },
-      { text: "mathml", value: "mathml" },
-      { text: "SVG", value: "svg" },
-      { text: "CSS", value: "css" },
-      { text: "Clike", value: "clike" },
-      { text: "Javascript", value: "javascript" },
-      { text: "ActionScript", value: "actionscript" },
-      { text: "apacheconf", value: "apacheconf" },
-      { text: "apl", value: "apl" },
-      { text: "applescript", value: "applescript" },
-      { text: "asciidoc", value: "asciidoc" },
-      { text: "aspnet", value: "aspnet" },
-      { text: "autoit", value: "autoit" },
-      { text: "autohotkey", value: "autohotkey" },
-      { text: "bash", value: "bash" },
-      { text: "basic", value: "basic" },
-      { text: "batch", value: "batch" },
-      { text: "c", value: "c" },
-      { text: "brainfuck", value: "brainfuck" },
-      { text: "bro", value: "bro" },
-      { text: "bison", value: "bison" },
-      { text: "C#", value: "csharp" },
-      { text: "C++", value: "cpp" },
-      { text: "CoffeeScript", value: "coffeescript" },
-      { text: "ruby", value: "ruby" },
-      { text: "d", value: "d" },
-      { text: "dart", value: "dart" },
-      { text: "diff", value: "diff" },
-      { text: "docker", value: "docker" },
-      { text: "eiffel", value: "eiffel" },
-      { text: "elixir", value: "elixir" },
-      { text: "erlang", value: "erlang" },
-      { text: "fsharp", value: "fsharp" },
-      { text: "fortran", value: "fortran" },
-      { text: "git", value: "git" },
-      { text: "glsl", value: "glsl" },
-      { text: "go", value: "go" },
-      { text: "groovy", value: "groovy" },
-      { text: "haml", value: "haml" },
-      { text: "handlebars", value: "handlebars" },
-      { text: "haskell", value: "haskell" },
-      { text: "haxe", value: "haxe" },
-      { text: "http", value: "http" },
-      { text: "icon", value: "icon" },
-      { text: "inform7", value: "inform7" },
-      { text: "ini", value: "ini" },
-      { text: "j", value: "j" },
-      { text: "jade", value: "jade" },
-      { text: "java", value: "java" },
-      { text: "JSON", value: "json" },
-      { text: "jsonp", value: "jsonp" },
-      { text: "julia", value: "julia" },
-      { text: "keyman", value: "keyman" },
-      { text: "kotlin", value: "kotlin" },
-      { text: "latex", value: "latex" },
-      { text: "less", value: "less" },
-      { text: "lolcode", value: "lolcode" },
-      { text: "lua", value: "lua" },
-      { text: "makefile", value: "makefile" },
-      { text: "markdown", value: "markdown" },
-      { text: "matlab", value: "matlab" },
-      { text: "mel", value: "mel" },
-      { text: "mizar", value: "mizar" },
-      { text: "monkey", value: "monkey" },
-      { text: "nasm", value: "nasm" },
-      { text: "nginx", value: "nginx" },
-      { text: "nim", value: "nim" },
-      { text: "nix", value: "nix" },
-      { text: "nsis", value: "nsis" },
-      { text: "objectivec", value: "objectivec" },
-      { text: "ocaml", value: "ocaml" },
-      { text: "oz", value: "oz" },
-      { text: "parigp", value: "parigp" },
-      { text: "parser", value: "parser" },
-      { text: "pascal", value: "pascal" },
-      { text: "perl", value: "perl" },
-      { text: "PHP", value: "php" },
-      { text: "processing", value: "processing" },
-      { text: "prolog", value: "prolog" },
-      { text: "protobuf", value: "protobuf" },
-      { text: "puppet", value: "puppet" },
-      { text: "pure", value: "pure" },
-      { text: "python", value: "python" },
-      { text: "q", value: "q" },
-      { text: "qore", value: "qore" },
-      { text: "r", value: "r" },
-      { text: "jsx", value: "jsx" },
-      { text: "rest", value: "rest" },
-      { text: "rip", value: "rip" },
-      { text: "roboconf", value: "roboconf" },
-      { text: "crystal", value: "crystal" },
-      { text: "rust", value: "rust" },
-      { text: "sas", value: "sas" },
-      { text: "sass", value: "sass" },
-      { text: "scss", value: "scss" },
-      { text: "scala", value: "scala" },
-      { text: "scheme", value: "scheme" },
-      { text: "smalltalk", value: "smalltalk" },
-      { text: "smarty", value: "smarty" },
-      { text: "SQL", value: "sql" },
-      { text: "stylus", value: "stylus" },
-      { text: "swift", value: "swift" },
-      { text: "tcl", value: "tcl" },
-      { text: "textile", value: "textile" },
-      { text: "twig", value: "twig" },
-      { text: "TypeScript", value: "typescript" },
-      { text: "verilog", value: "verilog" },
-      { text: "vhdl", value: "vhdl" },
-      { text: "wiki", value: "wiki" },
-      { text: "YAML", value: "yaml" }
-    ],
-    toolbar: 'codesample',
-    // Custom CSS file
-    codesample_content_css: "http://ourcodeworld.com/material/css/prism.css",
-    plugins: [
-      'advlist autolink link image codesample lists charmap print preview hr anchor pagebreak',
-      'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
-      'table emoticons template paste help'
-    ],
-    toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
-      'bullist numlist outdent indent | link codesample image | print preview media fullpage | ' +
-      'forecolor backcolor emoticons | help',
-    menu: {
-      favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
-    },
-    menubar: 'favs file edit view insert format tools table help',
-  });
-
-</script>
+<script src="{% static 'scripts/composeBlog.js' %}" type="text/javascript"></script>
 {% endblock script %}

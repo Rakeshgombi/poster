@@ -1,46 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block blogactive %}active{% endblock blogactive %}
-<title>{% block title %}Poster | All Posts{% endblock title %}</title>
+
+
+{% block title %}Poster | All Posts{% endblock title %}
+
 {% block css %}
-<style>
-  .crayon {
-    background: #ebebeb;
-  }
-   .previews::-webkit-scrollbar, pre[class*="language-"]::-webkit-scrollbar {
-    display: none;
-  }
-</style>
+<link rel="stylesheet" href="{% static 'style/home.css' %}">
+<link rel="stylesheet" href="{% static 'aos/aos.css' %}">
 {% endblock css %}
-{% block script %}
-<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script>
-  let previews = document.getElementsByClassName('previews');
-  Array.from(previews).forEach((element) => {
-    element.innerHTML = element.innerText;
-  })
- AOS.init({
-    // Global settings:
-    disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
-    startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
-    initClassName: 'aos-init', // class applied after initialization
-    animatedClassName: 'aos-animate', // class applied on animation
-    useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
-    disableMutationObserver: false, // disables automatic mutations' detections (advanced)
-    debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
-    throttleDelay: 10, // the delay on throttle used while scrolling the page (advanced)
 
-    // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
-    offset: 120, // offset (in px) from the original trigger point
-    delay: 0, // values from 0 to 3000, with step 50ms
-    duration: 400, // values from 0 to 3000, with step 50ms
-    easing: 'ease', // default easing for AOS animations
-    once: false, // whether animation should happen only once - while scrolling down
-    mirror: false, // whether elements should animate out while scrolling past them
-    anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
-
-  });
-</script>
-{% endblock script %}
 {% block body %}
 <main class="bg-black0  text-light py-5">
   <div class="container">
@@ -53,7 +22,8 @@
         <h3 class="mb-0"><a href="/blog/{{post.slug}}" class="text-decoration-none text-light">{{ post.title }}</a></h3>
         <div class="mb-1 text-muted">{{post.timestamp}}</div>
         <div class="card-text mb-3  overflow-hidden" >
-          <p class="previews text-muted text-justify overflow-hidden">{{post.content|escape|safe|truncatewords:50}}</p>
+           <p class="previews text-muted text-justify overflow-hidden" style="
+          max-block-size: 75px;">{{post.content|escape|safe|truncatewords:50}}</p>
         </div>
         <div class="col-12">
           <a href="/blog/{{post.slug}}" role="button" class="btn btn-primary">Continue reading</a>
@@ -67,3 +37,8 @@
   </div>
 </main>
 {% endblock body %}
+
+{% block script %}
+
+<script src="{% static 'scripts/home.js' %}"></script>
+{% endblock script %}

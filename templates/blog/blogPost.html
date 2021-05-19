@@ -1,60 +1,22 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+
 {% load static %}
 {% load humanize %}
+
 {% block title %}Poster | {{ post.title }}{% endblock title %}
 
 {% block css %}
-<style>
-  .crayon {
-    background: #ebebeb;
-  }
-
-  main form .form-control,
-  form textarea {
-    background-color: #161b22 !important;
-    color: #fff !important;
-    border: 1px solid #807f7f !important;
-  }
-
-  .control-img img,
-  .resource__image__img,
-  .lazyloaded {
-    max-width: 99% !important;
-    height: auto !important;
-    border: 2px solid rgb(63, 63, 63);
-    margin: 2rem 0;
-  }
-
-  .control-img div {
-    /* white-space: nowrap; */
-    text-align: justify;
-    color: #c9d1d9 !important;
-    font-size: 16px !important;
-  }
-
-  pre[class*="language-"]::-webkit-scrollbar {
-    display: none;
-  }
-
-
-  .popup img {
-    width: 60%;
-    height: auto;
-    margin: auto;
-    display: block;
-    border-radius: 50%;
-  }
-</style>
+<link rel="stylesheet" href="{% static 'style/blogPost.css'%}">
+<link rel="stylesheet" href="{% static 'prism/prism.css'%}">
 {% endblock css %}
 
 {% block body %}
-
 <main class="bg-black0 text-light">
   <div class="container py-5 mx-auto">
     <div class="row g-5">
-      <div class="col-md-9 border shadow-lg rounded py-4">
-        <article class="blog-post">
+      <div class="col-md-9  border shadow-lg rounded py-4">
+        <article class="blog-post control-img">
           <h2 class="fst-italic ">{{post.title}}</h2>
           <p class=" blog-post-meta">{{post.timestamp}} by <span class="text-muted">{{ post.author }} ({{post.views}}
               views so far</span>)</p>
@@ -111,13 +73,11 @@
               </p>
             </div>
           </div>
-
         </div>
-
       </div>
 
-      <div class="col-md-9 card mb-4 bg-black1 text-light border shadow-sm mt-3 ">
-        <div class="card-body">
+      <div class="sol-lg-9 col-md-9 sol-sm-11 card mb-4 bg-black1 text-light border shadow-sm mt-3 ">
+        <div class="col py-4">
           <!-- comments -->
           <h2>{{ comments.count }} comments</h2>
           <button type="button" class="btn btn-primary btn-sm" id="comment">Comment</button>
@@ -131,12 +91,10 @@
                 <button type="button" class="btn btn-outline-primary btn-sm mt-3" id="hideComment">cancel</button>
               </form>
             </div>
-
           </div>
 
-
           {% for comment in comments %}
-          <div class="comments border mt-2 bg-black2 text-light" style="padding: 10px;">
+          <div class="comments border mt-2 rounded bg-black2 text-light" style="padding: 10px;">
             <p class="font-weight-bold">
               {{ comment.name }}
               <span class=" text-muted font-weight-normal">
@@ -148,10 +106,16 @@
             </p>
 
             <button type="button" class="btn btn-link text-light btn-sm" id="make-reply{{ comment.id }}">Reply</button>
-            {% if comment.replies.count >= 1 %}
+            {% if comment.replies.count > 0 %}
+            {% if comment.replies.count == 1 %}
+            <button type="button" class="btn btn-link text-light btn-sm " id="show-reply{{ comment.id }}"> Show
+              {{comment.replies.count}} Reply</button>
+            {% else %}
             <button type="button" class="btn btn-link text-light btn-sm " id="show-reply{{ comment.id }}"> Show
               {{comment.replies.count}} Replies</button>
             {% endif %}
+            {% endif %}
+
             <div class="col-md-9 my-4">
               <div class="card-body bg-black2 border" id="reply-form{{ comment.id }}">
                 <h5>Reply for this comment</h5>
@@ -168,14 +132,14 @@
             </div>
             <div class="container" id="reply-box{{ comment.id }}">
 
-              {% for replay in comment.replies.all %}
+              {% for reply in comment.replies.all %}
               <div class="col mb-3">
                 <p class="font-weight-bold mb-0">
-                  {{ replay.name }}<span class=" text-muted font-weight-normal">
-                    {{ replay.created_on|naturaltime }}
+                  {{ reply.name }}<span class=" text-muted font-weight-normal">
+                    {{ reply.created_on|naturaltime }}
                   </span>
                 </p>
-                {{ replay.body }}
+                {{ reply.body }}
               </div>
               {% empty %}
               {% endfor %}
@@ -196,6 +160,7 @@
 
 {% block script %}
 <script src="{% static 'prism/prism.js' %}"></script>
+
 <script>
   var commentBtn = document.querySelector("#comment")
   var commentForm = document.querySelector("#comment-form")
@@ -214,39 +179,42 @@
     commentBtn.removeAttribute('disabled');
   })
 
-  {% for comment in comments %}
 
+  {% for comment in comments %}
+  console.log(comment.id);
   let makeReply{{ comment.id }} = document.querySelector("#make-reply{{ comment.id }}")
   let replyForm{{ comment.id }} = document.querySelector("#reply-form{{ comment.id }}")
   let hideReply{{ comment.id }} = document.querySelector("#hide-reply{{ comment.id }}")
+  replyForm{{ comment.id }}.style.display = 'none'
+  makeReply{{ comment.id }}.addEventListener('click', function () {
+    replyForm{{ comment.id }}.style.display = 'block'
+    replyForm{{ comment.id }}.classList.add("card")
+    makeReply{{ comment.id }}.setAttribute('disabled', "")
+  })
 
+  hideReply{{ comment.id }}.addEventListener('click', function () {
+    makeReply{{ comment.id }}.removeAttribute('disabled');
+    replyForm{{ comment.id }}.style.display = 'none'
+  })
   let showReply{{ comment.id }} = document.querySelector("#show-reply{{ comment.id }}")
   let replyBox{{ comment.id }} = document.querySelector("#reply-box{{ comment.id }}")
   let hideReplies{{ comment.id }} = document.querySelector("#hide-replies{{ comment.id }}")
+  replyBox{{ comment.id }}.style.display = "none"
+  {% if comment.replies.count > 0 %}
 
-  replyForm{ { comment.id } }.style.display = 'none'
-  makeReply{ { comment.id } }.addEventListener('click', function () {
-    replyForm{ { comment.id } }.style.display = 'block'
-    replyForm{ { comment.id } }.classList.add("card")
-    makeReply{ { comment.id } }.setAttribute('disabled', "")
+
+  showReply{{ comment.id }}.addEventListener('click', function () {
+    replyBox{{ comment.id }}.style.display = 'block'
+    showReply{{ comment.id }}.setAttribute('disabled', "")
   })
 
-  hideReply{ { comment.id } }.addEventListener('click', function () {
-    makeReply{ { comment.id } }.removeAttribute('disabled');
-    replyForm{ { comment.id } }.style.display = 'none'
+  hideReplies{{ comment.id }}.addEventListener('click', function () {
+    replyBox{{ comment.id }}.style.display = 'none'
+    showReply{{ comment.id }}.removeAttribute('disabled');
   })
-
-  replyBox{ { comment.id } }.style.display = "none"
-  showReply{ { comment.id } }.addEventListener('click', function () {
-    replyBox{ { comment.id } }.style.display = 'block'
-    showReply{ { comment.id } }.setAttribute('disabled', "")
-  })
-
-  hideReplies{ { comment.id } }.addEventListener('click', function () {
-    replyBox{ { comment.id } }.style.display = 'none'
-    showReply{ { comment.id } }.removeAttribute('disabled');
-  })
+  {% endif %}
   {% endfor %}
+
 </script>
 
 

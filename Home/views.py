@@ -107,7 +107,6 @@ def deleteProfilePicture(request):
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 def handleSignUp(request):
-
     if request.method == "POST":
         fname = request.POST['fname']
         lname = request.POST['lname']

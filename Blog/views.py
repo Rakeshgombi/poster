@@ -5,9 +5,10 @@ from django.contrib.auth.models import User
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import dateformat
+from django.core.mail import EmailMultiAlternatives
 
 from Blog.models import Comment, Post
-
+import os
 from .forms import CommentForm
 
 # Create your views here.
@@ -59,6 +60,28 @@ def blogPost(request, slug):
             # assign ship to the comment
             new_comment.post = post
             # save
+            subject, from_email, to = f"New comment on your post {post.title}", 'rakeshgombi18@gmail.com', f'{author.email}'
+            text_content = 'This is an important message.'
+            html_content = f'''
+             <div style="background: #eee; padding: 15px; margin: 0; display: inline-block; border-radius:10px ">
+              <div class="container"
+                style="padding: 10px; border-radius: 10px; background-color: rgb(255, 255, 255); display: inline-block; margin:0 auto">
+                <h4>Hi {author.first_name} {author.last_name},</h4>
+                <p><strong>{request.POST['name']}</strong> has just now commeted as <b>{request.POST['body']} </b> On your post
+                  <strong>{post.title}</strong>
+                </p>
+                <p style="text-align: center;"><a href="http://127.0.0.1:8000/blog/61-Blog-Home/"
+                    style="padding: 5px 10px; background: #ff7300; color: white; text-decoration: none; border-radius: 15px; display: inline-block; margin: 0 auto; text-align: center; font-size: large;"
+                    target="_blank">Click to view</a></p>
+                <p>Good luck! Have a nice day😊</p>
+              </div>
+              <p style="text-align: center; color: rgb(93, 93, 93);">Thanks for blogging with poster</p>
+            </div>
+            '''
+            msg = EmailMultiAlternatives(
+                subject, text_content, from_email, [to])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
             new_comment.save()
             return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
     else:
@@ -91,7 +114,8 @@ def composeBlog(request):
             post.slug = str(post.sno) + "-" + title.replace(" ", "-")
             post.save()
         else:
-            messages.info(request, "The content of the blog was Very less to post a blog")
+            messages.info(
+                request, "The content of the blog was Very less to post a blog")
 
     return render(request, 'blog/composeBlog.html')
 
@@ -121,7 +145,8 @@ def editPost(request, slug, owner):
                 post.save()
                 return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
             else:
-                messages.info(request, "The content of the blog was Very less to post a blog")
+                messages.info(
+                    request, "The content of the blog was Very less to post a blog")
                 return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
         return render(request, "blog/editPost.html", context)
     else:

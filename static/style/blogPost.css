@@ -1,0 +1,42 @@
+.crayon {
+  background: #ebebeb;
+}
+
+main form .form-control,
+form textarea {
+  background-color: #161b22 !important;
+  color: #fff !important;
+  border: 1px solid #807f7f !important;
+}
+
+.control-img img,
+.lazyloaded {
+  max-width: 99% !important;
+  height: auto !important;
+  border: 2px solid rgb(63, 63, 63);
+  margin: 2rem 0;
+}
+
+.control-img div {
+  /* white-space: nowrap; */
+  text-align: justify;
+  color: #c9d1d9 !important;
+  font-size: 16px !important;
+}
+
+pre[class*="language-"]::-webkit-scrollbar {
+  display: none;
+}
+pre, code {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+
+.popup img {
+  width: 60%;
+  height: auto;
+  margin: auto;
+  display: block;
+  border-radius: 50%;
+}
