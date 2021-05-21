@@ -52,48 +52,41 @@ def contact(request):
     return render(request, 'home/contact.html')
 
 
-
 def userSettings(request, slug):
     username = get_object_or_404(User, username=slug)
     user = User.objects.filter(username=username).first()
     allPost = Post.objects.filter(author=username)
     profile = Profile.objects.filter(user=user).first()
+    print(user)
     context = {"user": user, "profile": profile, "allPosts": allPost}
     if not(request.user.is_authenticated and request.user == username):
-        context['flag'] = True
         return render(request, "home/userProfile.html", context)
     else:
         if request.method == "POST":
-            if request.FILES['display_pic']:
+            dp = profile.display_pic
+            try:
+                print(request.FILES['display_pic'])
                 profile.display_pic = request.FILES['display_pic']
-                fs = FileSystemStorage(f'/media/pic_folder/{request.user}')
+                fs = FileSystemStorage(f'/media/pic_folder')
                 fs.save(profile.display_pic.name, profile.display_pic)
-            if request.POST['first_name']:
-                user.first_name = request.POST['first_name']
-            if request.POST['last_name']:
-                user.last_name = request.POST['last_name']
-            if request.POST['organisaation']:
-                profile.organisaation = request.POST['organisaation']
-            if request.POST['country']:
-                profile.country = request.POST['country']
-            if request.POST['website']:
-                profile.website = request.POST['website']
-            if request.POST['facebook']:
-                profile.facebook = request.POST['facebook']
-            if request.POST['instagram']:
-                profile.instagram = request.POST['instagram']
-            if request.POST['github']:
-                profile.github = request.POST['github']
-            if request.POST['twitter']:
-                profile.twitter = request.POST['twitter']
-            if request.POST['bio']:
-                profile.bio = request.POST['bio']
+            except Exception as e:
+                print(e)
+                profile.display_pic = dp 
+            user.first_name = request.POST.get('first_name' '')
+            user.last_name = request.POST.get('last_name' '')
+            profile.organisation = request.POST.get('organisation' '')
+            profile.country = request.POST.get('country' '')
+            profile.website = request.POST.get('website' '')
+            profile.facebook = request.POST.get('facebook' '')
+            profile.instagram = request.POST.get('instagram' '')
+            profile.github = request.POST.get('github' '')
+            profile.twitter = request.POST.get('twitter' '')
+            profile.bio = request.POST.get('bio' '')
             profile.save()
+            user.save()
+            print(request.POST.get('country', ''))
             return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
         return render(request, "home/userSettings.html", context)
-    
-
-        
 
 
 def deleteProfilePicture(request):

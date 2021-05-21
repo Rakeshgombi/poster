@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% load static %}
 {% load humanize %}
 
 {% block title %}Poster | {{ post.title }}{% endblock title %}
 
+{% load static %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'style/blogPost.css'%}">
 <link rel="stylesheet" href="{% static 'prism/prism.css'%}">
