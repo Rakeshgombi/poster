@@ -1,24 +1,29 @@
-<!doctype html>
 <html>
-
-<head>
-  <meta name="viewport" content="width=device-width">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Simple Transactional Email</title>
-</head>
-
 <body>
 
-  <div style="background: #eee; padding: 15px; margin: 0; display: inline-block; border-radius:10px ">
-    <div class="container"
-      style="padding: 10px; border-radius: 10px; background-color: rgb(255, 255, 255); display: inline-block; margin:0 auto">
-      <h4>Hi There,</h4>
-      <p>Your OTP for email verification at Poster is <strong>{sentOtp} </strong></p>
-      <p>Good luck! Have a nice day😊</p>
-    </div>
-    <p style="text-align: center; color: rgb(93, 93, 93);">Thanks for blogging with poster</p>
-  </div>
+
+<script type="text/javascript">
+function getPhoto() {
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myArr = JSON.parse(this.responseText);
+        try { 
+            profilePic = myArr["feed"]["entry"][0]["media$group"]["media$thumbnail"][0]["url"]; 
+            document.getElementById("demo").innerHTML="<img src='" + profilePic + "' width='160px' height='160px'>"
+            }
+        catch(err) { }
+
+        }
+    }
+xmlhttp.open("GET", "https://picasaweb.google.com/data/feed/api/user/rakeshgombi18@gmail.com?kind=album&alt=json", true);
+xmlhttp.send();
+}
+
+</script>
+
+<div id="demo" onclick="javascript:getPhoto();">click here to load photo</div>
 
 </body>
-
 </html>

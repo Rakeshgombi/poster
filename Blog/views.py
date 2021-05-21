@@ -15,51 +15,37 @@ from .forms import CommentForm
 
 
 def blogHome(request):
-
     allPost = Post.objects.all()
     context = {"allPosts": allPost}
     return render(request, 'blog/blogHome.html', context)
 
 
 def blogPost(request, slug):
-    # get post object
     post = get_object_or_404(Post, slug=slug)
     post.views += 1
     post.save()
     author = User.objects.filter(username=post.author).first()
     print(author.email)
-    # list of active parent comments
     comments = post.comments.filter(active=True, parent__isnull=True)
     if request.method == 'POST':
-        # comment has been added
         comment_form = CommentForm(data=request.POST)
-
         if comment_form.is_valid():
             parent_obj = None
-            # get parent comment id from hidden input
             try:
-                # id integer e.g. 15
                 parent_id = int(request.POST.get('parent_id'))
             except:
                 parent_id = None
-            # if parent_id has been submitted get parent_obj id
             if parent_id:
                 parent_obj = Comment.objects.get(id=parent_id)
                 reply = post.comments.filter(
                     id=parent_id, active=True, parent__isnull=False)
                 print(reply)
-                # if parent object exist
                 if parent_obj:
-                    # create replay comment object
                     replay_comment = comment_form.save(commit=False)
-                    # assign parent_obj to replay comment
                     replay_comment.parent = parent_obj
-            # normal comment
-            # create comment object but do not save to database
             new_comment = comment_form.save(commit=False)
-            # assign ship to the comment
             new_comment.post = post
-            # save
+            messages.success(request, "Your Comment has been posted")
             subject, from_email, to = f"New comment on your post {post.title}", 'rakeshgombi18@gmail.com', f'{author.email}'
             text_content = 'This is an important message.'
             html_content = f'''

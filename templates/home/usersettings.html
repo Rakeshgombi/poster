@@ -202,12 +202,12 @@
     {% for post in allPosts %}
     <div
       class="row no-gutters rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-2 position-relative  bg-black0 text-light p-1 col-lg-12 mx-auto">
-      <div class="col p-2 d-flex flex-column position-static  text-light justify col-12 col-sm-10">
+      <div class="col p-2 d-flex flex-column position-static  text-light justify col-12 col-lg-9">
         <strong class="d-inline-block mb-2 text-primary">{{post.category}}</strong>
         <h5 class="mb-1"><a href="/blog/{{post.slug}}" class="text-link">{{ post.title }}</a></h5>
         <div class="mb-1 text-muted">{{post.timestamp}}</div>
       </div>
-      <div class="d-flex text-light justify col col-lg-2 d-flex justify-content-between align-items-center">
+      <div class="d-flex text-light justify col col-lg-3 d-flex justify-content-between align-items-center">
         <a href="/blog/{{request.user}}/editpost/{{post.slug}}/" role="button"
           class="text-light text-decoration-none "><i class="fas fa-edit"></i> Edit</a>
         <a role="button" class=" text-decorartion-none text-light text-decoration-none" data-bs-toggle="modal"
