@@ -39,12 +39,6 @@
   background: url("https://images.pexels.com/photos/1181330/pexels-photo-1181330.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")no-repeat center center/cover;
   /* opacity: 0.9; */
 }
-
-.crayon {
-  background: #FAFBFC;
-}
-
-
 section {
   width: 100%;
   margin: 0 auto;
@@ -54,7 +48,7 @@ section {
 }
 
 .row {
-  background: #FFF;
+  /* background: #FFF; */
   margin-bottom: 60px;
   display: flex;
   justify-content: center;

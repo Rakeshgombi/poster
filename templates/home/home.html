@@ -33,7 +33,7 @@
       class="row no-gutters border rounded overflow-hidden flex-md-row  shadow-sm h-md-250 my-4 position-relative bg-dark p-1 mx-auto ps-3"
       data-aos="fade-up">
       <div class="col d-flex flex-column position-static col-10 p-2">
-        <strong class="d-inline-block mb-2 text-link text-uppercase">{{post.category}}</strong>
+        <a href="/search/?csrfmiddlewaretoken=EoBDYq6h1yqGzmpOIFNi2mQYXTnJe8EJ7a94ZL0q5FwwvbMWgWmA5ofuXU9F4262&query={{post.category}}"><strong class="d-inline-block mb-2 text-link text-uppercase">{{post.category}}</strong>
         <h3 class="mb-0"><a href="/blog/{{post.slug}}" class="text-decoration-none text-light">{{ post.title }}</a></h3>
         <div class="mb-1 ">{{post.timestamp}}</div>
         <div class="card-text mb-3 control-img overflow-hidden">
@@ -45,8 +45,11 @@
         </div>
       </div>
       <div class="col-auto d-none d-lg-block col-2 p-0 m-0">
-        <img src="https://source.unsplash.com/400x700/?{{post.title}}" alt="Thumbnail" height="250"
-          style="width:100%; max-height: 100%">
+        {% if post.thumbnail %}
+        <img src="{{ post.thumbnail.url }}" alt="Thumbnail" height="250"style="width:100%; max-height: 250px">
+        {% else %}
+        <img src="https://source.unsplash.com/300x600/?{{ post.category }}" class="" alt="..." height="250"style="width:100%; max-height: 250px">
+        {% endif %}       
       </div>
     </div>
     {% endfor %}

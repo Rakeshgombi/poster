@@ -12,8 +12,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+
   <link rel="shortcut icon" href="{% static 'logo/favicon.png' %}" type="image/x-icon">
   <title>{% block title %}{% endblock title %}</title>
   {% block css %}{% endblock css %}
@@ -190,7 +191,10 @@
                 href="/blog/composeblog/"><i class="far fa-edit"></i> Compose Blog</a>
             </li>
             <li class="nav-item">
-              <input type="checkbox" name="change_theme" id="theme" onchange="mode()" checked>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked="">
+                <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+              </div>
             </li>
           </ul>
           <ul class="navbar-nav mb-2">
@@ -210,12 +214,14 @@
                   <i class="far fa-user"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg-end bg-dark p-3 border" aria-labelledby="dropdownMenuLink">
-                  <li class="py-2"><a class="text-decoration-none text-light d-block" href="/usersettings/{{request.user}}/"><i class="fas fa-cog"></i>
+                  <li class="py-2"><a class="text-decoration-none text-light d-block"
+                      href="/usersettings/{{request.user}}/"><i class="fas fa-cog"></i>
                       {{request.user}}</a>
                   </li>
                   <li class="py-2"><a class="text-decoration-none text-light d-block" href="/blog/composeblog/"><i
                         class="far fa-edit"></i> Compose Blog</a></li>
-                  <li class="py-2"><a class="text-decoration-none text-light d-block" href="/logout/"><i class="fas fa-sign-out-alt"></i>
+                  <li class="py-2"><a class="text-decoration-none text-light d-block" href="/logout/"><i
+                        class="fas fa-sign-out-alt"></i>
                       Logout</a></li>
                 </ul>
               </div>
@@ -224,7 +230,7 @@
                 data-bs-target="#offcanvasSignUp" aria-controls="offcanvasRight"><i class="fas fa-user-plus"></i>
                 SignUp</button>
 
-              <div class="offcanvas offcanvas-end  bg-dark" tabindex="-1" id="offcanvasSignUp"
+              <div class="offcanvas offcanvas-end  bg-dark text-light" tabindex="-1" id="offcanvasSignUp"
                 aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header">
                   <h5 id="offcanvasRightLabel">Signup</h5>
@@ -356,6 +362,8 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+
+
 {% block script %}{% endblock script %}
 <script>
   window.setTimeout(function () {
@@ -400,7 +408,11 @@
 
   function mode() {
     if ($('#theme').prop('checked')) {
+      $("section").removeClass("bg-dark").addClass("bg-light");
+      $("section").removeClass("text-dark").addClass("text-light");
     } else {
+      $("section").removeClass("bg-light").addClass("bg-dark");
+      $("section").removeClass("text-light").addClass("text-dark");
     }
   }
 

@@ -6,7 +6,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import dateformat
 from django.core.mail import EmailMultiAlternatives
-
+from django.core.files.storage import FileSystemStorage
 from Blog.models import Comment, Post
 import os
 from .forms import CommentForm
@@ -25,7 +25,6 @@ def blogPost(request, slug):
     post.views += 1
     post.save()
     author = User.objects.filter(username=post.author).first()
-    print(author.email)
     comments = post.comments.filter(active=True, parent__isnull=True)
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
@@ -39,7 +38,6 @@ def blogPost(request, slug):
                 parent_obj = Comment.objects.get(id=parent_id)
                 reply = post.comments.filter(
                     id=parent_id, active=True, parent__isnull=False)
-                print(reply)
                 if parent_obj:
                     replay_comment = comment_form.save(commit=False)
                     replay_comment.parent = parent_obj
@@ -82,14 +80,25 @@ def blogPost(request, slug):
 
 
 def composeBlog(request):
+    categories = Post.objects.values('category').distinct()
+    print(categories)
     if request.method == 'POST':
         content = request.POST.get('content', "")
         if len(content) > 30:
             category = request.POST.get('category', "")
             title = request.POST.get('title', "")
             author = request.POST.get('author', "")
+            # print(request.FILES['thumbnail'])
+            try:
+                thumbnail = request.FILES['thumbnail']
+                fs = FileSystemStorage('/media/blogThumbs')
+                fs.save(thumbnail.name, thumbnail)
+                print(request.FILES['thumbnail'])
+            except Exception as e:
+                # print(e)
+                thumbnail = ""
             post = Post(category=category, title=title,
-                        author=author, content=content)
+                        author=author, content=content, thumbnail=thumbnail)
             post.save()
             analyzed = ""
             punctuations = """.,;:?!-()[]{}"'/@&-*^%<>#_$+="""
@@ -99,11 +108,14 @@ def composeBlog(request):
             title = analyzed
             post.slug = str(post.sno) + "-" + title.replace(" ", "-")
             post.save()
+
+
+            dp = post.thumbnail
         else:
             messages.info(
                 request, "The content of the blog was Very less to post a blog")
 
-    return render(request, 'blog/composeBlog.html')
+    return render(request, 'blog/composeBlog.html', {'categories':categories})
 
 
 def editPost(request, slug, owner):
@@ -117,11 +129,20 @@ def editPost(request, slug, owner):
             if len(content) > 30:
                 category = request.POST['category']
                 title = request.POST['title']
-                analyzed = ""
                 post.category = category
                 post.title = title
                 post.content = content
+                thumb = post.thumbnail
+                try:
+                    post.thumbnail = request.FILES['thumbnail']
+                    fs = FileSystemStorage('/media/blogThumbs')
+                    fs.save(post.thumbnail.name, post.thumbnail)
+                    # print(request.FILES['thumbnail'])
+                except Exception as e:
+                    print(e)
+                    post.thumbnail = thumb
                 post.save()
+                analyzed = ""
                 punctuations = """.,;:?!-()[]{}"'/@&-*^%<>#_$+="""
                 for char in title:
                     if char not in punctuations:
@@ -145,5 +166,4 @@ def deletePost(request):
         slug = request.POST['slug']
         post = get_object_or_404(Post, slug=slug)
         post.delete()
-        print("deleted")
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))

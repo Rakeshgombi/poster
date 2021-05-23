@@ -87,7 +87,7 @@
           <!-- comments -->
           <h2>{{ comments.count }} comments</h2>
           <button type="button" class="btn btn-primary btn-sm" id="comment">Comment</button>
-          <div class="col-md-9 mb-4  mt-3 ">
+          <div class="col-md-9 mb-4 mt-3">
             <div class="card-body bg-dark  border" id="comment-form">
               <h3>Leave a comment</h3>
               <form method="post" style="margin-top: 1.3em;">
@@ -101,63 +101,64 @@
 
           {% for comment in comments %}
           <div class="comments border mt-2 rounded bg-dark " style="padding: 10px;">
-            <p class="font-weight-bold">
-              {{ comment.name }}
-              <span class="  font-weight-normal">
-                {{ comment.created_on |naturaltime }}
-              </span>
-            </p>
-            <p class="font-weight-bold">
+            <h6 class="d-flex align-items-center justify-content-start">
+              <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>&nbsp;
+              {{ comment.name }}&nbsp; <span style="font-size: 10px; color: #b4b4b6;">
+                ({{ comment.created_on |naturaltime }}) 
+            </span>
+            </h6>
+            <div class="font-weight-bold ps-4">
               {{ comment.body | linebreaks }}
-            </p>
-
-            <button type="button" class="btn btn-link text-light btn-sm" id="make-reply{{ comment.id }}">Reply</button>
+              
+              <button type="button" class="btn btn-link text-light btn-sm" id="make-reply{{ comment.id }}">Reply</button>
             {% if comment.replies.count > 0 %}
             {% if comment.replies.count == 1 %}
             <button type="button" class="btn btn-link text-light btn-sm " id="show-reply{{ comment.id }}"> Show
               {{comment.replies.count}} Reply</button>
-            {% else %}
-            <button type="button" class="btn btn-link text-light btn-sm " id="show-reply{{ comment.id }}"> Show
-              {{comment.replies.count}} Replies</button>
-            {% endif %}
-            {% endif %}
-
-            <div class="col-md-9 my-4">
-              <div class="card-body bg-dark border" id="reply-form{{ comment.id }}">
-                <h5>Reply for this comment</h5>
-                <form method="post" style="margin-top: 1.3em;">
-                  {{ comment_form.as_p }}
-                  {% csrf_token %}
-                  <!-- Hidden input for parent comment.id -->
-                  <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                  <input class="btn btn-outline-primary  btn-sm" type="submit" value="Reply">
-                  <button type="button" class="btn btn-outline-primary btn-sm"
-                    id="hide-reply{{ comment.id }}">Cancel</button>
-                </form>
-              </div>
+              {% else %}
+              <button type="button" class="btn btn-link text-light btn-sm " id="show-reply{{ comment.id }}"> Show
+                {{comment.replies.count}} Replies</button>
+                {% endif %}
+                {% endif %}
+                
+                <div class="col-md-9 my-4">
+                  <div class="card-body bg-dark border" id="reply-form{{ comment.id }}">
+                    <h5>Reply for this comment</h5>
+                    <form method="post" style="margin-top: 1.3em;">
+                      {{ comment_form.as_p }}
+                      {% csrf_token %}
+                      <!-- Hidden input for parent comment.id -->
+                      <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                      <input class="btn btn-outline-primary  btn-sm" type="submit" value="Reply">
+                      <button type="button" class="btn btn-outline-primary btn-sm"
+                      id="hide-reply{{ comment.id }}">Cancel</button>
+                    </form>
+                  </div>
             </div>
             <div class="container" id="reply-box{{ comment.id }}">
-
+              
               {% for reply in comment.replies.all %}
               <div class="col mb-3">
-                <p class="font-weight-bold mb-0">
-                  {{ reply.name }}<span class="  font-weight-normal">
+                <h6 class="font-weight-bold mb-0">
+                  <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;{{ reply.name }}
+                  <span style="font-size: 10px; color: #b4b4b6;">
                     {{ reply.created_on|naturaltime }}
                   </span>
-                </p>
-                {{ reply.body }}
+                </h6>
+                <div class="ps-3">{{ reply.body }}</div>
               </div>
               {% empty %}
               {% endfor %}
               <button type="button" class="btn text-light btn-link" id="hide-replies{{ comment.id }}">Hide all
                 replies</button>
+              </div>
+              
             </div>
-
           </div>
-          {% empty %}
-          <h4>There are no comments yet.</h4>
-          {% endfor %}
-        </div>
+            {% empty %}
+            <h4>There are no comments yet.</h4>
+            {% endfor %}
+          </div>
       </div>
     </div>
   </div>
@@ -185,6 +186,7 @@
     commentBtn.removeAttribute('disabled');
   })
 
+$("textarea").attr("rows", 3)
 
   {% for comment in comments %}
   console.log(comment.id);
