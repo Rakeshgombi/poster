@@ -9,19 +9,25 @@
 {% block css %}
 <link rel="stylesheet" href="{% static 'style/blogPost.css'%}">
 <link rel="stylesheet" href="{% static 'prism/prism.css'%}">
+<style>
+  p a {
+    color: #58a6ff !important;
+    text-decoration: none !important;
+  }
+</style>
 {% endblock css %}
 
 {% block body %}
-<main class="bg-black0 text-light">
+<main class="bg-dark text-light">
   <div class="container py-5 mx-auto">
     <div class="row g-5">
-      <div class="col-md-9  border shadow-lg rounded py-4">
+      <div class="col-md-9 border shadow-lg rounded py-4">
         <article class="blog-post control-img">
-          <h2 class="fst-italic ">{{post.title}}</h2>
-          <p class=" blog-post-meta">{{post.timestamp}} by <span class="text-muted">{{ post.author }} ({{post.views}}
+          <h2 class="fst-italic">{{post.title}}</h2>
+          <p class=" blog-post-meta">{{post.timestamp}} by <span class="">{{ post.author }} ({{post.views}}
               views so far</span>)</p>
           <hr class="m-0 p-0">
-          <p class="pt-3 control-img text-sm-left text-light " style="max-width: 100%;">
+          <p class="pt-3 control-img text-sm-left  " style="max-width: 100%;">
             {{ post.content|safe }}
           </p>
         </article>
@@ -33,7 +39,7 @@
       <div class="col-md-3">
         <div class="position-sticky" style="top: 2rem;">
           <h4 class="fst-italic">About the Author</h4>
-          <div class="p-3 bg-black1 border rounded shadow popup">
+          <div class="p-3 bg-dark border rounded shadow popup">
             <h4 class="fst-italic mb-3">{{author.first_name}} {{author.last_name}}</h4>
             {% if author.profile.display_pic %}
             <img src="{{ author.profile.display_pic.url}}" width="400" height="400">
@@ -76,13 +82,13 @@
         </div>
       </div>
 
-      <div class="sol-lg-9 col-md-9 sol-sm-11 card mb-4 bg-black1 text-light border shadow-sm mt-3 ">
+      <div class="sol-lg-9 col-md-9 sol-sm-11 card mb-4 bg-dark  border shadow-sm mt-3 ">
         <div class="col py-4">
           <!-- comments -->
           <h2>{{ comments.count }} comments</h2>
           <button type="button" class="btn btn-primary btn-sm" id="comment">Comment</button>
           <div class="col-md-9 mb-4  mt-3 ">
-            <div class="card-body bg-black2 text-light border" id="comment-form">
+            <div class="card-body bg-dark  border" id="comment-form">
               <h3>Leave a comment</h3>
               <form method="post" style="margin-top: 1.3em;">
                 {{ comment_form | crispy }}
@@ -94,10 +100,10 @@
           </div>
 
           {% for comment in comments %}
-          <div class="comments border mt-2 rounded bg-black2 text-light" style="padding: 10px;">
+          <div class="comments border mt-2 rounded bg-dark " style="padding: 10px;">
             <p class="font-weight-bold">
               {{ comment.name }}
-              <span class=" text-muted font-weight-normal">
+              <span class="  font-weight-normal">
                 {{ comment.created_on |naturaltime }}
               </span>
             </p>
@@ -117,7 +123,7 @@
             {% endif %}
 
             <div class="col-md-9 my-4">
-              <div class="card-body bg-black2 border" id="reply-form{{ comment.id }}">
+              <div class="card-body bg-dark border" id="reply-form{{ comment.id }}">
                 <h5>Reply for this comment</h5>
                 <form method="post" style="margin-top: 1.3em;">
                   {{ comment_form.as_p }}
@@ -135,7 +141,7 @@
               {% for reply in comment.replies.all %}
               <div class="col mb-3">
                 <p class="font-weight-bold mb-0">
-                  {{ reply.name }}<span class=" text-muted font-weight-normal">
+                  {{ reply.name }}<span class="  font-weight-normal">
                     {{ reply.created_on|naturaltime }}
                   </span>
                 </p>

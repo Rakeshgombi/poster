@@ -71,7 +71,7 @@ def userSettings(request, slug):
                 fs.save(profile.display_pic.name, profile.display_pic)
             except Exception as e:
                 print(e)
-                profile.display_pic = dp 
+                profile.display_pic = dp
             user.first_name = request.POST.get('first_name' '')
             user.last_name = request.POST.get('last_name' '')
             profile.organisation = request.POST.get('organisation' '')

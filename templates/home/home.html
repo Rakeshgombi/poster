@@ -8,6 +8,12 @@
 {% block css %}
 <link rel="stylesheet" href="{% static 'style/home.css' %}">
 <link rel="stylesheet" href="{% static 'aos/aos.css' %}">
+<style>
+  .previews a {
+  color: #FAFBFC !important;
+  text-decoration: none !important;
+}
+</style>
 {% endblock css %}
 
 {% block body %}
@@ -19,19 +25,19 @@
   </div>
 </div>
 
-<section class="bg-black0 text-light py-5" id="blogs">
+<section class="bg-dark text-light py-5" id="blogs">
   <div class="container">
     <h2>Popular Blogs</h2>
     {% for post in allPosts %}
     <div
-      class="row no-gutters border rounded overflow-hidden flex-md-row  shadow-sm h-md-250 my-4 position-relative bg-black2 p-1 mx-auto ps-3"
+      class="row no-gutters border rounded overflow-hidden flex-md-row  shadow-sm h-md-250 my-4 position-relative bg-dark p-1 mx-auto ps-3"
       data-aos="fade-up">
       <div class="col d-flex flex-column position-static col-10 p-2">
-        <strong class="d-inline-block mb-2 text-primary">{{post.category}}</strong>
+        <strong class="d-inline-block mb-2 text-link text-uppercase">{{post.category}}</strong>
         <h3 class="mb-0"><a href="/blog/{{post.slug}}" class="text-decoration-none text-light">{{ post.title }}</a></h3>
-        <div class="mb-1 text-muted">{{post.timestamp}}</div>
+        <div class="mb-1 ">{{post.timestamp}}</div>
         <div class="card-text mb-3 control-img overflow-hidden">
-          <p class="previews text-muted text-justify overflow-hidden" style="
+          <p class="previews text-justify overflow-hidden" style="
           max-block-size: 50px;">{{post.content|escape|safe|truncatewords:50}}</p>
         </div>
         <div class="col-12">
@@ -47,15 +53,11 @@
   </div>
   <div class="container text-center">
     {% if allPosts.count > 10 %}
-    <a href="/blog/" class="text-muted">Load More</a>
+    <a href="/blog/" class="">Load More</a>
     {% endif %}
   </div>
 </section>
 {% endblock body %}
-
-
-
 {% block script %}
-
 <script src="{% static 'scripts/home.js' %}"></script>
 {% endblock script %}

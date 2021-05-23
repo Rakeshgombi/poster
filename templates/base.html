@@ -55,55 +55,14 @@
       /* filter: hue-rotate(20deg); */
     }
 
-
-
-    .bg-black0 {
-      background-color: #090c10 !important;
-    }
-
-    .bg-black1 {
-      background-color: #0d1117 !important;
-    }
-
-    .bg-black2 {
-      background-color: #161b22 !important;
-    }
-
     .border {
-      border: 1px solid #807f7f !important;
+      border: 1px solid #66696d !important;
     }
 
-    .border-bottom {
-      border-bottom: 1px solid #9999997c !important;
-    }
-
-    .border-top {
-      border-top: 1px solid #999999 !important;
-    }
-
-    .border-left {
-      border-left: 1px solid #999999 !important;
-    }
-
-    .border-right {
-      border-right: 1px solid #999999 !important;
-    }
-
-    .text-light {
-      color: #c9d1d9 !important;
-    }
-
-    .text-muted {
-      color: #b3b3b3 !important;
-    }
 
     .text-link {
       color: #58a6ff !important;
       text-decoration: none;
-    }
-
-    .text-light {
-      color: #c9d1d9;
     }
 
     .text-link:hover {
@@ -151,7 +110,7 @@
       height: auto;
       height: auto;
     }
-    
+
     .spinner {
       max-width: 300px;
       animation: spin 2s linear infinite;
@@ -170,10 +129,28 @@
         transform: rotate(360deg);
       }
     }
+
+    .form-control {
+      border: 1px solid #66696d;
+      background: none;
+      color: #c9d1d9;
+      font-size: small;
+      width: 91%;
+    }
+
+    .form-control::placeholder {
+      color: #8a8a8a;
+    }
+
+    .form-control:focus {
+      background: none;
+      border: none;
+      color: #c9d1d9;
+    }
   </style>
 </head>
 
-<body class="bg-black0">
+<body class="bg-dark">
   <!-- START LOADER HTML -->
   <div class="fullpage-loader bg-dark">
     <div class="fullpage-loader__logo">
@@ -183,7 +160,7 @@
   </div>
   <!-- END LOADER HTML -->
   <header class="border-bottom">
-    <nav class="navbar navbar-expand-md navbar-dark text-light bg-black2">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid px-4 ">
         <a class="navbar-brand logo" href="/"> </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -212,39 +189,42 @@
               <a class="nav-link {% block composeactive %}{% endblock composeactive %}" aria-current="page"
                 href="/blog/composeblog/"><i class="far fa-edit"></i> Compose Blog</a>
             </li>
+            <li class="nav-item">
+              <input type="checkbox" name="change_theme" id="theme" onchange="mode()" checked>
+            </li>
           </ul>
           <ul class="navbar-nav mb-2">
             <li class="nav-item ">
               <form class="d-flex" action="/search/" method="GET">{% csrf_token %}
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query"
-                  id="query">
-                <button class="btn btn-outline-success" type="submit"> Search</button>
+                <input class="form-control flex-auto me-1 border-success input-sm" type="search" placeholder="Search"
+                  aria-label="Search" name="query" id="query" style="border: 1px solid #50555c;">
+                <button class="btn btn-outline-success btn-sm" type="submit"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
               </form>
             </li>
             <li class="nav-item mt-2 mx-md-2 mt-md-0">
               {% if request.user.is_authenticated %}
               <div class="dropdown mx-1">
-                <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                <a class="btn btn-outline-primary dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink"
                   data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="far fa-user"></i>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-lg-end bg-black1 p-3 border" aria-labelledby="dropdownMenuLink">
-                  <li class="py-2"><a class="text-decoration-none text-light" href="/usersettings/{{request.user}}/"><i
-                        class="fas fa-cog"></i>
+                <ul class="dropdown-menu dropdown-menu-lg-end bg-dark p-3 border" aria-labelledby="dropdownMenuLink">
+                  <li class="py-2"><a class="text-decoration-none text-light d-block" href="/usersettings/{{request.user}}/"><i class="fas fa-cog"></i>
                       {{request.user}}</a>
                   </li>
-                  <li class="py-2"><a class="text-decoration-none text-light" href="/blog/composeblog/"><i
+                  <li class="py-2"><a class="text-decoration-none text-light d-block" href="/blog/composeblog/"><i
                         class="far fa-edit"></i> Compose Blog</a></li>
-                  <li class="py-2"><a class="text-decoration-none text-light" href="/logout/"><i
-                        class="fas fa-sign-out-alt"></i> Logout</a></li>
+                  <li class="py-2"><a class="text-decoration-none text-light d-block" href="/logout/"><i class="fas fa-sign-out-alt"></i>
+                      Logout</a></li>
                 </ul>
               </div>
               {% else %}
-              <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas"
+              <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasSignUp" aria-controls="offcanvasRight"><i class="fas fa-user-plus"></i>
                 SignUp</button>
 
-              <div class="offcanvas offcanvas-end  bg-dark text-white" tabindex="-1" id="offcanvasSignUp"
+              <div class="offcanvas offcanvas-end  bg-dark" tabindex="-1" id="offcanvasSignUp"
                 aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header">
                   <h5 id="offcanvasRightLabel">Signup</h5>
@@ -278,14 +258,14 @@
                     </div>
                     <div class="mb-1">
                       <label for="username">Username</label>
-                      <div class="input-group">
+                      <div class="input-group border-none">
                         <div class="input-group-prepend">
-                          <span class="input-group-text">@</span>
+                          <span class="form-control bg-dark">@</span>
                         </div>
                         <input type="text" class="form-control" id="username" name="username" placeholder="Username"
                           required="">
                       </div>
-                      <small class="text-muted">Username can only contain numbers and alphabets</small>
+                      <small class="">Username can only contain numbers and alphabets</small>
                     </div>
                     <div class="mb-1">
                       <label for="otp">Enter OTP</label>
@@ -299,16 +279,17 @@
                       <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Enter Password"
                         required="">
                     </div>
+
                     <div class="mb-3">
                       <label for="pass2">Re-enter Password</label>
                       <input type="password" class="form-control" id="pass2" name="pass2"
                         placeholder="Confirm Password">
                     </div>
-                    <button class="btn btn-outline-success btn-block" type="submit">Sign up</button>
+                    <button class="btn btn-outline-primary btn-block" type="submit">Sign up</button>
                   </form>
                 </div>
               </div>
-              <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas"
+              <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasSignIn" aria-controls="offcanvasRight"><i class="fas fa-sign-in-alt"></i>
                 SignIn</button>
 
@@ -322,12 +303,12 @@
                 <div class="offcanvas-body">
                   <form class="form-signin" method="POST" action="/login/">{% csrf_token %}
                     <a class="navbar-brand logo d-flex mx-auto" href="/"> </a>
-                    <h3 class="h3 mb-3 text-center font-weight-normal">Please sign in</h3>
-                    <div class="mb-1">
+
+                    <div class="mb-1  mt-4">
                       <label for="loginusername">Username</label>
-                      <div class="input-group">
+                      <div class="input-group border-none">
                         <div class="input-group-prepend">
-                          <span class="input-group-text">@</span>
+                          <span class="form-control bg-dark">@</span>
                         </div>
                         <input type="text" class="form-control" id="loginusername" name="loginusername"
                           placeholder="Username" required="">
@@ -339,8 +320,13 @@
                         placeholder="Enter Password" required="">
                     </div>
 
-                    <button class="btn btn-lg btn-outline-primary btn-block mt-3" type="submit">Sign in</button>
+                    <button class="btn btn-outline-primary mt-3" type="submit">Sign in</button>
                   </form>
+                  <div class="mt-2">
+                    <small>Do not have account <a class="text-link pe-auto cursor-pointer" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasSignUp" aria-controls="offcanvasRight" style="cursor: pointer;">
+                        SignUp</a> or <a href="/password_reset/" class="text-link">forgot passwoord?</a></small>
+                  </div>
                 </div>
               </div>
               {% endif %}
@@ -360,7 +346,7 @@
   {% block body %}{% endblock body %}
 
 
-  <footer class="container-fluid bg-black3 my-0 py-3 text-light border-top">
+  <footer class="container-fluid bg-dark my-0 py-3  border-top">
     <p class="mb-0 text-center">© 2021 Poster.com</p>
     <p class="mb-0 text-center">
       <a href="#">Back to top</a>
@@ -411,6 +397,12 @@
       }, 2000)
     }
   });
+
+  function mode() {
+    if ($('#theme').prop('checked')) {
+    } else {
+    }
+  }
 
 </script>
 

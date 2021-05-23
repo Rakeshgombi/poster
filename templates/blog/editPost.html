@@ -4,25 +4,24 @@
 {% block body %}
 
 {% if user.is_authenticated %}
-<div class="container my-5 bg-black1 text-light">
+<div class="container my-5 bg-dark ">
   <h3 class="mb-4">Edit Blog</h3>
 
   <form action="#" method="POST"> {% csrf_token %}
     <div class="input-group mb-3">
-      <label class="input-group-text  bg-black2 text-light border" for="inputGroupSelect01">Category</label>
+      <label class="input-group-text  bg-dark  border" for="inputGroupSelect01">Category</label>
 
-      <select class="form-select  bg-black2 text-light border" id="inputGroupSelect01" name="category" required
-        value="">
-        <option selected value="{{post.category}}" class="text-muted">{{post.category}}</option>
+      <select class="form-select  bg-dark  border" id="inputGroupSelect01" name="category" required value="">
+        <option selected value="{{post.category}}" class="">{{post.category}}</option>
         <option value="Tech">Tech Blog</option>
         <option value="Nature">Nature</option>
         <option value="Political">Political</option>
       </select>
     </div>
     <div class="input-group mb-3">
-      <input type="text" class="form-control   bg-black2 text-light border" placeholder="Enter the Title"
+      <input type="text" class="form-control   bg-dark  border" placeholder="Enter the Title"
         aria-label="Recipient's username" aria-describedby="basic-addon2" name="title" value="{{post.title}}">
-      <span class="input-group-text bg-black2 text-light border" id="basic-addon2">Title</span>
+      <span class="input-group-text bg-dark  border" id="basic-addon2">Title</span>
     </div>
     <input type="hidden" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="author"
       value="{{request.user}}">
@@ -35,7 +34,7 @@
   </form>
 </div>
 {% else %}
-<div class="container my-5 bg-black2 p-4 border shadow-lg rounded text-light">
+<div class="container my-5 bg-dark p-4 border shadow-lg rounded ">
   <h3>Sign in To Compose your own blog</h3>
   <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSignUp"
     aria-controls="offcanvasRight">SignUp</button>

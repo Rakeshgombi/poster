@@ -27,29 +27,29 @@
 
     border-radius: 50%;
   }
-  .form-control{
-    /* padding: 3px 8px !important; */
-    /* border-radius: 3px !important; */
+
+  .form-control {
     border: 1px solid #21262d;
     background: none;
     color: #c9d1d9;
     font-size: small;
-    margin: 3px 0px 0px 0px;
-    /* margin-left: 7px; */
-    width: 80%;
+    width: 91%;
   }
+
   /* span{
     margin: 0 !important;
     padding: 0 !important;
   } */
-  .form-control::placeholder{
+  .form-control::placeholder {
     color: #8a8a8a;
   }
-  .form-control:focus{
-  background: none;
-  border: none;
-  color: #c9d1d9;  
-}
+
+  .form-control:focus {
+    background: none;
+    border: none;
+    color: #c9d1d9;
+  }
+
   /*End style*/
 </style>
 {% endblock css %}
@@ -57,11 +57,11 @@
 {% block body %}
 {% if user.is_authenticated %}
 {% if user.username == profile.user.username %}
-<main class="bg-black0 text-light row mx-0 py-3">
+<main class="bg-dark text-light row mx-0 py-3">
   <div class="divider" style="width:20px"></div>
-  <div class="col px-4 mt-4 bg-black0 col col-lg-3">
+  <div class="col px-4 mt-4 col col-lg-3">
     <div class="col">
-      <div class="bg-black0 row ">
+      <div class=" row">
         <div class="popup col-2 col-lg-12 col-sm-2 p-0 ">
           {% if profile.display_pic %}
           <img src="{{ profile.display_pic.url}}" width="400" height="400">
@@ -70,15 +70,16 @@
           <img src="{% static 'logo/favicon.png' %}" class="" alt="...">
           {% endif %}
         </div>
-        <div class="col bg-black0 text-muted col col-10 col-lg-12 p-2 px-3 col-sm-10">
-          <h3 class="text-light">{{user.first_name}} {{user.last_name}}</h3>
+        <div class="col col col-10 col-lg-12 p-2 px-3 col-sm-10">
+          <h3 class="">{{user.first_name}} {{user.last_name}}</h3>
           <h4>{{user.username}}</h4>
         </div>
       </div>
-      <div class="col bg-black0 text-muted " id="user-details">
+      <div class="col bg-dark  " id="user-details">
         <p class="mt-3">{{profile.bio}}</p>
-        <button type="button" class="btn btn-outline-dark my-1 col-lg-12 bg-black2 d-block text-light my-3"
-          id="edit-details">Edit Details <i class="fas fa-pencil-alt"></i></button>
+        <button type="button" class="btn btn-outline-secondary my-1 rounded col-lg-12 bg-dark d-block my-3"
+          id="edit-details">Edit
+          Details <i class="fas fa-pencil-alt"></i></button>
         <ul class="navbar-nav">
           {% if profile.organisation %}
           <li class="nav-item text-truncate">
@@ -92,55 +93,56 @@
           {% endif %}
           {% if user.email %}
           <li class="nav-item text-truncate mb-1"><a href="mailto:{{user.email}}" target="_blank"
-              class="text-muted text-decoration-none"><i class="far fa-envelope"></i> {{user.email}}</a></li>
+              class="text-light text-decoration-none"><i class="far fa-envelope"></i> {{user.email}}</a></li>
           {% endif %}
           {% if profile.facebook %}
           <li class="nav-item text-truncate mb-1"><a href="{{profile.facebook}}" target="_blank"
-              class="text-muted text-decoration-none"><i class="fab fa-facebook"></i> {{profile.facebook}}</a></li>
+              class="text-light text-decoration-none"><i class="fab fa-facebook"></i> {{profile.facebook}}</a></li>
           {% endif %}
           {% if profile.instagram %}
           <li class="nav-item text-truncate mb-1"><a href="{{profile.instagram}}" target="_blank"
-              class="text-muted text-decoration-none"><i class="fab fa-instagram"></i> {{profile.instagram}}</a></li>
+              class="text-light text-decoration-none"><i class="fab fa-instagram"></i> {{profile.instagram}}</a></li>
           {% endif %}
           {% if profile.github %}
           <li class="nav-item text-truncate mb-1"><a href="{{profile.github}}" target="_blank"
-              class="text-muted text-decoration-none"><i class="fab fa-github"></i> {{profile.github}}</a></li>
+              class="text-light text-decoration-none"><i class="fab fa-github"></i> {{profile.github}}</a></li>
           {% endif %}
           {% if profile.twitter %}
           <li class="nav-item text-truncate mb-1">
-            <a href="{{profile.twitter}}" target="_blank" class="text-muted text-decoration-none"><i
+            <a href="{{profile.twitter}}" target="_blank" class="text-light text-decoration-none"><i
                 class="fab fa-twitter"></i>
               {{profile.twitter}}</a>
           </li>
           {% endif %}
           {% if profile.website %}
           <li class="nav-item text-truncate mb-1"><a href="{{profile.website}}"
-              class="text-muted text-decoration-none"><i class="fas fa-globe-asia"></i> {{profile.website}}</a></li>
+              class="text-light text-decoration-none"><i class="fas fa-globe-asia"></i> {{profile.website}}</a></li>
           {% endif %}
         </ul>
       </div>
 
     </div>
-    <div class="position-relative" id="edit-user-details">
-      
+    <div class="col bg-dark " id="edit-user-details">
+
       {% if profile.display_pic %}
-      <div class="col-md-12 my-1 form-control bg-black0 text-light">
-        <a role="button" class=" text-decorartion-none text-secondary d-block text-decoration-none" data-bs-toggle="modal"
-          data-bs-target="#deleteDispPic"><i class="far fa-trash-alt"></i> Remove Profile Picture</a>
-
-
+      <div class="w-100 my-1 bg-dark ">
+        <a role="button"
+          class="btn btn-outline-secondary  text-decorartion-none text-light d-block text-decoration-none"
+          data-bs-toggle="modal" data-bs-target="#deleteDispPic"><i class="far fa-trash-alt"></i> Remove Profile
+          Picture</a>
         <!-- Modal -->
         <div class="modal fade" id="deleteDispPic" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
           aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-black2 border">
+            <div class="modal-content bg-dark border">
               <div class="modal-header border-bottom-0 my-0 pb-0">
                 <h5 class="modal-title" id="staticBackdropLabel"><i
                     class="fas fa-exclamation-triangle text-warning"></i>Remove Profile Picture</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body my-0 py-0">
-                <hr class=""><h5> Are You sure that want to Remove this Picture?</h5>
+                <hr class="">
+                <h5> Are You sure that want to Remove this Picture?</h5>
                 <p>This will permanently deletes your profile picture and you will not be
                   able to retrive it back...!
                 </p>
@@ -160,57 +162,60 @@
       {% endif %}
 
       <form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
-        <div class="col-md-12 my-1 form-control bg-black0 text-light">
-          <label for="selectfile" class=" bg-black0 d-block text-secondary" style="cursor: pointer;"><i class="fa fa-camera"
-              aria-hidden="true"></i> Add Profile picture</label>
-          <input id="selectfile" type="file" name="display_pic" accept="image/*" value="True">
-        </div>
-        <div class="col-12 my-1">
-          <textarea class="form-control" name="bio" id="bio" rows="3"
+        <!-- <div class="col-md-12 w-100 my-1 form-control bg-dark "> -->
+        <label for="selectfile" class="btn btn-outline-secondary d-block text-light" style="cursor: pointer;"><i
+            class="fa fa-camera" aria-hidden="true"></i> Add Profile picture</label>
+        <input id="selectfile" type="file" name="display_pic" accept="image/*" value="True">
+        <!-- </div> -->
+        <div class="col-md-12 w-100 my-1 bg-dark ">
+          <textarea class="form-control w-100" name="bio" id="bio" rows="3"
             placeholder="Add a bio">{{profile.bio}}</textarea>
         </div>
-        <div class="text-secondary mt-2 d-flex align-items-center justify-content-end">
-          <i class="fas fa-user-tie"></i><input type="text" class="ml-2 form-control flex-auto input-sm" id="first_name" name="first_name"
-              value="{{user.first_name}}" placeholder="Enter First Name">
+        <div class="col-md-12 w-100 my-1 bg-dark  d-flex align-items-center justify-content-between">
+          <i class="fas fa-user-tie"></i> <input type="text" class="form-control flex-auto input-sm" id="first_name"
+            name="first_name" value="{{user.first_name}}" placeholder="Enter First Name">
         </div>
-        <div class="text-secondary mt-2 d-flex align-items-center justify-content-between">
-         <i class="fas fa-user-tag"></i><input type="text" class="ml-2 form-control flex-auto input-sm" id="last_name" name="last_name"
-            value="{{user.last_name}}" placeholder="Enter Last Name">
+        <div class="col-md-12 w-100 my-1 bg-dark  d-flex align-items-center justify-content-between">
+          <i class="fas fa-user-tag"></i><input type="text" class=" form-control flex-auto input-sm" id="last_name"
+            name="last_name" value="{{user.last_name}}" placeholder="Enter Last Name">
         </div>
-        <div class="text-secondary mt-2 d-flex align-items-center justify-content-between">
-         <i class="fa fa-building" aria-hidden="true"></i> <input type="text" class="ml-2 form-control flex-auto input-sm" id="organisaation" name="organisation"
-            value="{{profile.organisation}}" placeholder="Enter Your organisation Name">
+        <div class="col-md-12 w-100 my-1 bg-dark  d-flex align-items-center justify-content-between">
+          <i class="fa fa-building" aria-hidden="true"></i> <input type="text" class=" form-control flex-auto input-sm"
+            id="organisaation" name="organisation" value="{{profile.organisation}}"
+            placeholder="Enter Your organisation Name">
         </div>
-        <div class="text-secondary mt-2 d-flex align-items-center justify-content-between">
-         <i class="fas fa-map-marker-alt"></i><input type="text" class="ml-2 form-control flex-auto input-sm" id="country" name="country"
-            value="{{profile.country}}" placeholder="Enter Your Country Name">
+        <div class="col-md-12 w-100 my-1 bg-dark  d-flex align-items-center justify-content-between">
+          <i class="fas fa-map-marker-alt"></i><input type="text" class=" form-control flex-auto input-sm" id="country"
+            name="country" value="{{profile.country}}" placeholder="Enter Your Country Name">
         </div>
-        <div class="text-secondary mt-2 d-flex align-items-center justify-content-between">
-         <i class="fas fa-globe-asia"></i><input type="url" class="ml-2 form-control flex-auto input-sm" id="website" name="website"
-            value="{{profile.website}}" placeholder="Enter your website url">
+        <div class="col-md-12 w-100 my-1 bg-dark  d-flex align-items-center justify-content-between">
+          <i class="fas fa-globe-asia"></i><input type="url" class=" form-control flex-auto input-sm" id="website"
+            name="website" value="{{profile.website}}" placeholder="Enter your website url">
         </div>
-        <div class="text-secondary mt-2 d-flex align-items-center justify-content-between">
-         <i class="fab fa-facebook"></i><input type="url" class="ml-2 form-control flex-auto input-sm" id="facebook" name="facebook"
-            value="{{profile.facebook}}" placeholder="Enter your facebook url">
+        <div class="col-md-12 w-100 my-1 bg-dark  d-flex align-items-center justify-content-between">
+          <i class="fab fa-facebook"></i><input type="url" class=" form-control flex-auto input-sm" id="facebook"
+            name="facebook" value="{{profile.facebook}}" placeholder="Enter your facebook url">
         </div>
-        <div class="text-secondary mt-2 d-flex align-items-center justify-content-between">
-         <i class="fab fa-instagram"></i><input type="url" class="ml-2 form-control flex-auto input-sm" id="instagram" name="instagram"
-            value="{{profile.instagram}}" placeholder="Enter your instagram url">
+        <div class="col-md-12 w-100 my-1 bg-dark  d-flex align-items-center justify-content-between">
+          <i class="fab fa-instagram"></i><input type="url" class=" form-control flex-auto input-sm" id="instagram"
+            name="instagram" value="{{profile.instagram}}" placeholder="Enter your instagram url">
         </div>
-        <div class="text-secondary mt-2 d-flex align-items-center justify-content-between">
-         <i class="fab fa-github"></i><input type="url" class="ml-2 form-control flex-auto input-sm" id="github" name="github" value="{{profile.github}}" placeholder="Enter your github url">
+        <div class="col-md-12 w-100 my-1 bg-dark  d-flex align-items-center justify-content-between">
+          <i class="fab fa-github"></i><input type="url" class=" form-control flex-auto input-sm" id="github"
+            name="github" value="{{profile.github}}" placeholder="Enter your github url">
         </div>
-        <div class="text-secondary mt-2 d-flex align-items-center justify-content-between">
-         <i class="fab fa-twitter"></i> <input type="url" class="ml-2 form-control flex-auto input-sm" id="twitter" name="twitter"
-            value="{{profile.twitter}}" placeholder="Enter your twitter url">
+        <div class="col-md-12 w-100 my-1 bg-dark  d-flex align-items-center justify-content-between">
+          <i class="fab fa-twitter"></i> <input type="url" class=" form-control flex-auto input-sm" id="twitter"
+            name="twitter" value="{{profile.twitter}}" placeholder="Enter your twitter url">
         </div>
-        <div class="col-12 mt-2 ms-2">
+        <div class="col-12 mt-2 ">
           <button type="submit" class="btn btn-success text-white btn-sm" id="save-changes">Save</button>
-          <button type="button" class="btn btn-outline-dark text-muted btn-sm rounded bg-black1 " id="cancel-changes">cancel</button>
+          <button type="button" class="btn btn-outline-secondary  btn-sm rounded bg-dark "
+            id="cancel-changes">cancel</button>
         </div>
       </form>
     </div>
-    
+
   </div>
   <div class="container mt-5 col-lg-8">
     {% if allPosts.count > 0 %}
@@ -218,16 +223,16 @@
     <hr>
     {% for post in allPosts %}
     <div
-      class="row no-gutters rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-2 position-relative  bg-black0 text-light p-1 col-lg-12 mx-auto">
-      <div class="col p-2 d-flex flex-column position-static  text-light justify col-12 col-lg-9">
-        <strong class="d-inline-block mb-2 text-primary">{{post.category}}</strong>
+      class="row no-gutters rounded overflow-hidden flex-md-row shadow-sm h-md-250 position-relative bg-dark col-lg-12 mx-auto">
+      <div class="col d-flex flex-column position-static col-12 col-lg-9">
+        <strong class="d-inline-block mb-2 text-link text-uppercase">{{post.category}}</strong>
         <h5 class="mb-1"><a href="/blog/{{post.slug}}" class="text-link">{{ post.title }}</a></h5>
-        <div class="mb-1 text-muted">{{post.timestamp}}</div>
+        <div class="mb-1 ">{{post.timestamp}}</div>
       </div>
-      <div class="d-flex text-light justify col col-lg-3 d-flex justify-content-between align-items-center">
+      <div class="d-flex  justify col col-lg-3 d-flex justify-content-between align-items-center">
         <a href="/blog/{{request.user}}/editpost/{{post.slug}}/" role="button"
-          class="text-light text-decoration-none "><i class="fas fa-edit"></i> Edit</a>
-        <a role="button" class=" text-decorartion-none text-light text-decoration-none" data-bs-toggle="modal"
+          class=" text-decoration-none text-light mt-3"><i class="fas fa-edit"></i> Edit</a>
+        <a role="button" class=" text-decorartion-none mt-3 text-light text-decoration-none" data-bs-toggle="modal"
           data-bs-target="#staticBackdrop"><i class="far fa-trash-alt"></i> Delete</a>
 
 
@@ -235,7 +240,7 @@
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
           aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-black2 border">
+            <div class="modal-content bg-dark border">
               <div class="modal-header border-bottom-0 my-0 pb-0">
                 <h5 class="modal-title" id="staticBackdropLabel"><i
                     class="fas fa-exclamation-triangle text-warning"></i> Delete</h5>
@@ -246,7 +251,7 @@
                 <h5> Are You sure that want to delete this post?</h5>
 
                 <p>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This will permanently deletes your post and you will not be able
+                  This will permanently deletes your post and you will not be able
                   to retrive it back...!
                 </p>
                 <hr class="">
@@ -271,7 +276,7 @@
   {% else %}
 
   <h5>No Posts Yet</h5>
-  <li class="py-2"><a class="text-decoration-none text-light" href="/blog/composeblog/"><i class="far fa-edit"></i>
+  <li class="py-2"><a class="text-decoration-none " href="/blog/composeblog/"><i class="far fa-edit"></i>
       Compose
       Blog</a></li>
   {% endif %}

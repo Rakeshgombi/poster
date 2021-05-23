@@ -12,7 +12,7 @@
 
 {% block body %}
 
-<main class="bg-black0  text-light py-5">
+<main class="bg-dark   py-5">
   <div class="container">
     {% if allposts.count < 1 %} Your search - <b>{{query}}</b> - did not match any documents.
       <p>Suggestions:</p>
@@ -25,14 +25,15 @@
       <h2 class="mb-3">About ({{allposts.count}}) results found</h2>
       {% for post in allposts %}
       <div
-        class="row no-gutters border rounded overflow-hidden flex-md-row  shadow-sm h-md-250 my-4 position-relative bg-black2 p-1 mx-auto ps-3" data-aos="fade-up">
+        class="row no-gutters border rounded overflow-hidden flex-md-row  shadow-sm h-md-250 my-4 position-relative bg-dark p-1 mx-auto ps-3"
+        data-aos="fade-up">
         <div class="col d-flex flex-column position-static col-10 p-2">
           <strong class="d-inline-block mb-2 text-primary">{{post.category}}</strong>
-          <h3 class="mb-0"><a href="/blog/{{post.slug}}" class="text-decoration-none text-light">{{ post.title }}</a>
+          <h3 class="mb-0"><a href="/blog/{{post.slug}}" class="text-decoration-none ">{{ post.title }}</a>
           </h3>
-          <div class="mb-1 text-muted">{{post.timestamp}}</div>
+          <div class="mb-1 ">{{post.timestamp}}</div>
           <div class="card-text mb-3  overflow-hidden">
-            <p class="previews text-muted text-justify overflow-hidden" style="
+            <p class="previews  text-justify overflow-hidden" style="
           max-block-size: 75px;">{{post.content|escape|safe|truncatewords:50}}</p>
           </div>
           <div class="col-12">

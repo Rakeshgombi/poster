@@ -4,27 +4,27 @@
 
 {% block body %}
 <div class="container my-5">
-  <div class="col-lg-10 mx-auto p-4 shadow-lg bg-black1 rounded text-light border">
+  <div class="col-lg-10 mx-auto p-4 shadow-lg bg-dark text-light rounded  border">
     <h2>Contact Us!</h2>
     <form action="/contact/" method="POST">{% csrf_token %}
       <div class="input-group mb-3">
-        <span class="input-group-text bg-black2 text-light border">Name</span>
-        <input type="text" aria-label="name" class="form-control   bg-black2 text-light border" name="name"
+        <span class="input-group-text bg-dark text-light border">Name</span>
+        <input type="text" aria-label="name" class="form-control   bg-dark text-light border" name="name"
           placeholder="Enter Yout Name">
       </div>
       <div class="input-group mb-3">
-        <input type="email" aria-label="First name" class="form-control   bg-black2 text-light border"
-          placeholder="Enter Email Address" name="email">
-        <span class="input-group-text bg-black2 text-light border">@example.com</span>
+        <input type="email" aria-label="First name" class="form-control   bg-dark text-light border"
+        placeholder="Enter Email Address" name="email">
+        <span class="input-group-text bg-dark text-light border">@example.com</span>
       </div>
       <div class="input-group mb-3">
-        <span class="input-group-text bg-black2 text-light border">Phone No</span>
-        <input type="tel" aria-label="First name" class="form-control   bg-black2 text-light border"
+        <span class="input-group-text bg-dark text-light border">Phone No</span>
+        <input type="tel" aria-label="First name" class="form-control   bg-dark text-lightborder"
           placeholder="Enter Email Address" name="phone">
       </div>
       <div class="input-group">
-        <span class="input-group-text bg-black2 text-light border">Your Query?</span>
-        <textarea class="form-control bg-black2 text-light border" aria-label="With textarea" name="content" rows="3"></textarea>
+        <textarea class="form-control bg-dark text-light border" aria-label="With textarea" name="content" rows="3"></textarea>
+        <span class="input-group-text bg-dark text-light border">Your Query?</span>
       </div>
       <button type="submit" class="btn btn-outline-success mt-2">Submit</button>
     </form>

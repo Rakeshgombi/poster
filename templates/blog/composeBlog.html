@@ -4,15 +4,14 @@
 {% block body %}
 
 {% if user.is_authenticated %}
-<div class="container my-5 bg-black0 text-light">
+<div class="container my-5 bg-dark text-light">
   <h3 class="mb-4">Compose your own blog</h3>
   <form action="#" method="POST"> {% csrf_token %}
     <div class="input-group mb-3">
-      <label class="input-group-text  bg-black2 text-light border" for="inputGroupSelect01">Category</label>
-      <input type="text" name="category" list="category" required list="citynames"
-        class="form-select bg-black2 text-light border">
-      <datalist id="category" >
-        <option selected value="" class="text-muted">Choose category...</option>
+      <label class="input-group-text bg-dark text-light border" for="inputGroupSelect01">Category</label>
+      <input type="text" name="category" list="category" required list="citynames" class="form-select bg-dark text-light border">
+      <datalist id="category">
+        <option selected value="" class="">Choose category...</option>
         <option value="Tech">Tech</option>
         <option value="Programming">Programming</option>
         <option value="Educational">Educational</option>
@@ -55,9 +54,9 @@
     </div>
 
     <div class="input-group mb-3">
-      <input type="text" class="form-control   bg-black2 text-light border" placeholder="Enter the Title"
+      <input type="text" class="form-control bg-dark tex-light border" placeholder="Enter the Title"
         aria-label="Recipient's username" aria-describedby="basic-addon2" name="title" required>
-      <span class="input-group-text   bg-black2 text-light border" id="basic-addon2">Title</span>
+      <span class="input-group-text text-light bg-dark  border" id="basic-addon2">Title</span>
     </div>
 
     <input type="hidden" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="author"
@@ -73,8 +72,8 @@
   </form>
 </div>
 {% else %}
-<div class="container my-5 bg-black2 p-4 border shadow-lg rounded text-light">
-  <h3>Sign in To Compose your own blog</h3>
+<div class="container my-5 bg-dark text-light p-4 border shadow-lg rounded ">
+  <h3>Sign in to compose your own blog</h3>
   <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSignUp"
     aria-controls="offcanvasRight">SignUp</button>
 
