@@ -13,8 +13,9 @@ import random
 
 
 def index(request):
+    categories = Post.objects.values('category').distinct()
     allPost = Post.objects.all().order_by('-views')[:10:1]
-    context = {"allPosts": allPost}
+    context = {"allPosts": allPost, "categories":categories}
     return render(request, 'home/home.html', context)
 
 
@@ -32,7 +33,9 @@ def search(request):
         allPostsContent = Post.objects.filter(content__icontains=query)
         allPostsAuthor = Post.objects.filter(author__icontains=query)
         allPosts = allPostsTitle.union(allPostsAuthor, allPostsContent, allPostsCategory)
-    context = {'allposts': allPosts, 'query': query}
+
+    categories = Post.objects.values('category').distinct()
+    context = {"allposts": allPosts, "categories":categories, 'query':query}
     return render(request, 'home/search.html', context)
 
 

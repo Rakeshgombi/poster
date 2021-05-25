@@ -10,7 +10,7 @@ class Post(models.Model):
     title = models.CharField(max_length=300, default="")
     author = models.CharField(max_length=255, default="")
     content = RichTextField(blank=True, null=True)
-    thumbnail = ResizedImageField(size=[300, 600], crop=['middle', 'center'], quality=100, upload_to="blogThumbs", blank=True, null=True)
+    thumbnail = ResizedImageField(size=[300, 400], crop=['middle', 'center'], quality=100, upload_to="blogThumbs", blank=True, null=True)
     # content = models.TextField()
     slug = models.CharField(max_length=350)
     views = models.IntegerField(default=0)

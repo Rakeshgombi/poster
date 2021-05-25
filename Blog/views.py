@@ -16,7 +16,8 @@ from .forms import CommentForm
 
 def blogHome(request):
     allPost = Post.objects.all()
-    context = {"allPosts": allPost}
+    categories = Post.objects.values('category').distinct()
+    context = {"allPosts": allPost, "categories":categories}
     return render(request, 'blog/blogHome.html', context)
 
 
@@ -25,6 +26,7 @@ def blogPost(request, slug):
     post.views += 1
     post.save()
     author = User.objects.filter(username=post.author).first()
+    print(author.email)
     comments = post.comments.filter(active=True, parent__isnull=True)
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)

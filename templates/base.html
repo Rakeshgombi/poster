@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
 
   <link rel="shortcut icon" href="{% static 'logo/favicon.png' %}" type="image/x-icon">
   <title>{% block title %}{% endblock title %}</title>
@@ -131,6 +131,9 @@
       }
     }
 
+    .offcanvas-body .form-control {
+      width: 100%;
+    }
     .form-control {
       border: 1px solid #66696d;
       background: none;
@@ -147,6 +150,10 @@
       background: none;
       border: none;
       color: #c9d1d9;
+    }
+
+    .offcanvas-body::-webkit-scrollbar {
+      display: none;
     }
   </style>
 </head>
@@ -234,7 +241,7 @@
                 aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header">
                   <h5 id="offcanvasRightLabel">Signup</h5>
-                  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body form-group-sm">
@@ -265,9 +272,6 @@
                     <div class="mb-1">
                       <label for="username">Username</label>
                       <div class="input-group border-none">
-                        <div class="input-group-prepend">
-                          <span class="form-control bg-dark">@</span>
-                        </div>
                         <input type="text" class="form-control" id="username" name="username" placeholder="Username"
                           required="">
                       </div>
@@ -303,7 +307,7 @@
                 aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header">
                   <h5 id="offcanvasRightLabel">Signin</h5>
-                  <button type="button" class="btn-close text-reset btn-success" data-bs-dismiss="offcanvas"
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
@@ -313,9 +317,6 @@
                     <div class="mb-1  mt-4">
                       <label for="loginusername">Username</label>
                       <div class="input-group border-none">
-                        <div class="input-group-prepend">
-                          <span class="form-control bg-dark">@</span>
-                        </div>
                         <input type="text" class="form-control" id="loginusername" name="loginusername"
                           placeholder="Username" required="">
                       </div>

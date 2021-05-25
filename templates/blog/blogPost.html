@@ -14,154 +14,220 @@
     color: #58a6ff !important;
     text-decoration: none !important;
   }
+
+  .social-btn {
+    background: rgba(0, 0, 0, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(9.0px);
+    -webkit-backdrop-filter: blur(9.0px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    text-align: center;
+    font-size: 1.3rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.1s linear;
+  }
+
+  .social-btn:hover {
+    font-size: 1.5rem;
+    transform: scale(1.1);
+  }
+
+  .outline-none {
+    outline: none !important;
+    box-shadow: none;
+  }
 </style>
 {% endblock css %}
 
 {% block body %}
 <main class="bg-dark text-light">
+
   <div class="container py-5 mx-auto">
     <div class="row g-5">
-      <div class="col-md-9 border shadow-lg rounded py-4">
+      <div class="col-md-9 rounded py-4">
         <article class="blog-post control-img">
           <h2 class="fst-italic">{{post.title}}</h2>
           <p class=" blog-post-meta">{{post.timestamp}} by <span class="">{{ post.author }} ({{post.views}}
               views so far</span>)</p>
           <hr class="m-0 p-0">
-          <p class="pt-3 control-img text-sm-left  " style="max-width: 100%;">
+          <p class="pt-3 control-img text-sm-left" style="max-width: 100%;">
             {{ post.content|safe }}
           </p>
         </article>
-        <nav class="blog-pagination" aria-label="Pagination">
-          <a class="btn btn-outline-primary btn-sm" href="#">Older</a>
-          <a class="btn btn-outline-secondary disabled btn-sm" href="#" tabindex="-1" aria-disabled="true">Newer</a>
+        <hr>
+        <nav class="blog-pagination mt-4 d-flex align-items-center col-md-5 justify-content-end w-100"
+          aria-label="Pagination">
+          <p class="text-light m-0 d-flex align-items-center" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" title="Comment">
+            <i class="far fa-comment fa-2x"></i> &nbsp;<span>{{comments.count}}</span>
+          </p>
+          <p class="text-light m-0 d-flex align-items-center ms-3" type="button"><i class="far fa-thumbs-up fa-2x"></i>
+          </p>
         </nav>
       </div>
       <div class="col-md-3">
         <div class="position-sticky" style="top: 2rem;">
           <h4 class="fst-italic">About the Author</h4>
           <div class="p-3 bg-dark border rounded shadow popup">
-            <h4 class="fst-italic mb-3">{{author.first_name}} {{author.last_name}}</h4>
+            <h4 class="fst-italic mb-3"><a href="/usersettings/{{author}}/"
+                class="text-decoration-none text-light">{{author.first_name}}
+                {{author.last_name}}</a></h4>
             {% if author.profile.display_pic %}
             <img src="{{ author.profile.display_pic.url}}" width="400" height="400">
-
             {% else %}
             <img src="{% static 'logo/favicon.png' %}" class="" alt="...">
             {% endif %}
             <p class="mb-0 mt-3">{{author.profile.bio}}</p>
             <p class="mb-0">{{author.profile.country}}</p>
             <p class="mb-0">{{author.profile.organisation}}</p>
-            <div class="">
-              <h5 class="fst-italic">Elsewhere</h5>
-              <p class="text-justify text-center m-0 p-0 py-2">
-                {% if user.email %}
-                <a href="mailto:{{user.email}}" target="_blank" class="border-right pe-2 ms-1 text-link"><i
+            <div class="mt-2">
+              <h5 class="fst-italic">Contact me on</h5>
+              <p class="text-justify text-center m-0 p-0 d-flex mt-2 align-items-center justify-content-around">
+                {% if author.email %}
+                <a href="mailto:{{author.email}}" style="color: #3b5998;" class="p-2" target="_blank"><i
                     class="far fa-envelope"></i></a>
                 {% endif %}
-                {% if user.profile.facebook %}
-                <a href="{{user.profile.facebook}}" target="_blank" class="border-right pe-2 ms-1 text-link"><i
+                {% if author.profile.facebook %}
+                <a href="{{author.profile.facebook}}" style="color: #ff0095;" class="p-2" target="_blank"><i
                     class="fab fa-facebook"></i></a>
                 {% endif %}
-                {% if user.profile.instagram %}
-                <a href="{{user.profile.instagram}}" target="_blank" class="border-right pe-2 ms-1 text-link"><i
+                {% if author.profile.instagram %}
+                <a href="{{author.profile.instagram}}" style="color: #55acee;" class="p-2" target="_blank"><i
                     class="fab fa-instagram"></i></a>
                 {% endif %}
-                {% if user.profile.github %}
-                <a href="{{user.profile.github}}" target="_blank" class="border-right pe-2 ms-1 text-link"><i
+                {% if author.profile.github %}
+                <a href="{{author.profile.github}}" style="color: #25d366;" class="p-2" target="_blank"><i
                     class="fab fa-github"></i></a>
                 {% endif %}
-                {% if user.profile.twitter %}
-                <a href="{{user.profile.twitter}}" target="_blank" class="border-right pe-2 ms-1 text-link"><i
+                {% if author.profile.twitter %}
+                <a href="{{author.profile.twitter}}" style="color: #0082ca;" class="p-2" target="_blank"><i
                     class="fab fa-twitter"></i></a>
                 {% endif %}
-                {% if user.profile.website %}
-                <a href=" {{user.profile.website}}" class="ms-1 text-link"><i class="fas fa-globe-asia"></i></a>
+                {% if author.profile.website %}
+                <a href=" {{author.profile.website}}" style="color: #c61118;" class="p-2"><i
+                    class="fas fa-globe-asia"></i></a>
                 {% endif %}
               </p>
             </div>
           </div>
+          <div class="social d-flex mt-2 flex-column" style="z-index: 100;">
+            <h5>Share this blog</h5>
+            <div class="d-flex mt-2 align-items-center justify-content-around" style="z-index: 100;">
+              <a href="https://www.facebook.com/sharer.php?u=http://127.0.0.1:8000/blog/{{post.slug}}/&description={{post.title}}"
+                style="color: #215cda; " class="social-btn text-decoration-none" target="_blank"><i
+                  class="fab fa-facebook-f"></i></a>
+              <a href="https://twitter.com/share?url=http://127.0.0.1:8000/blog/{{post.slug}}/&text={{post.title}}&hashtags={{post.title}}
+              " style="color: #55acee;" class="social-btn text-decoration-none" target="_blank"><i
+                  class="fab fa-twitter"></i></a>
+              <a href="https://api.whatsapp.com/send?text=http://127.0.0.1:8000/blog/{{post.slug}}/&description={{post.title}}"
+                style="color: #25d366;" class="social-btn text-decoration-none" target="_blank"><i
+                  class="fab fa-whatsapp"></i></a>
+              <a href="https://www.linkedin.com/shareArticle?url=http://127.0.0.1:8000/blog/{{post.slug}}/&description={{post.title}}&title={{post.title}}
+              " style="color: #0082ca;" class=" social-btn text-decoration-none" target="_blank"><i
+                  class="fab fa-linkedin-in"></i></a>
+              <a href="https://pinterest.com/pin/create/bookmarklet/?url=http://127.0.0.1:8000/blog/{{post.slug}}/&description={{post.title}}"
+                style="color: #c61118;" class="social-btn text-decoration-none" target="_blank"><i
+                  class="fab fa-pinterest"></i></a>
+            </div>
+          </div>
         </div>
       </div>
+      <div class="offcanvas offcanvas-start p-0  bg-dark text-light m-0" tabindex="-1" id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Responses ({{ comments.count }})</h5>
+          <p type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></p>
+        </div>
+        <div class="offcanvas-body">
+          <div class="col-12 mb-4 bg-darkshadow-sm">
+            <div class="col">
+              <!-- comments -->
+              <button type="button" class="btn btn-outline-primary btn-sm" id="comment">Comment</button>
+              <div class="mb-4 mt-2">
+                <div class="card-body bg-dark border" id="comment-form">
+                  <h3>Leave a comment</h3>
+                  <form method="post" style="margin-top: 1.3em;">
+                    {{ comment_form | crispy }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-primary btn-sm mt-3">Submit</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm mt-3" id="hideComment">cancel</button>
+                  </form>
+                </div>
+              </div>
 
-      <div class="sol-lg-9 col-md-9 sol-sm-11 card mb-4 bg-dark  border shadow-sm mt-3 ">
-        <div class="col py-4">
-          <!-- comments -->
-          <h2>{{ comments.count }} comments</h2>
-          <button type="button" class="btn btn-primary btn-sm" id="comment">Comment</button>
-          <div class="col-md-9 mb-4 mt-3">
-            <div class="card-body bg-dark  border" id="comment-form">
-              <h3>Leave a comment</h3>
-              <form method="post" style="margin-top: 1.3em;">
-                {{ comment_form | crispy }}
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline-primary btn-sm mt-3">Submit</button>
-                <button type="button" class="btn btn-outline-primary btn-sm mt-3" id="hideComment">cancel</button>
-              </form>
-            </div>
-          </div>
-
-          {% for comment in comments %}
-          <div class="comments border mt-2 rounded bg-dark " style="padding: 10px;">
-            <h6 class="d-flex align-items-center justify-content-start">
-              <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>&nbsp;
-              {{ comment.name }}&nbsp; <span style="font-size: 10px; color: #b4b4b6;">
-                ({{ comment.created_on |naturaltime }}) 
-            </span>
-            </h6>
-            <div class="font-weight-bold ps-4">
-              {{ comment.body | linebreaks }}
-              
-              <button type="button" class="btn btn-link text-light btn-sm" id="make-reply{{ comment.id }}">Reply</button>
-            {% if comment.replies.count > 0 %}
-            {% if comment.replies.count == 1 %}
-            <button type="button" class="btn btn-link text-light btn-sm " id="show-reply{{ comment.id }}"> Show
-              {{comment.replies.count}} Reply</button>
-              {% else %}
-              <button type="button" class="btn btn-link text-light btn-sm " id="show-reply{{ comment.id }}"> Show
-                {{comment.replies.count}} Replies</button>
-                {% endif %}
-                {% endif %}
-                
-                <div class="col-md-9 my-4">
-                  <div class="card-body bg-dark border" id="reply-form{{ comment.id }}">
-                    <h5>Reply for this comment</h5>
-                    <form method="post" style="margin-top: 1.3em;">
-                      {{ comment_form.as_p }}
-                      {% csrf_token %}
-                      <!-- Hidden input for parent comment.id -->
-                      <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                      <input class="btn btn-outline-primary  btn-sm" type="submit" value="Reply">
-                      <button type="button" class="btn btn-outline-primary btn-sm"
-                      id="hide-reply{{ comment.id }}">Cancel</button>
-                    </form>
-                  </div>
-            </div>
-            <div class="container" id="reply-box{{ comment.id }}">
-              
-              {% for reply in comment.replies.all %}
-              <div class="col mb-3">
-                <h6 class="font-weight-bold mb-0">
-                  <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;{{ reply.name }}
-                  <span style="font-size: 10px; color: #b4b4b6;">
-                    {{ reply.created_on|naturaltime }}
+              {% for comment in comments %}
+              <hr>
+              <div class="comments mt-2 rounded bg-dark ">
+                <h6 class="d-flex align-items-center justify-content-start">
+                  <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>&nbsp;
+                  {{ comment.name }}&nbsp; <span style="font-size: 10px; color: #b4b4b6;">
+                    ({{ comment.created_on |naturaltime }})
                   </span>
                 </h6>
-                <div class="ps-3">{{ reply.body }}</div>
+                <div class="font-weight-bold ps-2">
+                  {{ comment.body | linebreaks }}
+
+                  <button type="button" class="btn btn-link text-light btn-sm"
+                    id="make-reply{{ comment.id }}">Reply</button>
+                  {% if comment.replies.count > 0 %}
+                  {% if comment.replies.count == 1 %}
+                  <button type="button" class="btn btn-link text-light btn-sm " id="show-reply{{ comment.id }}"> Show
+                    {{comment.replies.count}} Reply</button>
+                  {% else %}
+                  <button type="button" class="btn btn-link text-light btn-sm " id="show-reply{{ comment.id }}"> Show
+                    {{comment.replies.count}} Replies</button>
+                  {% endif %}
+                  {% endif %}
+
+                  <div class="my-4">
+                    <div class="card-body bg-dark border" id="reply-form{{ comment.id }}">
+                      <h5>Reply for this comment</h5>
+                      <form method="post" style="margin-top: 1.3em;">
+                        {{ comment_form.as_p }}
+                        {% csrf_token %}
+                        <!-- Hidden input for parent comment.id -->
+                        <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                        <input class="btn btn-outline-primary  btn-sm" type="submit" value="Reply">
+                        <button type="button" class="btn btn-outline-primary btn-sm"
+                          id="hide-reply{{ comment.id }}">Cancel</button>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="card bg-dark ps-3" id="reply-box{{ comment.id }}">
+
+                    {% for reply in comment.replies.all %}
+                    <div class="col mb-3">
+                      <h6 class="font-weight-bold mb-0">
+                        <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;{{ reply.name }}
+                        <span style="font-size: 10px; color: #b4b4b6;">
+                          {{ reply.created_on|naturaltime }}
+                        </span>
+                      </h6>
+                      <div class="ps-3">{{ reply.body }}</div>
+                    </div>
+                    {% empty %}
+                    {% endfor %}
+                    <button type="button" class="btn text-light btn-link" id="hide-replies{{ comment.id }}">Hide all
+                      replies</button>
+                  </div>
+
+                </div>
               </div>
               {% empty %}
+              <h4>There are no comments yet.</h4>
               {% endfor %}
-              <button type="button" class="btn text-light btn-link" id="hide-replies{{ comment.id }}">Hide all
-                replies</button>
-              </div>
-              
             </div>
           </div>
-            {% empty %}
-            <h4>There are no comments yet.</h4>
-            {% endfor %}
-          </div>
+        </div>
       </div>
     </div>
   </div>
+
 </main>
 {% endblock body %}
 
@@ -186,39 +252,39 @@
     commentBtn.removeAttribute('disabled');
   })
 
-$("textarea").attr("rows", 3)
+  $("textarea").attr("rows", 3)
 
   {% for comment in comments %}
   console.log(comment.id);
   let makeReply{{ comment.id }} = document.querySelector("#make-reply{{ comment.id }}")
   let replyForm{{ comment.id }} = document.querySelector("#reply-form{{ comment.id }}")
   let hideReply{{ comment.id }} = document.querySelector("#hide-reply{{ comment.id }}")
-  replyForm{{ comment.id }}.style.display = 'none'
-  makeReply{{ comment.id }}.addEventListener('click', function () {
-    replyForm{{ comment.id }}.style.display = 'block'
-    replyForm{{ comment.id }}.classList.add("card")
-    makeReply{{ comment.id }}.setAttribute('disabled', "")
+  replyForm{ { comment.id } }.style.display = 'none'
+  makeReply{ { comment.id } }.addEventListener('click', function () {
+    replyForm{ { comment.id } }.style.display = 'block'
+    replyForm{ { comment.id } }.classList.add("card")
+    makeReply{ { comment.id } }.setAttribute('disabled', "")
   })
 
-  hideReply{{ comment.id }}.addEventListener('click', function () {
-    makeReply{{ comment.id }}.removeAttribute('disabled');
-    replyForm{{ comment.id }}.style.display = 'none'
+  hideReply{ { comment.id } }.addEventListener('click', function () {
+    makeReply{ { comment.id } }.removeAttribute('disabled');
+    replyForm{ { comment.id } }.style.display = 'none'
   })
   let showReply{{ comment.id }} = document.querySelector("#show-reply{{ comment.id }}")
   let replyBox{{ comment.id }} = document.querySelector("#reply-box{{ comment.id }}")
   let hideReplies{{ comment.id }} = document.querySelector("#hide-replies{{ comment.id }}")
-  replyBox{{ comment.id }}.style.display = "none"
+  replyBox{ { comment.id } }.style.display = "none"
   {% if comment.replies.count > 0 %}
 
 
-  showReply{{ comment.id }}.addEventListener('click', function () {
-    replyBox{{ comment.id }}.style.display = 'block'
-    showReply{{ comment.id }}.setAttribute('disabled', "")
+  showReply{ { comment.id } }.addEventListener('click', function () {
+    replyBox{ { comment.id } }.style.display = 'block'
+    showReply{ { comment.id } }.setAttribute('disabled', "")
   })
 
-  hideReplies{{ comment.id }}.addEventListener('click', function () {
-    replyBox{{ comment.id }}.style.display = 'none'
-    showReply{{ comment.id }}.removeAttribute('disabled');
+  hideReplies{ { comment.id } }.addEventListener('click', function () {
+    replyBox{ { comment.id } }.style.display = 'none'
+    showReply{ { comment.id } }.removeAttribute('disabled');
   })
   {% endif %}
   {% endfor %}

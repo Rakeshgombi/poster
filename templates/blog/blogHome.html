@@ -14,36 +14,51 @@
 {% endblock css %}
 
 {% block body %}
-<main class="bg-dark text-light py-5">
-  <div class="container">
-    <h2>All Blogs</h2>
-    {% for post in allPosts %}
-    <div
-      class="row no-gutters border rounded overflow-hidden flex-md-row  shadow-sm h-md-250 my-4 position-relative bg-dark p-1 mx-auto ps-3"
-      data-aos="fade-up">
-      <div class="col d-flex flex-column position-static col-10 p-2">
-        <strong class="d-inline-block mb-2 text-link text-uppercase">{{post.category}}</strong>
-        <h3 class="mb-0"><a href="/blog/{{post.slug}}" class="text-decoration-none text-light">{{ post.title }}</a></h3>
-        <div class="mb-1 ">{{post.timestamp}}</div>
-        <div class="card-text mb-3 control-img overflow-hidden">
-          <p class="previews text-justify overflow-hidden" style="
-        max-block-size: 50px;">{{post.content|escape|safe|truncatewords:50}}</p>
+
+<section class="bg-dark text-light d-flex justify-content-center" id="blogs">
+  <div class="container mx-0 px-0">
+    <div class="row g-5 position-relative d-flex align-items-start">
+      <div class="col-md-9 rounded">
+        <h3>All Posts</h3>
+        {% for post in allPosts %}
+        <!-- <hr> -->
+        <div class="row no-gutters overflow-hidden flex-md-row h-md-250 my-2 position-relative p-1 mx-auto"
+          data-aos="fade-up">
+          <div class="col d-flex flex-column position-static col-auto col-lg-9 col-sm-12  py-2">
+            <strong class="d-inline-block mb-2 text-link text-uppercase">{{post.category}}</strong>
+            <a href="/blog/{{post.slug}}" class="text-decoration-none text-light"><h3 class="mb-0">{{ post.title }}
+            </h3>
+            <div class="mb-1 ">{{post.timestamp}}</div>
+            <div class="card-text mb-3 control-img overflow-hidden">
+              <p class="previews text-justify overflow-hidden" style="
+            max-block-size: 50px;">{{post.content|escape|safe|truncatewords:50}}</p>
+            </div>
+          </a>
+          </div>
+          <div class="col-auto d-none d-lg-block col-3 p-0 m-0">
+            {% if post.thumbnail %}
+            <img src="{{ post.thumbnail.url }}" alt="Thumbnail" height="150" style="width:100%; max-height: 250px">
+            {% else %}
+            <img src="https://source.unsplash.com/300x400/?{{ post.category }}" class="" alt="..." height="150"
+              style="width:100%; max-height: 250px">
+            {% endif %}
+          </div>
         </div>
-        <div class="col-12">
-          <a href="/blog/{{post.slug}}" role="button" class="btn btn-primary">Continue reading</a>
-        </div>
+        {% endfor %}
       </div>
-      <div class="col-auto d-none d-lg-block col-2 p-0 m-0">
-        {% if post.thumbnail %}
-        <img src="{{ post.thumbnail.url }}" alt="Thumbnail" height="250"style="width:100%; max-height: 250px">
-        {% else %}
-        <img src="https://source.unsplash.com/300x600/?{{ post.category }}" class="" alt="..." height="250"style="width:100%; max-height: 250px">
-        {% endif %}       
+      <div class="col-md-3 position-sticky" style="top: 2rem;">
+        <h3 class="fst-italic">Search by category</h3>
+        <hr>
+        <div class='d-flex flex-wrap align-items-center justify-content-center'>
+          {% for category in categories %}
+          <a href="/search/?csrfmiddlewaretoken=3G0eangPBft4fYbv4wwZ0cnUPKiix5MmwsyFbIaYFmzUbNyDCN5h3eMqPL4enZeF&query={{category.category}}"
+            class="btn btn-outline-secondary bg-dark m-1 p-1 btn-sm text-muted text-uppercase">{{category.category}}</a>
+          {% endfor %}
+        </div>
       </div>
     </div>
-    {% endfor %}
   </div>
-</main>
+</section>
 {% endblock body %}
 
 {% block script %}
