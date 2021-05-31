@@ -220,10 +220,10 @@
   <div class="container mt-5 col-lg-8">
     {% if allPosts.count > 0 %}
     <h2 class="">Your Posts</h2>
-    <hr>
     {% for post in allPosts %}
+    <hr>
     <div
-      class="row no-gutters rounded overflow-hidden flex-md-row shadow-sm h-md-250 position-relative bg-dark col-lg-12 mx-auto">
+      class="row no-gutters rounded overflow-hidden flex-md-row h-md-250 position-relative bg-dark col-lg-12 mx-auto">
       <div class="col d-flex flex-column position-static col-12 col-lg-9">
         <strong class="d-inline-block mb-2 text-link text-uppercase">{{post.category}}</strong>
         <h5 class="mb-1"><a href="/blog/{{post.slug}}" class="text-link">{{ post.title }}</a></h5>
@@ -270,7 +270,6 @@
       </div>
 
     </div>
-    <hr>
     {% endfor %}
   </div>
   {% else %}

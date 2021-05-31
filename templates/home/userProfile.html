@@ -70,17 +70,19 @@
           {% endif %}
           {% if profile.github %}
           <li class="nav-item text-truncate mb-1"><a href="{{profile.github}}" target="_blank"
-              class=" text-decoration-none text-light text-light"><i class="fab fa-github"></i> {{profile.github}}</a></li>
+              class=" text-decoration-none text-light text-light"><i class="fab fa-github"></i> {{profile.github}}</a>
+          </li>
           {% endif %}
           {% if profile.twitter %}
           <li class="nav-item text-truncate mb-1">
-            <a href="{{profile.twitter}}" target="_blank" class=" text-decoration-none text-light"><i class="fab fa-twitter"></i>
+            <a href="{{profile.twitter}}" target="_blank" class=" text-decoration-none text-light"><i
+                class="fab fa-twitter"></i>
               {{profile.twitter}}</a>
           </li>
           {% endif %}
           {% if profile.website %}
-          <li class="nav-item text-truncate mb-1"><a href="{{profile.website}}" class=" text-decoration-none text-light"><i
-                class="fas fa-globe-asia"></i> {{profile.website}}</a></li>
+          <li class="nav-item text-truncate mb-1"><a href="{{profile.website}}"
+              class=" text-decoration-none text-light"><i class="fas fa-globe-asia"></i> {{profile.website}}</a></li>
           {% endif %}
         </ul>
       </div>
@@ -90,13 +92,13 @@
     <h2 class="">Posts</h2>
     {% if allPosts.count > 0 %}
     {% for post in allPosts %}
+    <hr>
     <div
-      class="row no-gutters border-top  overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-2 position-relative  bg-dark  p-1 col-lg-12 mx-auto">
-      <div class="col p-2 d-flex flex-column position-static   justify">
+      class="row no-gutters rounded overflow-hidden flex-md-row h-md-250 position-relative bg-dark col-lg-12 mx-auto">
+      <div class="col d-flex flex-column position-static col-12">
         <strong class="d-inline-block mb-2 text-link text-uppercase">{{post.category}}</strong>
         <h5 class="mb-1"><a href="/blog/{{post.slug}}" class="text-link">{{ post.title }}</a></h5>
         <div class="mb-1 ">{{post.timestamp}}</div>
-
       </div>
 
     </div>

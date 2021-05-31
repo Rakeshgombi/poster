@@ -1,7 +1,6 @@
 * {
   scroll-behavior: smooth;
 }
-
 .land-bg {
   display: flex;
   justify-content: center;
@@ -42,7 +41,7 @@
 section {
   width: 100%;
   margin: 0 auto;
-  padding: 60px 15px;
+  /* padding: 60px 15px; */
   transition: transform 0.25s;
   will-change: transform;
 }
