@@ -41,9 +41,10 @@
 section {
   width: 100%;
   margin: 0 auto;
-  /* padding: 60px 15px; */
+  padding: 60px 15px;
   transition: transform 0.25s;
   will-change: transform;
+  z-index: -1;
 }
 
 .row {

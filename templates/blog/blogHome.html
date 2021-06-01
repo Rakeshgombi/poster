@@ -6,7 +6,7 @@
 {% block title %}Poster | All Posts{% endblock title %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'style/home.css' %}">
+{% comment %} <link rel="stylesheet" href="{% static 'style/home.css' %}"> {% endcomment %}
 <link rel="stylesheet" href="{% static 'aos/aos.css' %}">
 <style>
   .previews a {
@@ -30,7 +30,7 @@
 
 {% block body %}
 
-<section class="bg-dark text-light d-flex justify-content-center" id="blogs">
+<section class="bg-dark text-light d-flex justify-content-center mt-5" id="blogs">
   <div class="container mx-0 px-0">
     <div class="row g-5 position-relative d-flex align-items-start">
       <div class="col-md-9 rounded">
