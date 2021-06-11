@@ -69,6 +69,22 @@
       border: 1px solid #66696d !important;
     }
 
+    .border-top {
+      border-top: 1px solid #66696d !important;
+    }
+
+    .border-left {
+      border-left: 1px solid #66696d !important;
+    }
+
+    .border-bottom {
+      border-bottom: 1px solid #66696d !important;
+    }
+
+    .border-right {
+      border-right: 1px solid #66696d !important;
+    }
+
 
     .text-link {
       color: #58a6ff !important;
@@ -166,33 +182,155 @@
       display: none;
     }
 
-    body::-webkit-scrollbar {
-      display: none;
+    ::-webkit-scrollbar {
+      max-width: 5px;
     }
 
-    .border-bottom {
-      border-bottom: 1px solid #555 !important;
+    /* Track */
+    ::-webkit-scrollbar-track {
+      /* box-shadow: inset 0 0 5px grey; */
+      background: none;
     }
 
-    .border-top {
-      border-top: 1px solid #555 !important;
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+
+      background: rgba(255, 255, 255, 0.198);
+      /* border-radius: 10px; */
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.255);
+    }
+
+    .progress {
+      position: relative;
+      height: 1px;
+      display: block;
+      width: 100%;
+      background-color: white;
+      border-radius: 2px;
+      background-clip: padding-box;
+      /*margin: 0.5rem 0 1rem 0;*/
+      overflow: hidden;
+
+    }
+
+    .progress .indeterminate {
+      background-color: black;
+    }
+
+    .progress .indeterminate:before {
+      content: '';
+      position: absolute;
+      background-color: #2C67B1;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      will-change: left, right;
+      -webkit-animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+      animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+    }
+
+    .progress .indeterminate:after {
+      content: '';
+      position: absolute;
+      background-color: #2C67B1;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      will-change: left, right;
+      -webkit-animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+      animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+      -webkit-animation-delay: 1.15s;
+      animation-delay: 1.5s;
+    }
+
+    @-webkit-keyframes indeterminate {
+      0% {
+        left: -35%;
+        right: 100%;
+      }
+
+      60% {
+        left: 100%;
+        right: -90%;
+      }
+
+      100% {
+        left: 100%;
+        right: -90%;
+      }
+    }
+
+    @keyframes indeterminate {
+      0% {
+        left: -35%;
+        right: 100%;
+      }
+
+      60% {
+        left: 100%;
+        right: -90%;
+      }
+
+      100% {
+        left: 100%;
+        right: -90%;
+      }
+    }
+
+    @-webkit-keyframes indeterminate-short {
+      0% {
+        left: -200%;
+        right: 100%;
+      }
+
+      60% {
+        left: 107%;
+        right: -8%;
+      }
+
+      100% {
+        left: 107%;
+        right: -8%;
+      }
+    }
+
+    @keyframes indeterminate-short {
+      0% {
+        left: -200%;
+        right: 100%;
+      }
+
+      60% {
+        left: 107%;
+        right: -8%;
+      }
+
+      100% {
+        left: 107%;
+        right: -8%;
+      }
     }
   </style>
 </head>
 
 <body class="bg-dark text-light">
   <!-- START LOADER HTML -->
-  <div class="fullpage-loader bg-dark">
+  <!-- <div class="fullpage-loader bg-dark">
     <div class="fullpage-loader__logo">
       <div class="box"><img src="{% static 'logo/p1.png' %}" alt="" class="loader-image"></div>
       <div class="box"><img src="{% static 'logo/p2.png' %}" alt="" class="loader-image spinner"></div>
     </div>
-  </div>
+  </div> -->
   <!-- END LOADER HTML -->
-  <header class="bg-dark border-bottom">
+  <header class="bg-dark border-bottom sticky-top">
+ 
     <nav class="navbar navbar-expand-lg navbar-dark" style="background:#212529 !important;">
       <div class="container-fluid px-4 ">
-        <a class="navbar-brand logo" href="/"> </a>
+        <a class="navbar-brand logo" href="/" title="poster logo" alt="poster logo"> </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -205,7 +343,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link {% block blogactive %}{% endblock blogactive %}" aria-current="page" href="/blog/"><i
-                  class="fas fa-server"></i> Blog</a>
+                  class="fas fa-server"></i> Blogs</a>
             </li>
             <li class="nav-item">
               <a class="nav-link {% block contactactive %}{% endblock contactactive %}" aria-current="page"
@@ -228,7 +366,7 @@
           </ul>
           <ul class="navbar-nav mb-2">
             <li class="nav-item ">
-              <form class="d-flex" action="/search/" method="GET">{% csrf_token %}
+              <form class="d-flex" action="/search/" method="GET">
                 <input class="form-control flex-auto me-1 border-success input-sm" type="search" placeholder="Search"
                   aria-label="Search" name="query" id="query" style="border: 1px solid #50555c;">
                 <button class="btn btn-outline-success btn-sm" type="submit"><i class="fa fa-search"
@@ -364,6 +502,9 @@
         </div>
       </div>
     </nav>
+    <div class="progress" id="PreLoaderBar">
+      <div class="indeterminate"></div>
+    </div>
   </header>
   {% for message in messages %}
   <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-0" role="alert">
@@ -440,8 +581,13 @@
   //   }
   // }
 
-  $(".bg-dark").attr('style',)
-
+  // $(".bg-dark").attr('style',)
+  document.onreadystatechange = function () {
+    if (document.readyState === "complete") {
+      console.log(document.readyState);
+      document.getElementById("PreLoaderBar").style.display = "none";
+    }
+  }
 </script>
 
 </html>

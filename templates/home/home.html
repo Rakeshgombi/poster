@@ -9,36 +9,35 @@
 <link rel="stylesheet" href="{% static 'style/home.css' %}">
 <link rel="stylesheet" href="{% static 'aos/aos.css' %}">
 <style>
+  .land-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    top: 0;
+  }
 
+  .land-bg .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: aliceblue;
+  }
 
-.land-bg {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 100%;
-  height: 70vh;
-  top: 0;
-}
- 
-.land-bg .content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  color: aliceblue;
-}
+  .land-bg h1 {
+    text-align: center;
+    font-size: 3rem;
+  }
 
-.land-bg h1 {
-  text-align: center;
-  font-size: 3rem;
-}
-.land-bg p {
-  text-align: center;
-  font-size: 2rem;
-}
+  .land-bg p {
+    text-align: center;
+    font-size: 2rem;
+  }
 
-  .land-bg::before{
+  .land-bg::before {
     position: absolute;
     content: "";
     top: 0;
@@ -47,6 +46,11 @@
     height: 100%;
     background: url("{% static 'background/lang-bg.jpeg'%}") no-repeat center center/cover;
     z-index: -10;
+  }
+
+  .previews a {
+    color: #FAFBFC !important;
+    text-decoration: none !important;
   }
 </style>
 {% endblock css %}
@@ -65,20 +69,22 @@
     <div class="row g-5 position-relative d-flex align-items-start jusify-contents-center">
       <div class="col-md-9">
         <h3>Trending on Poster</h3>
+        <hr>
         {% for post in allPosts %}
         <!-- <hr> -->
         <div
-          class="row no-gutters overflow-hidden flex-md-row h-md-250 my-2 position-relative p-1 mx-auto"
+          class="row blog-post visible no-gutters overflow-hidden flex-md-row h-md-250 my-2 position-relative p-1 mx-auto"
           data-aos="fade-up">
           <div class="col d-flex flex-column position-static col-auto col-lg-9 col-sm-12  py-2">
             <strong class="d-inline-block mb-2 text-link text-uppercase">{{post.category}}</strong>
-            <a href="/blog/{{post.slug}}" class="text-decoration-none text-light"><h3 class="mb-0">{{ post.title }}
-            </h3>
-            <div class="mb-1 ">{{post.timestamp}}</div>
-            <div class="card-text mb-3 control-img overflow-hidden">
-              <p class="previews text-justify overflow-hidden" style="
+            <a href="/blog/{{post.slug}}" class="text-decoration-none text-light">
+              <h3 class="mb-0" title="title: {{ post.title }}">{{ post.title }}</h3>
+              <div class="mb-1 ">{{post.timestamp}}</div>
+              <div class="card-text mb-3 control-img overflow-hidden">
+                <p class="previews text-justify overflow-hidden" style="
             max-block-size: 50px;">{{post.content|escape|safe|truncatewords:50}}</p>
-            </div></a>
+              </div>
+            </a>
             <!-- <div class="col-12">
               <a href="/blog/{{post.slug}}" role="button" class="btn btn-outline-success">Continue reading</a>
             </div> -->
@@ -87,31 +93,87 @@
             {% if post.thumbnail %}
             <img src="{{ post.thumbnail.url }}" alt="Thumbnail" height="150" style="width:100%; max-height: 250px">
             {% else %}
-            <img src="https://source.unsplash.com/300x400/?{{ post.category }}" class="" alt="..." height="150"
+            <img src="https://source.unsplash.com/600x400/weekly?{{ post.category }}" class="" alt="..." height="150"
               style="width:100%; max-height: 250px">
             {% endif %}
           </div>
         </div>
         {% endfor %}
         <div class="container text-center">
-          {% if allPosts.count > 10 %}
-          <a href="/blog/" class="">Load More</a>
+          {% if allPosts.count > 9 %}
+          <a href="/blog/" class="text-muted">Load More</a>
           {% endif %}
         </div>
       </div>
-      <div class="col-md-3 position-sticky p-3" style="top: 2rem;">
-        <h3 class="fst-italic">Search by category</h3>
-        <hr>
-        <div class='d-flex flex-wrap align-items-center justify-content-center'>
-          {% for category in categories %}
-          <a href="/search/?csrfmiddlewaretoken=3G0eangPBft4fYbv4wwZ0cnUPKiix5MmwsyFbIaYFmzUbNyDCN5h3eMqPL4enZeF&query={{category.category}}" class="btn btn-outline-secondary bg-dark m-1 p-1 btn-sm text-muted text-uppercase">{{category.category}}</a>
-          {% endfor %}
+      <div class="d-sm-none d-md-block col-md-3 position-sticky p-3" style="top: 5.6rem;">
+        <div class="col">
+          <div class="text-center">
+            <img src="{% static 'logo/favicon.png' %}" class="" width="60" height="60"
+              alt="{{user.first_name}} {{user.last_name}} avatar" title="{{user.first_name}} {{user.last_name}} avatar">
+          </div>
+          <h5 class="mt-2 text-center">Poster is a community of</h5>
+          <div class="row mb-0 mt-3 text-center d-flex justify-content-center align-items-center">
+            <div class="col-auto p-0">
+              <h3><i class="fa fa-users" aria-hidden="true"></i></h3>
+              <h5><span class="count">{{users|length}}</span> Bloggers</h5>
+            </div>
+            <div class="col-auto p-0 ms-2">
+              <h3><i class="fas fa-server"></i></h3>
+              <h5><span class="count">{{allposts|length}}</span> Posts</h5>
+            </div>
+          </div>
+          {% if not request.user.is_authenticated %}
+          <div class="col-12 mt-3 d-flex flex-column justify-content-center align-items-center">
+            <button class="btn btn-outline-primary w-75 btn-sm" type="button" data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasSignUp" aria-controls="offcanvasRight"><i class="fas fa-user-plus"></i>
+              SignUp</button>
+            <button class="btn btn-outline-primary w-75 mt-2 btn-sm" type="button" data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasSignIn" aria-controls="offcanvasRight"><i class="fas fa-sign-in-alt"></i>
+              SignIn</button>
+          </div>
+          {% else %}
+          <div class="col-12 mt-3 d-flex flex-column justify-content-center align-items-center">
+            <a class="btn btn-outline-primary w-75 btn-sm" href="/blog/composeblog/"><i class="far fa-edit"></i> Compose
+              Blog</a>
+          </div>
+          {% endif %}
+
+        </div>
+        <div class="col mt-4">
+          <h3 class="fst-italic text-center">Search by category</h3>
+          <hr>
+          <div class='row d-flex justify-content-center align-items-center overflow-auto' style="max-height: 200px;">
+            {% for category in categories %}
+            <a href="http://127.0.0.1:8000/search/?query={{category.category}}"
+              class="btn btn-outline-secondary d-block mw-100 bg-dark p-1 btn-sm m-1 no-gutters text-muted col-5 text-uppercase text-truncate"
+              title="{{category.category}}">{{category.category}}</a>
+            {% endfor %}
+          </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 </section>
 {% endblock body %}
 {% block script %}
 <script src="{% static 'scripts/home.js' %}"></script>
+<script>
+  $('.count').hide()
+  window.onload = function () {
+    $('.count').show()
+    $('.count').each(function () {
+      $(this).prop('Counter', 0).animate({
+        Counter: $(this).text()
+      }, {
+        duration: 2500,
+        easing: 'swing',
+        step: function (now) {
+          $(this).text(Math.ceil(now));
+        }
+      });
+    });
+  }
+
+</script>
 {% endblock script %}

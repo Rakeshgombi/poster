@@ -15,9 +15,10 @@ from .forms import CommentForm
 
 
 def blogHome(request):
+    users = User.objects.all()
     allPost = Post.objects.all()
     categories = Post.objects.values('category').distinct()
-    context = {"allPosts": allPost, "categories":categories}
+    context = {"allPosts": allPost, "categories":categories, "users": users}
     return render(request, 'blog/blogHome.html', context)
 
 

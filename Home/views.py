@@ -14,8 +14,10 @@ import random
 
 def index(request):
     categories = Post.objects.values('category').distinct()
-    allPost = Post.objects.all().order_by('-views')[:10:1]
-    context = {"allPosts": allPost, "categories":categories}
+    users = User.objects.all()
+    allPost = Post.objects.all().order_by('-views')[:10]
+    allpost = Post.objects.all()
+    context = {"allPosts": allPost, "categories":categories, "users": users, "allposts": allpost}
     return render(request, 'home/home.html', context)
 
 
@@ -24,7 +26,9 @@ def about(request):
 
 
 def search(request):
-    query = request.GET['query']
+    users = User.objects.all()
+    allPost = Post.objects.all().order_by
+    query = request.GET.get('query', "")
     if len(query) > 70:
         allPosts = Post.objects.none()
     else:
@@ -35,7 +39,7 @@ def search(request):
         allPosts = allPostsTitle.union(allPostsAuthor, allPostsContent, allPostsCategory)
 
     categories = Post.objects.values('category').distinct()
-    context = {"allposts": allPosts, "categories":categories, 'query':query}
+    context = {"allposts": allPosts, "categories":categories, 'query':query, "users": users, "allPosts": allPost}
     return render(request, 'home/search.html', context)
 
 

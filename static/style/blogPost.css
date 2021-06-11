@@ -13,10 +13,8 @@
   font-size: 16px !important;
 }
 
-pre[class*="language-"]::-webkit-scrollbar {
-  display: none;
-}
-pre, code {
+pre,
+code {
   max-height: 80vh;
   overflow-y: auto;
 }

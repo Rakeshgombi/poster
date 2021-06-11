@@ -39,10 +39,10 @@
       <div class="bg-dark row ">
         <div class="popup col-2 col-lg-12 col-sm-2  p-0">
           {% if profile.display_pic %}
-          <img src="{{ profile.display_pic.url}}" width="400" height="400">
+          <img src="{{ profile.display_pic.url}}" width="400" height="400" alt="{{user.first_name}} {{user.last_name}} avatar" title="{{user.first_name}} {{user.last_name}} avatar">
 
           {% else %}
-          <img src="{% static 'logo/favicon.png' %}" class="" alt="...">
+          <img src="{% static 'logo/favicon.png' %}"  width="400" height="400" alt="{{user.first_name}} {{user.last_name}} avatar" title="{{user.first_name}} {{user.last_name}} avatar">
           {% endif %}
         </div>
         <div class="col bg-dark text-light col col-10 col-lg-12 p-2 px-3 col-sm-10">
