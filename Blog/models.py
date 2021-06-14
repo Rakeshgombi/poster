@@ -8,6 +8,7 @@ class Post(models.Model):
     sno = models.AutoField(primary_key=True)
     category = models.CharField(max_length=50, default="")
     title = models.CharField(max_length=300, default="")
+    subtitle = models.CharField(max_length=300, default="", null=True, blank=True)
     author = models.CharField(max_length=255, default="")
     content = RichTextField(blank=True, null=True)
     thumbnail = ResizedImageField(size=[620, 400], crop=['middle', 'center'], quality=100, upload_to="blogThumbs", blank=True, null=True)

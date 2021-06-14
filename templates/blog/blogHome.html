@@ -6,7 +6,8 @@
 {% block title %}Poster | All Posts{% endblock title %}
 
 {% block css %}
-{% comment %} <link rel="stylesheet" href="{% static 'style/home.css' %}"> {% endcomment %}
+{% comment %}
+<link rel="stylesheet" href="{% static 'style/home.css' %}"> {% endcomment %}
 <link rel="stylesheet" href="{% static 'aos/aos.css' %}">
 <style>
   .previews a {
@@ -20,52 +21,57 @@
 {% endblock css %}
 
 {% block body %}
-
 <section class="bg-dark text-light d-flex justify-content-center py-5" id="blogs">
   <div class="container mx-0 px-0">
-    <div class="row g-5 position-relative d-flex align-items-start jusify-contents-center">
-      <div class="col-md-9">
+    <div class="row g-5 position-relative d-flex align-items-start jusify-contents-center mx-auto">
+      <div class="col-12 col-md-9 px-0 mx-auto px-1">
         <h3>All Posts</h3>
         <hr>
         {% for post in allPosts %}
         <!-- <hr> -->
         <div
-          class="row blog-post visible no-gutters overflow-hidden flex-md-row h-md-250 my-2 position-relative p-1 mx-auto" data-aos="fade-up">
-          <div class="col d-flex flex-column position-static col-auto col-lg-9 col-sm-12  py-2">
-            <strong class="d-inline-block mb-2 text-link text-uppercase">{{post.category}}</strong>
+          class="row blog-post visible no-gutters overflow-hidden flex-md-row h-md-250 my-2 position-relative py-1 mx-auto d-flex align-items-center col-md-12"
+          data-aos="fade-up">
+          <div class="col d-flex flex-column align-items-start col-lg-9 col-sm-12 py-2">
+            <div class="col-12 d-flex justify-content-between">
+              <strong class="d-inline-block mb-2 text-link text-uppercase"
+                title="Category: {{post.category}}">{{post.category}}</strong>
+              <strong class="d-inline-block mb-2 text-muted text-lowercase" title="Author: {{post.author}}">by
+                {{post.author}}</strong>
+            </div>
             <a href="/blog/{{post.slug}}" class="text-decoration-none text-light">
-              <h3 class="mb-0" title="title: {{ post.title }}">{{ post.title }}</h3>
-              <div class="mb-1 ">{{post.timestamp}}</div>
-              <div class="card-text mb-3 control-img overflow-hidden">
-                <p class="previews text-justify overflow-hidden" style="
-            max-block-size: 50px;">{{post.content|escape|safe|truncatewords:50}}</p>
+              <h5 class="mb-0" title="title: {{ post.title }}">{{ post.title }}</h5>
+              <div class="mb-1 text-muted"><small>{{post.timestamp}}</small></div>
+              <div class="card-text mb-3">
+                <p class="text-justify">{{post.subtitle|truncatechars:75}}</p>
               </div>
             </a>
             <!-- <div class="col-12">
-              <a href="/blog/{{post.slug}}" role="button" class="btn btn-outline-success">Continue reading</a>
-            </div> -->
+            <a href="/blog/{{post.slug}}" role="button" class="btn btn-outline-success">Continue reading</a>
+          </div> -->
           </div>
-          <div class="col-auto d-none d-lg-block col-3 p-0 m-0">
+          <div class="col-auto d-none d-lg-flex align-items-center jusify-contents-center h-100 col-3 p-0 m-0">
             {% if post.thumbnail %}
-            <img src="{{ post.thumbnail.url }}" alt="Thumbnail" height="150" style="width:100%; max-height: 250px">
+            <img src="{{ post.thumbnail.url }}" class="" title="Post Thumbnail" alt="Post Thumnail"
+              style="width:100%; max-height: 100%">
             {% else %}
-            <img src="https://source.unsplash.com/600x400/weekly?{{ post.category }}" class="" alt="..." height="150"
-              style="width:100%; max-height: 250px">
+            <img src="https://source.unsplash.com/600x400/weekly?{{ post.category }}" class="" title="Post Thumbnail"
+              alt="Post Thumnail" style="width:100%; max-height: 100%">
             {% endif %}
           </div>
         </div>
         {% endfor %}
-        <!-- <div class="container text-center">
-          {% if allPosts.count > 10 %}
-          <a href="/blog/" class="">Load More</a>
+        <div class="container text-center">
+          {% if allPosts.count > 9 %}
+          <a href="/blog/" class="text-muted" title="Obtain all our posts">Load More</a>
           {% endif %}
-        </div> -->
+        </div>
       </div>
       <div class="d-sm-none d-md-block col-md-3 position-sticky p-3" style="top: 5.6rem;">
         <div class="col">
           <div class="text-center">
-            <img src="{% static 'logo/favicon.png' %}" class="" width="60" height="60"
-            alt="{{user.first_name}} {{user.last_name}} avatar" title="{{user.first_name}} {{user.last_name}} avatar">
+            <img src="{% static 'logo/favicon.png' %}" class="" width="60" height="60" alt="Poster Logo"
+              title="Poster Logo">
           </div>
           <h5 class="mt-2 text-center">Poster is a community of</h5>
           <div class="row mb-0 mt-3 text-center d-flex justify-content-center align-items-center">
@@ -75,32 +81,35 @@
             </div>
             <div class="col-auto p-0 ms-2">
               <h3><i class="fas fa-server"></i></h3>
-              <h5><span class="count">{{allPosts|length}}</span> Posts</h5>
+              <h5><span class="count">{{allposts|length}}</span> Posts</h5>
             </div>
           </div>
           {% if not request.user.is_authenticated %}
           <div class="col-12 mt-3 d-flex flex-column justify-content-center align-items-center">
             <button class="btn btn-outline-primary w-75 btn-sm" type="button" data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasSignUp" aria-controls="offcanvasRight"><i class="fas fa-user-plus"></i>
+              data-bs-target="#offcanvasSignUp" aria-controls="offcanvasRight" title="Signup to post your own Blog"><i
+                class="fas fa-user-plus"></i>
               SignUp</button>
             <button class="btn btn-outline-primary w-75 mt-2 btn-sm" type="button" data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasSignIn" aria-controls="offcanvasRight"><i class="fas fa-sign-in-alt"></i>
+              data-bs-target="#offcanvasSignIn" aria-controls="offcanvasRight" title="Signin to post your own Blog"><i
+                class="fas fa-sign-in-alt"></i>
               SignIn</button>
           </div>
           {% else %}
           <div class="col-12 mt-3 d-flex flex-column justify-content-center align-items-center">
-            <a class="btn btn-outline-primary w-75 btn-sm" href="/blog/composeblog/"><i class="far fa-edit"></i> Compose
+            <a class="btn btn-outline-primary w-75 btn-sm" href="/blog/composeblog/" title="Compose Your own Blog"><i
+                class="far fa-edit"></i> Compose
               Blog</a>
           </div>
           {% endif %}
 
         </div>
         <div class="col mt-4">
-          <h3 class="fst-italic">Search by category</h3>
+          <h3 class="fst-italic text-center">Search by category</h3>
           <hr>
           <div class='row d-flex justify-content-center align-items-center overflow-auto' style="max-height: 200px;">
             {% for category in categories %}
-            <a href="http://127.0.0.1:8000/search/?query={{category.category}}"
+            <a href="/search/?query={{category.category}}"
               class="btn btn-outline-secondary d-block mw-100 bg-dark p-1 btn-sm m-1 no-gutters text-muted col-5 text-uppercase text-truncate"
               title="{{category.category}}">{{category.category}}</a>
             {% endfor %}
@@ -108,7 +117,6 @@
         </div>
       </div>
     </div>
-  </div>
   </div>
 </section>
 {% endblock body %}

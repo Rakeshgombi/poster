@@ -13,25 +13,25 @@
     color: #FAFBFC !important;
     text-decoration: none !important;
   }
+
   .popup {
     /* margin: 15px 0; */
     border-radius: 20px;
     background: #212529;
     box-shadow: 8px 8px 12px #0d0f10c0,
       -8px -8px 12px #353b42b2;
-    transition: all .2s linear;    
-    
+    transition: all .2s linear;
+
   }
 </style>
 {% endblock css %}
 
 {% block body %}
-<section class="bg-dark text-light d-flex justify-content-center" id="blogs">
+<section class="bg-dark text-light d-flex justify-content-center py-5" id="blogs">
   <div class="container mx-0 px-0">
-    <div class="row g-5 position-relative d-flex align-items-start">
-      <div class="col-md-9 rounded">
-        {% if allposts.count < 1 %}
-        <p> Your search - <b>{{query}}</b> - did not match any documents.</p>
+    <div class="row g-5 position-relative d-flex align-items-start jusify-contents-center mx-auto">
+      <div class="col-12 col-md-9 px-0">
+        {% if allposts.count < 1 %} <p> Your search - <b>{{query}}</b> - did not match any documents.</p>
           <p>Suggestions:</p>
           <ul>
             <li> Make sure that all words are spelled correctly.</li>
@@ -42,25 +42,34 @@
           <h2 class="mb-3">About ({{allposts.count}}) posts found</h2>
           {% for post in allposts %}
           <!-- <hr> -->
-          <div class="row no-gutters overflow-hidden flex-md-row h-md-250 my-2 position-relative p-1 mx-auto"
+          <div
+            class="row blog-post visible no-gutters overflow-hidden flex-md-row h-md-250 my-2 position-relative py-1 mx-auto d-flex align-items-center col-md-12"
             data-aos="fade-up">
-            <div class="col d-flex flex-column position-static col-auto col-lg-9 col-sm-12  py-2">
-              <strong class="d-inline-block mb-2 text-link text-uppercase">{{post.category}}</strong>
-              <a href="/blog/{{post.slug}}" class="text-decoration-none text-light"><h4 class="mb-0">{{ post.title }}
-              </h4>
-              <div class="mb-1 ">{{post.timestamp}}</div>
-              <div class="card-text mb-3 control-img overflow-hidden">
-                <p class="previews text-justify overflow-hidden" style="
-              max-block-size: 50px;">{{post.content|escape|safe|truncatewords:50}}</p>
+            <div class="col d-flex flex-column align-items-start col-lg-9 col-sm-12 py-2">
+              <div class="col-12 d-flex justify-content-between">
+                <strong class="d-inline-block mb-2 text-link text-uppercase"
+                  title="Category: {{post.category}}">{{post.category}}</strong>
+                <strong class="d-inline-block mb-2 text-muted text-lowercase" title="Author: {{post.author}}">by
+                  {{post.author}}</strong>
               </div>
-            </a>
+              <a href="/blog/{{post.slug}}" class="text-decoration-none text-light">
+                <h5 class="mb-0" title="title: {{ post.title }}">{{ post.title }}</h5>
+                <div class="mb-1 text-muted"><small>{{post.timestamp}}</small></div>
+                <div class="card-text mb-3">
+                  <p class="text-justify">{{post.subtitle|truncatechars:75}}</p>
+                </div>
+              </a>
+              <!-- <div class="col-12">
+            <a href="/blog/{{post.slug}}" role="button" class="btn btn-outline-success">Continue reading</a>
+          </div> -->
             </div>
-            <div class="col-auto d-none d-lg-block col-3 p-0 m-0">
+            <div class="col-auto d-none d-lg-flex align-items-center jusify-contents-center h-100 col-3 p-0 m-0">
               {% if post.thumbnail %}
-              <img src="{{ post.thumbnail.url }}" alt="Thumbnail" height="150" style="width:100%; max-height: 250px">
+              <img src="{{ post.thumbnail.url }}" class="" title="Post Thumbnail" alt="Post Thumnail"
+                style="width:100%; max-height: 100%">
               {% else %}
-              <img src="https://source.unsplash.com/300x400/?{{ post.category }}" class="" alt="..." height="150"
-                style="width:100%; max-height: 250px">
+              <img src="https://source.unsplash.com/600x400/weekly?{{ post.category }}" class="" title="Post Thumbnail"
+                alt="Post Thumnail" style="width:100%; max-height: 100%">
               {% endif %}
             </div>
           </div>
@@ -71,7 +80,7 @@
         <div class="col">
           <div class="text-center">
             <img src="{% static 'logo/favicon.png' %}" class="" width="60" height="60"
-            alt="{{user.first_name}} {{user.last_name}} avatar" title="{{user.first_name}} {{user.last_name}} avatar">
+              alt="{{user.first_name}} {{user.last_name}} avatar" title="{{user.first_name}} {{user.last_name}} avatar">
           </div>
           <h5 class="mt-2 text-center">Poster is a community of</h5>
           <div class="row mb-0 mt-3 mx-auto text-center">
@@ -106,7 +115,7 @@
           <hr>
           <div class='row d-flex justify-content-center align-items-center overflow-auto' style="max-height: 200px;">
             {% for category in categories %}
-            <a href="http://127.0.0.1:8000/search/?query={{category.category}}"
+            <a href="/search/?query={{category.category}}"
               class="btn btn-outline-secondary d-block mw-100 bg-dark p-1 btn-sm m-1 no-gutters text-muted col-5 text-uppercase text-truncate"
               title="{{category.category}}">{{category.category}}</a>
             {% endfor %}

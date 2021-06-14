@@ -186,20 +186,14 @@
       max-width: 5px;
     }
 
-    /* Track */
     ::-webkit-scrollbar-track {
-      /* box-shadow: inset 0 0 5px grey; */
       background: none;
     }
 
-    /* Handle */
     ::-webkit-scrollbar-thumb {
-
       background: rgba(255, 255, 255, 0.198);
-      /* border-radius: 10px; */
     }
 
-    /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
       background: rgba(255, 255, 255, 0.255);
     }
@@ -212,11 +206,12 @@
       background-color: white;
       border-radius: 2px;
       background-clip: padding-box;
-      /*margin: 0.5rem 0 1rem 0;*/
       overflow: hidden;
 
     }
-
+    .text-muted{
+      color: #ffffff8a !important;
+    }
     .progress .indeterminate {
       background-color: black;
     }
@@ -327,10 +322,10 @@
   </div> -->
   <!-- END LOADER HTML -->
   <header class="bg-dark border-bottom sticky-top">
- 
+
     <nav class="navbar navbar-expand-lg navbar-dark" style="background:#212529 !important;">
       <div class="container-fluid px-4 ">
-        <a class="navbar-brand logo" href="/" title="poster logo" alt="poster logo"> </a>
+        <a class="navbar-brand logo" href="/" title="Poster logo" alt="poster logo"> </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -367,8 +362,7 @@
           <ul class="navbar-nav mb-2">
             <li class="nav-item ">
               <form class="d-flex" action="/search/" method="GET">
-                <input class="form-control flex-auto me-1 border-success input-sm" type="search" placeholder="Search"
-                  aria-label="Search" name="query" id="query" style="border: 1px solid #50555c;">
+                <input class="form-control flex-auto me-1 border-success input-sm" type="search" placeholder="Search" aria-label="Search" name="query" id="query" style="border: 1px solid #50555c;" title="Search by keyword, Title, author and category">
                 <button class="btn btn-outline-success btn-sm" type="submit"><i class="fa fa-search"
                     aria-hidden="true"></i></button>
               </form>
@@ -382,19 +376,19 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg-end bg-dark p-3 border" aria-labelledby="dropdownMenuLink">
                   <li class="py-2"><a class="text-decoration-none text-light d-block"
-                      href="/usersettings/{{request.user}}/"><i class="fas fa-cog"></i>
+                      href="/usersettings/{{request.user}}/" title="User Settings"><i class="fas fa-cog"></i>
                       {{request.user}}</a>
                   </li>
-                  <li class="py-2"><a class="text-decoration-none text-light d-block" href="/blog/composeblog/"><i
-                        class="far fa-edit"></i> Compose Blog</a></li>
-                  <li class="py-2"><a class="text-decoration-none text-light d-block" href="/logout/"><i
+                  <li class="py-2"><a class="text-decoration-none text-light d-block" href="/blog/composeblog/"  title="Compose Your own Blog"><i class="far fa-edit"></i> Compose Blog</a>
+                  </li>
+                  <li class="py-2"><a class="text-decoration-none text-light d-block" href="/logout/" title="Logout from this site"><i
                         class="fas fa-sign-out-alt"></i>
                       Logout</a></li>
                 </ul>
               </div>
               {% else %}
               <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasSignUp" aria-controls="offcanvasRight"><i class="fas fa-user-plus"></i>
+                data-bs-target="#offcanvasSignUp" aria-controls="offcanvasRight" title="Signup to post your own Blog"><i class="fas fa-user-plus"></i>
                 SignUp</button>
 
               <div class="offcanvas offcanvas-end  bg-dark text-light" tabindex="-1" id="offcanvasSignUp"
@@ -461,7 +455,7 @@
                 </div>
               </div>
               <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasSignIn" aria-controls="offcanvasRight"><i class="fas fa-sign-in-alt"></i>
+                data-bs-target="#offcanvasSignIn" aria-controls="offcanvasRight" title="SignIn to post your own Blog"><i class="fas fa-sign-in-alt"></i>
                 SignIn</button>
 
               <div class="offcanvas offcanvas-end bg-dark text-white" tabindex="-1" id="offcanvasSignIn"
@@ -564,7 +558,6 @@
       // when document ready add lass to fadeout loader
       loaderEl.classList.add('fullpage-loader--invisible');
 
-      // when loader is invisible remove it from the DOM
       setTimeout(() => {
         loaderEl.parentNode.removeChild(loaderEl);
       }, 2000)
@@ -584,7 +577,6 @@
   // $(".bg-dark").attr('style',)
   document.onreadystatechange = function () {
     if (document.readyState === "complete") {
-      console.log(document.readyState);
       document.getElementById("PreLoaderBar").style.display = "none";
     }
   }

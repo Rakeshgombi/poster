@@ -90,6 +90,7 @@ def composeBlog(request):
         if len(content) > 30:
             category = request.POST.get('category', "")
             title = request.POST.get('title', "")
+            subtitle = request.POST.get('subtitle', "")
             author = request.POST.get('author', "")
             # print(request.FILES['thumbnail'])
             try:
@@ -101,7 +102,7 @@ def composeBlog(request):
                 # print(e)
                 thumbnail = ""
             post = Post(category=category, title=title,
-                        author=author, content=content, thumbnail=thumbnail)
+                        author=author, content=content, thumbnail=thumbnail, subtitle=subtitle)
             post.save()
             analyzed = ""
             punctuations = """.,;:?!-()[]{}"'/@&-*^%<>#_$+="""
@@ -111,9 +112,9 @@ def composeBlog(request):
             title = analyzed
             post.slug = str(post.sno) + "-" + title.replace(" ", "-")
             post.save()
-
-
-            dp = post.thumbnail
+            
+            messages.info(
+                request, "Your Blog has been posted succefully")
         else:
             messages.info(
                 request, "The content of the blog was Very less to post a blog")
@@ -130,10 +131,12 @@ def editPost(request, slug, owner):
         if request.method == 'POST':
             content = request.POST.get('content', "")
             if len(content) > 30:
-                category = request.POST['category']
-                title = request.POST['title']
+                category = request.POST.get('category', "")
+                title = request.POST.get('title', "")
+                subtitle = request.POST.get('subtitle', "")
                 post.category = category
                 post.title = title
+                post.subtitle = subtitle
                 post.content = content
                 thumb = post.thumbnail
                 try:
@@ -153,6 +156,7 @@ def editPost(request, slug, owner):
                         title = analyzed
                 post.slug = str(post.sno) + "-" + title.replace(" ", "-")
                 post.save()
+                messages.info(request, "Your Blog has been posted succefully")
                 return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
             else:
                 messages.info(

@@ -15,7 +15,7 @@ import random
 def index(request):
     categories = Post.objects.values('category').distinct()
     users = User.objects.all()
-    allPost = Post.objects.all().order_by('-views')[:10]
+    allPost = Post.objects.all().order_by('-views')
     allpost = Post.objects.all()
     context = {"allPosts": allPost, "categories":categories, "users": users, "allposts": allpost}
     return render(request, 'home/home.html', context)

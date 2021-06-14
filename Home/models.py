@@ -21,7 +21,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     bio = models.CharField(max_length=300, default="")
     organisation = models.CharField(max_length=300, default="")
-    country = models.CharField(max_length=50, default="")
+    country = models.CharField(max_length=50, null=True, blank=True, default="")
     display_pic = ResizedImageField(size=[400, 400], crop=['middle', 'center'],quality=100, upload_to="pic_folder", blank=True, null=True)
     website = models.CharField(max_length=255, null=True, blank=True, default="")
     facebook = models.CharField(max_length=255, null=True, blank=True, default="")

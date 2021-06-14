@@ -24,9 +24,7 @@
   p a {
     color: #ffffff !important;
     text-decoration: underline rgb(160, 159, 159);
-
   }
-
 
   article p {
     text-align: justify;
@@ -100,15 +98,17 @@
 {% endblock css %}
 
 {% block body %}
-<main class="bg-dark text-light">
+<section class="bg-dark text-light d-flex justify-content-center" id="blogs">
 
-  <div class="container py-5 mx-auto">
-    <div class="row g-5">
-      <div class="col-md-9 py-1">
+  <div class="container py-5 m-0 p-0 ">
+    <div class="row g-5 mx-auto ">
+      <div class="col-lg-9 py-1 mx-0 px-2">
         <article class="blog-post control-img">
-          <h2 class="fst-italic" title="Post Title: {{post.title}}">{{post.title}}</h2>
-          <p class=" blog-post-meta">{{post.timestamp}} by <span class="">{{ post.author }} ({{post.views}}
-              views so far</span>)</p>
+          <h2 class="h2" title="Post Title: {{post.title}}">{{post.title}}</h2>
+          <h6 class="fst-italic " title="Post Sub Title">{{post.subtitle}}</h6>
+          <p class=" blog-post-meta text-muted"><small>{{post.timestamp}} by <span class="">{{ post.author }}
+                ({{post.views}}
+                views so far</span>)</small></p>
           <hr class="m-0 p-0">
           <p class="pt-2 control-img text-sm-left" style="max-width: 100%;">
             {{ post.content|safe }}
@@ -125,55 +125,64 @@
           </p> -->
         </nav>
       </div>
-      <div class="col-md-3">
+      <div class="col-lg-3 col-12">
         <div class="position-sticky " style="top: 5.6rem;">
           <h4 class="fst-italic">About the Author</h4>
           <div class="p-3 bg-dark popup">
-            {% if author.profile.display_pic %}
-            <img src="{{ author.profile.display_pic.url}}" width="400" height="400" class="card-img-top rounded-circle"
-              alt="{{author.first_name}} Avatar" title="avatar">
-            {% else %}
-            <img src="{% static 'logo/favicon.png' %}" class="card-img-top rounded-circle" alt="Avatar">
-            {% endif %}
-            <h5 class="fst-italic mt-3"><a href="/usersettings/{{author}}/"
-                class="text-decoration-none text-light">{{author.first_name}}
-                {{author.last_name}}</a></h5>
-            <p class="mb-0">{{author.profile.organisation}}</p>
-            <div class="mt-2">
-              <p class="text-justify text-center m-0 p-0 d-flex mt-2 align-items-center justify-content-around">
-                {% if author.email %}
-                <a href="mailto:{{author.email}}" class="text-light p-2" target="_blank"><i
-                    class="far fa-envelope"></i></a>
+            <div class="row d-flex align-items-center">
+              <div class="col-3 col-md-2 col-lg-7 my-2 mx-auto">
+                {% if author.profile.display_pic %}
+                <img src="{{ author.profile.display_pic.url}}" class="card-img-top rounded-circle mw-100"
+                  alt="{{author.first_name}} Avatar" title="avatar">
+                {% else %}
+                <img src="{% static 'logo/favicon.png' %}" class="card-img-top rounded-circle" alt="Avatar">
                 {% endif %}
-                {% if author.profile.facebook %}
-                <a href="{{author.profile.facebook}}" class="text-light p-2 link" target="_blank"><i
-                    class="fab fa-facebook"></i></a>
-                {% endif %}
-                {% if author.profile.instagram %}
-                <a href="{{author.profile.instagram}}" class="text-light p-2 link" target="_blank"><i
-                    class="fab fa-instagram"></i></a>
-                {% endif %}
-                {% if author.profile.github %}
-                <a href="{{author.profile.github}}" class="text-light p-2 link" target="_blank"><i
-                    class="fab fa-github"></i></a>
-                {% endif %}
-                {% if author.profile.twitter %}
-                <a href="{{author.profile.twitter}}" class="text-light p-2 link" target="_blank"><i
-                    class="fab fa-twitter"></i></a>
-                {% endif %}
-                {% if author.profile.website %}
-                <a href=" {{author.profile.website}}" class="text-light p-2 link"><i class="fas fa-globe-asia"></i></a>
-                {% endif %}
-              </p>
+              </div>
+              <div class="col-9 col-md-10 col-lg-12">
+                <h5 class="fst-italic" title="{{author.first_name}} {{author.last_name}}"><a
+                    href="/usersettings/{{author}}/" class="text-decoration-none text-light">{{author.first_name}}
+                    {{author.last_name}}</a></h5>
+
+                <p class="mb-0" title="Organision">{{author.profile.organisation}}</p>
+              </div>
+              <div class="mt-2">
+                <p
+                  class="text-justify text-center m-0 p-0 d-flex mt-2 align-items-center justify-content-around flex-wrap">
+                  {% if author.email %}
+                  <a href="mailto:{{author.email}}" class="text-light p-2" target="_blank"
+                    title="mail me: {{author.email}}"><i class="far fa-envelope"></i></a>
+                  {% endif %}
+                  {% if author.profile.facebook %}
+                  <a href="{{author.profile.facebook}}" class="text-light p-2 link" target="_blank"
+                    title="reach me through facebook"><i class="fab fa-facebook"></i></a>
+                  {% endif %}
+                  {% if author.profile.instagram %}
+                  <a href="{{author.profile.instagram}}" class="text-light p-2 link" target="_blank"
+                    title="reach me through instagram"><i class="fab fa-instagram"></i></a>
+                  {% endif %}
+                  {% if author.profile.github %}
+                  <a href="{{author.profile.github}}" class="text-light p-2 link" target="_blank"
+                    title="find me on Github "><i class="fab fa-github"></i></a>
+                  {% endif %}
+                  {% if author.profile.twitter %}
+                  <a href="{{author.profile.twitter}}" class="text-light p-2 link" target="_blank"
+                    title="reach me through Linkedin"><i class="fab fa-twitter"></i></a>
+                  {% endif %}
+                  {% if author.profile.website %}
+                  <a href=" {{author.profile.website}}" class="text-light p-2 link"
+                    title="reach me through my personal website"><i class="fas fa-globe-asia"></i></a>
+                  {% endif %}
+                </p>
+              </div>
+              <p class="mb-0 mt-1 text-justify">{{author.profile.bio}}</p>
             </div>
-            <p class="mb-0 mt-1 text-justify">{{author.profile.bio}}</p>
           </div>
           <div class="social d-flex mt-2 flex-column" style="z-index: 100;">
             <h5>Share this blog</h5>
-            <div class="d-flex mt-2 align-items-center justify-content-around" style="z-index: 100;">
+            <div class="d-flex mt-2 align-items-center justify-content-around flex-wrap" style="z-index: 100;">
               <a rel="external nofollow" class="social-btn text-decoration-none"
                 href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000/blog/{{post.slug}}/"
-                style="color: #215cda;" target="_blank" title="Share on Reddit"><i class="fab fa-facebook-f"></i></a>
+                style="color: #215cda;" target="_blank" title="Share on facebook"><i class="fab fa-facebook-f"></i></a>
               <a href="https://api.whatsapp.com/send?text=http://127.0.0.1:8000/blog/{{post.slug}}/&description={{post.title}}"
                 style="color: #25d366;" class="social-btn text-decoration-none" target="_blank"
                 title="Share on whatsapp"><i class="fab fa-whatsapp"></i></a>
@@ -190,8 +199,8 @@
           </div>
         </div>
       </div>
-      <div class="offcanvas offcanvas-start p-0  bg-dark text-light m-0" tabindex="-1" id="offcanvasExample"
-        aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas offcanvas-start p-0  bg-dark text-light m-0" data-bs-scroll="true" tabindex="-1" id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel" style="min-width: 35%;">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasExampleLabel">Responses ({{ comments.count }})</h5>
           <p type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></p>
@@ -222,7 +231,7 @@
                     ({{ comment.created_on |naturaltime }})
                   </span>
                 </h6>
-                <div class="font-weight-bold ps-2">
+                <div class="font-weight-bold ps-2 text-justify">
                   {{ comment.body | linebreaks }}
 
                   <button type="button" class="btn btn-link text-light btn-sm"
@@ -261,7 +270,7 @@
                           {{ reply.created_on|naturaltime }}
                         </span>
                       </h6>
-                      <div class="ps-3">{{ reply.body }}</div>
+                      <div class="ps-3 text-justify">{{ reply.body }}</div>
                     </div>
                     {% empty %}
                     {% endfor %}
@@ -281,7 +290,7 @@
     </div>
   </div>
 
-</main>
+</section>
 {% endblock body %}
 
 {% block script %}
