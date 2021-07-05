@@ -13,60 +13,94 @@
     color: #FAFBFC !important;
     text-decoration: none !important;
   }
-  
-.land-bg {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 100%;
-  height: 70vh;
-  top: 0;
-}
 
-.land-bg .content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  color: aliceblue;
-}
+.carousel-item {
+    height: 90vh;
+    position: relative !important;
+    width: 100%;
+  }
 
-.land-bg h1 {
-  text-align: center;
-  font-size: 3rem;
-}
+  .carousel-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  .carousel-item1::before{
+    opacity: 1;
+    background: url("{% static 'background/thoughts.jpg' %}") no-repeat center center/cover;
+  }
+  .carousel-item2::before{
+    opacity: 01;
+    background: url("{% static 'background/lang-bg.jpeg' %}") no-repeat center center/cover;
+    /* transform: rotate(-1deg); */
+  }
+  .carousel-item3::before{
+    background: url("{% static 'background/blog2.jpg' %}") no-repeat center center/cover;
+    opacity: 01;
+  }
 
-.land-bg p {
-  text-align: center;
-  font-size: 2rem;
-}
-
-.land-bg::before {
-  position: absolute;
-  content: "";
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url("{% static 'background/lang-bg.jpeg'%}") no-repeat center center/cover;
-  z-index: -10;
-}
 </style>
 {% endblock css %}
 
 {% block body %}
-<div class="land-bg">
-  <div class="content">
-    <h1>Poster</h1>
-    <p>Find the blogs that are best in contents</p>
-    <a href="#blogs" class="btn btn-outline-success">Explore</a>
+<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+
+  <div class="carousel-inner">
+    <div class="carousel-item carousel-item1">
+
+      <div class="container d-flex align-items-center justify-contents-center">
+        <div class="carousel-caption text-start">
+          <h1>Share your thoughts</h1>
+          <p>Poster helps your thoughts to reach across the globe</p>
+          <p>
+          {% if user.is_authenticated %}
+            <a class="btn btn-lg btn-primary" href="/blog/composeblog/"  title="Compose Your own Blog">Compose Blog</a>
+            {% else %}
+              <button class="btn btn-lg btn-primary" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasSignUp" aria-controls="offcanvasRight" title="Signup to post your own Blog">Join Poster</button>
+            {% endif %}</p>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item carousel-item2 active">
+
+      <div class="container">
+        <div class="carousel-caption">
+          <h1 class="special">Poster</h1>
+          <h2>Find the blogs that are best in contents</h2>
+          <p><a class="btn btn-lg btn-primary" href="#blogs">Start Reading <span class="up-down"><i class="fas fa-angle-double-down"></i></span></a></p>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item carousel-item3">
+
+      <div class="container">
+        <div class="carousel-caption text-end">
+          <h1>Wide Range of Categories</h1>
+          <p>Poster has a blogs with wide range of your favourite categories to pick a from</p>
+          <p><a class="btn btn-lg btn-primary" href="/blog/">Browse Blogs</a></p>
+        </div>
+      </div>
+    </div>
   </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
 
 <section class="bg-dark text-light d-flex justify-content-center py-5" id="blogs">
   <div class="container mx-0 px-0">
     <div class="row g-5 position-relative d-flex align-items-start jusify-contents-center mx-auto">
+      {% if allPosts.count > 0 %}
       <div class="col-12 col-md-9 px-0">
         <h3>Trending on Poster</h3>
         <hr>
@@ -110,6 +144,11 @@
           {% endif %}
         </div>
       </div>
+      {% else %}
+      <div class="col-12 col-md-9 px-0">
+        <h3>No posts yet be the first one to post your blog here</h3>
+      </div>
+      {%endif%}
       <div class="d-sm-none d-md-block col-md-3 position-sticky p-3" style="top: 5.6rem;">
         <div class="col">
           <div class="text-center">
@@ -141,12 +180,12 @@
           {% else %}
           <div class="col-12 mt-3 d-flex flex-column justify-content-center align-items-center">
             <a class="btn btn-outline-primary w-75 btn-sm" href="/blog/composeblog/" title="Compose Your own Blog"><i
-                class="far fa-edit"></i> Compose
-              Blog</a>
+                class="far fa-edit"></i> Compose Blog</a>
           </div>
           {% endif %}
 
         </div>
+        {% if categories|length > 0 %}
         <div class="col mt-4">
           <h3 class="fst-italic text-center">Search by category</h3>
           <hr>
@@ -158,6 +197,7 @@
             {% endfor %}
           </div>
         </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -181,5 +221,7 @@
       });
     });
   }
+
+  $(".blog-post").lazyScrollLoding
 </script>
 {% endblock script %}

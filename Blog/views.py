@@ -27,7 +27,7 @@ def blogPost(request, slug):
     post.views += 1
     post.save()
     author = User.objects.filter(username=post.author).first()
-    print(author.email)
+    relatedPosts = Post.objects.filter(author=author)[:6]
     comments = post.comments.filter(active=True, parent__isnull=True)
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
@@ -78,7 +78,8 @@ def blogPost(request, slug):
                   {'post': post,
                    'comments': comments,
                    'comment_form': comment_form,
-                   'author': author
+                   'author': author,
+                   'relatedPosts': relatedPosts
                    })
 
 
@@ -110,7 +111,7 @@ def composeBlog(request):
                 if char not in punctuations:
                     analyzed += char
             title = analyzed
-            post.slug = str(post.sno) + "-" + title.replace(" ", "-")
+            post.slug = title.replace(" ", "-") + "-" + str(post.sno)
             post.save()
             
             messages.info(
@@ -154,7 +155,7 @@ def editPost(request, slug, owner):
                     if char not in punctuations:
                         analyzed += char
                         title = analyzed
-                post.slug = str(post.sno) + "-" + title.replace(" ", "-")
+                post.slug = title.replace(" ", "-") + "-" + str(post.sno)
                 post.save()
                 messages.info(request, "Your Blog has been posted succefully")
                 return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))

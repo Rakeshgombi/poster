@@ -54,10 +54,21 @@ def contact(request):
         else:
             contact = Contact(name=name, email=email,
                               phone=phone, content=content)
-            messages.warning(
+            messages.success(
                 request, "Your query has been submitted successfully!")
             contact.save()
     return render(request, 'home/contact.html')
+
+
+def userProfile(request, slug):
+    username = get_object_or_404(User, username=slug)
+    user = User.objects.filter(username=username).first()
+    allPost = Post.objects.filter(author=username)
+    profile = Profile.objects.filter(user=user).first()
+    print(user)
+    context = {"user": user, "profile": profile, "allPosts": allPost}
+    return render(request, "home/userProfile.html", context)
+    
 
 
 def userSettings(request, slug):
@@ -191,7 +202,7 @@ def handleSignIn(request):
             login(request, user)
             messages.success(request, "Successfully Logged In")
         else:
-            messages.error(request, "Invalid credentials! Please try again")
+            messages.success(request, "Invalid credentials! Please try again")
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
     else:

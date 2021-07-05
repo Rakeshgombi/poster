@@ -32,9 +32,9 @@
 {% endblock css %}
 
 {% block body %}
-<main class="bg-dark text-light row mx-0 py-5">
+<main class="bg-dark text-light row m-0 py-4">
   <div class="divider" style="width:20px"></div>
-  <div class="col px-4 mt-4 bg-dark col col-lg-3">
+  <div class="col px-4 bg-dark col col-lg-3">
     <div class="" id="user-details">
       <div class="bg-dark row ">
         <div class="popup col-2 col-lg-12 col-sm-2  p-0">
@@ -88,7 +88,7 @@
       </div>
     </div>
   </div>
-  <div class="container mt-5 col-lg-8">
+  <div class="container col-lg-8">
     <h2 class="">Posts</h2>
     {% if allPosts.count > 0 %}
     {% for post in allPosts %}
@@ -99,6 +99,10 @@
         <strong class="d-inline-block mb-2 text-link text-uppercase">{{post.category}}</strong>
         <h5 class="mb-1"><a href="/blog/{{post.slug}}" class="text-link">{{ post.title }}</a></h5>
         <div class="mb-1 ">{{post.timestamp}}</div>
+        
+        <div class="card-text text-justify">
+          <p class="text-justify">{{post.subtitle|truncatechars:120}}</p>
+        </div>
       </div>
 
     </div>

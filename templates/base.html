@@ -14,7 +14,7 @@
   <!-- CDN' s -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-  <link rel="shortcut icon" href="{% static 'logo/favicon.png' %}" type="image/x-icon">
+  <link rel="shortcut icon" href="{% static 'logo/p.png' %}" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -31,6 +31,8 @@
   <style>
     body {
       min-height: 100vh;
+      /* max-width: 100%; */
+      overflow-x: hidden;
     }
 
     /* .container-fluid img {
@@ -209,9 +211,11 @@
       overflow: hidden;
 
     }
-    .text-muted{
+
+    .text-muted {
       color: #ffffff8a !important;
     }
+
     .progress .indeterminate {
       background-color: black;
     }
@@ -309,6 +313,23 @@
         right: -8%;
       }
     }
+
+    .special {
+      /*  leverage cascade for cross-browser gradients  */
+      /* background: radial-gradient(
+    hsl(100 100% 60%), 
+    hsl(200 100% 60%) 
+  ) fixed; */
+      background: conic-gradient(hsl(100 100% 60%),
+          hsl(200 100% 60%),
+          hsl(100 100% 60%)) fixed;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      font-size: 3rem;
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -321,6 +342,8 @@
     </div>
   </div> -->
   <!-- END LOADER HTML -->
+  {% block progress %}
+  {% endblock progress %}
   <header class="bg-dark border-bottom sticky-top">
 
     <nav class="navbar navbar-expand-lg navbar-dark" style="background:#212529 !important;">
@@ -345,10 +368,6 @@
                 href="/contact/"><i class="fa fa-question-circle" aria-hidden="true"></i> Contact Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {% block aboutactive %}{% endblock aboutactive %}" aria-current="page"
-                href="/about/"><i class="far fa-address-card"></i> About Us</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link {% block composeactive %}{% endblock composeactive %}" aria-current="page"
                 href="/blog/composeblog/"><i class="far fa-edit"></i> Compose Blog</a>
             </li>
@@ -362,7 +381,9 @@
           <ul class="navbar-nav mb-2">
             <li class="nav-item ">
               <form class="d-flex" action="/search/" method="GET">
-                <input class="form-control flex-auto me-1 border-success input-sm" type="search" placeholder="Search" aria-label="Search" name="query" id="query" style="border: 1px solid #50555c;" title="Search by keyword, Title, author and category">
+                <input class="form-control flex-auto me-1 border-success input-sm" type="search" placeholder="Search"
+                  aria-label="Search" name="query" id="query" style="border: 1px solid #50555c;"
+                  title="Search by keyword, Title, author and category">
                 <button class="btn btn-outline-success btn-sm" type="submit"><i class="fa fa-search"
                     aria-hidden="true"></i></button>
               </form>
@@ -376,19 +397,24 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg-end bg-dark p-3 border" aria-labelledby="dropdownMenuLink">
                   <li class="py-2"><a class="text-decoration-none text-light d-block"
+                      href="/userprofile/{{request.user}}/" title="User Settings"><i class="fa fa-user-circle" aria-hidden="true"></i> My Profile</a>
+                  </li>
+                  <li class="py-2"><a class="text-decoration-none text-light d-block"
                       href="/usersettings/{{request.user}}/" title="User Settings"><i class="fas fa-cog"></i>
-                      {{request.user}}</a>
+                      Edit Profile</a>
                   </li>
-                  <li class="py-2"><a class="text-decoration-none text-light d-block" href="/blog/composeblog/"  title="Compose Your own Blog"><i class="far fa-edit"></i> Compose Blog</a>
+                  <li class="py-2"><a class="text-decoration-none text-light d-block" href="/blog/composeblog/"
+                      title="Compose Your own Blog"><i class="far fa-edit"></i> Compose Blog</a>
                   </li>
-                  <li class="py-2"><a class="text-decoration-none text-light d-block" href="/logout/" title="Logout from this site"><i
-                        class="fas fa-sign-out-alt"></i>
+                  <li class="py-2"><a class="text-decoration-none text-light d-block border-top" href="/logout/"
+                      title="Logout from this site"><i class="fas fa-sign-out-alt"></i>
                       Logout</a></li>
                 </ul>
               </div>
               {% else %}
               <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasSignUp" aria-controls="offcanvasRight" title="Signup to post your own Blog"><i class="fas fa-user-plus"></i>
+                data-bs-target="#offcanvasSignUp" aria-controls="offcanvasRight" title="Signup to post your own Blog"><i
+                  class="fas fa-user-plus"></i>
                 SignUp</button>
 
               <div class="offcanvas offcanvas-end  bg-dark text-light" tabindex="-1" id="offcanvasSignUp"
@@ -455,7 +481,8 @@
                 </div>
               </div>
               <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasSignIn" aria-controls="offcanvasRight" title="SignIn to post your own Blog"><i class="fas fa-sign-in-alt"></i>
+                data-bs-target="#offcanvasSignIn" aria-controls="offcanvasRight" title="SignIn to post your own Blog"><i
+                  class="fas fa-sign-in-alt"></i>
                 SignIn</button>
 
               <div class="offcanvas offcanvas-end bg-dark text-white" tabindex="-1" id="offcanvasSignIn"
@@ -499,6 +526,11 @@
     <div class="progress" id="PreLoaderBar">
       <div class="indeterminate"></div>
     </div>
+    <div id="scrollPath">
+      <div id="progressBar"></div>
+    </div>
+
+
   </header>
   {% for message in messages %}
   <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-0" role="alert">
@@ -511,11 +543,36 @@
   {% block body %}{% endblock body %}
 
 
-  <footer class="container-fluid bg-dark my-0 py-3  border-top" style="background:#212529 !important;">
-    <p class="mb-0 text-center">© 2021 Poster.com</p>
-    <p class="mb-0 text-center">
-      <a href="#">Back to top</a>
-    </p>
+  <footer class="container-fluid bg-dark mt-1 py-3 border-top" style="background:#212529 !important;">
+    <div class="row">
+      <div class="col-md-6 px-3 py-3 d-flex flex-column align-items-center flex-wrap">
+        <h6>&copy; 2021 Copyright Poster </h6>
+        <p class="text-justify text-center m-0 p-0 d-flex align-items-center justify-content-around flex-wrap">
+          <a href="mailto:rakeshgombi18@gmail.com" class="text-light p-2" target="_blank"
+            title="mail me: rakeshgombi18@gmail.com"><i class="far fa-envelope"></i></a>
+          <a href="https://www.facebook.com/people/Rakesh-Gombi/100007943115024/" class="text-light p-2 link"
+            target="_blank" title="reach me through facebook"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.instagram.com/_.__no.one_.__/" class="text-light p-2 link" target="_blank"
+            title="reach me through instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://github.com/Rakeshgombi" class="text-light p-2 link" target="_blank"
+            title="find me on Github "><i class="fab fa-github"></i></a>
+          <a href="#" class="text-light p-2 link" title="reach me through my personal website"><i
+              class="fas fa-globe-asia"></i></a>
+          <a href="https://in.linkedin.com/in/rakesh-gombi-8b8412170" class="text-light p-2 link"
+            title="reach me through Linkedin" target="_blank"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+        </p>
+      </div>
+      <div class="col-md-6  d-flex align-items-center justify-content-center flex-wrap">
+          <a class="text-light nav-link border-right px-2" aria-current="page"
+            href="/about/">About Us</a>
+          <a class="text-light nav-link border-right px-2" aria-current="page"
+            href="/blog/composeblog/">Start a Blog</a>
+          <a class="text-light nav-link border-right px-2" aria-current="page"
+            href="/contact/">Contact Us</a>
+          <a class="text-light nav-link px-2" aria-current="page"
+            href="/blog/">Browse Blogs</a>
+      </div>
+    </div>
   </footer>
   </section>
 </body>

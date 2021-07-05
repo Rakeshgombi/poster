@@ -68,76 +68,81 @@
 {% endblock css %}
 {% block body %}
 
-{% if user.is_authenticated %}
-<div class="container my-5 bg-dark text-light">
-  <h3 class="mb-4">Compose your own blog</h3>
-  <form action="" method="POST" enctype="multipart/form-data"> {% csrf_token %}
-    <div class="input-group mb-3">
-      <label for="categories" class="input-group-text bg-dark text-light border"
-        for="inputGroupSelect01">Category*</label>
-      <input type="text" name="category" list="category" required list="citynames"
-        class="form-select bg-dark text-light border" placeholder="Enter or Select one..." id="categories">
-      <datalist id="category">
-        <option value="Programming">Programming</option>
-        <option value="Educational">Educational</option>
-        <option value="Nature">Nature</option>
-        <option value="Political">Political</option>
-        <option value="Fashion">Fashion</option>
-        <option value="Food">Food</option>
-        <option value="Travel">Travel</option>
-        <option value="Music">Music</option>
-      </datalist>
+<div class="container" style="min-height: 68vh;">
+  {% if user.is_authenticated %}
+  <div class="my-5 bg-dark text-light">
+    <h3 class="mb-4">Compose your own blog</h3>
+    <form action="" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+      <div class="input-group mb-3">
+        <label for="categories" class="input-group-text bg-dark text-light border"
+          for="inputGroupSelect01">Category*</label>
+        <input type="text" name="category" list="category" required list="citynames"
+          class="form-select bg-dark text-light border" placeholder="Enter or Select one..." id="categories">
+        <datalist id="category">
+          <option value="Programming">Programming</option>
+          <option value="Educational">Educational</option>
+          <option value="Nature">Nature</option>
+          <option value="Political">Political</option>
+          <option value="Fashion">Fashion</option>
+          <option value="Food">Food</option>
+          <option value="Travel">Travel</option>
+          <option value="Music">Music</option>
+        </datalist>
 
-    </div>
+      </div>
 
-    <div class="input-group mb-3">
-      <label for="title" class="input-group-text text-light bg-dark border" id="basic-addon2">Title*</label>
-      <input type="text" class="form-control bg-dark tex-light border" placeholder="Enter the Title" aria-label="Title"
-        id="title" aria-describedby="basic-addon2" name="title" required oninput="TitTxtCnt(this.value)"
-        maxlength="300">
-      <span class="input-group-text text-light bg-dark border" id="basic-addon3"><small><span
-            id="tit-txt-cnt">000</span>/300</small>
-    </div>
-    <div class="input-group mb-3">
-      <label for="subtitle" class="input-group-text text-light bg-dark border" id="basic-addon3">Sub Title</label>
-      <input type="text" id="subtitle" class="form-control bg-dark tex-light border" placeholder="Enter the Sub Title"
-        aria-label="Sub Title" aria-describedby="basic-addon3" name="subtitle" oninput="subTitTxtCnt(this.value)" maxlength="300">
-      <span class="input-group-text text-light bg-dark border" id="basic-addon3">
-        <small><span id="sub-tit-txt-cnt">000</span>/300</small>
-    </div>
-    <div class="input-group mb-3">
-      <label for="selectfile" class="btn btn-outline-secondary w-100 d-block text-light" style="cursor: pointer;"><i
-          class="fa fa-camera" aria-hidden="true"></i> Add Thumbnail</label>
-      <input id="selectfile" type="file" name="thumbnail" accept="image/*" value="hi">
-    </div>
+      <div class="input-group mb-3">
+        <label for="title" class="input-group-text text-light bg-dark border" id="basic-addon2">Title*</label>
+        <input type="text" class="form-control bg-dark tex-light border" placeholder="Enter the Title"
+          aria-label="Title" id="title" aria-describedby="basic-addon2" name="title" required
+          oninput="TitTxtCnt(this.value)" maxlength="300">
+        <span class="input-group-text text-light bg-dark border" id="basic-addon3"><small><span
+              id="tit-txt-cnt">000</span>/300</small>
+      </div>
+      <div class="input-group mb-3">
+        <label for="subtitle" class="input-group-text text-light bg-dark border" id="basic-addon3">Sub Title</label>
+        <input type="text" id="subtitle" class="form-control bg-dark tex-light border" placeholder="Enter the Sub Title"
+          aria-label="Sub Title" aria-describedby="basic-addon3" name="subtitle" oninput="subTitTxtCnt(this.value)"
+          maxlength="300">
+        <span class="input-group-text text-light bg-dark border" id="basic-addon3">
+          <small><span id="sub-tit-txt-cnt">000</span>/300</small>
+      </div>
+      <div class="input-group mb-3">
+        <label for="selectfile" class="btn btn-outline-secondary w-100 d-block text-light" style="cursor: pointer;"><i
+            class="fa fa-camera" aria-hidden="true"></i> Add Thumbnail</label>
+        <input id="selectfile" type="file" name="thumbnail" accept="image/*" value="hi">
+      </div>
 
-    <input type="hidden" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="author"
-      value="{{request.user}}">
+      <input type="hidden" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="author"
+        value="{{request.user}}">
 
-    <div class="input-group mb-3">
-      <textarea id="full-featured-non-premium" class="form-control" aria-label="With textarea"
-        name="content"></textarea>
-    </div>
+      <div class="input-group mb-3">
+        <textarea id="full-featured-non-premium" class="form-control" aria-label="With textarea"
+          name="content"></textarea>
+      </div>
 
-    <div class="input-group">
-      <input type="submit" class="btn btn-outline-success btn-lg" value="Post">
-    </div>
-  </form>
+      <div class="input-group">
+        <input type="submit" class="btn btn-outline-success btn-lg" value="Post">
+      </div>
+    </form>
+  </div>
+  {% else %}
+  <div class="my-5 bg-dark text-light p-4 border rounded ">
+    <h3>Sign in to compose your own blog</h3>
+    <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSignUp"
+      aria-controls="offcanvasRight" title="SignUp to post your own Blog"><i class="fas fa-user-plus"></i>
+      SignUp</button>
+
+    <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSignIn"
+      aria-controls="offcanvasRight" title="SignIn to post your own Blog"><i class="fas fa-sign-in-alt"></i>
+      SignIn</button>
+  </div>
+  {% endif %}
 </div>
-{% else %}
-<div class="container my-5 bg-dark text-light p-4 border shadow-lg rounded ">
-  <h3>Sign in to compose your own blog</h3>
-  <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSignUp"
-    aria-controls="offcanvasRight" title="SignUp to post your own Blog"><i class="fas fa-user-plus"></i> SignUp</button>
-
-  <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSignIn"
-    aria-controls="offcanvasRight" title="SignIn to post your own Blog"><i class="fas fa-sign-in-alt"></i> SignIn</button>
-</div>
-{% endif %}
-
 {% endblock body %}
 {% block script %}
-<script src="https://cdn.tiny.cloud/1/11ddu8bq9gxdm71uo0x3fw08yg016jvgxcwpg1ch29mgzoq9/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.tiny.cloud/1/11ddu8bq9gxdm71uo0x3fw08yg016jvgxcwpg1ch29mgzoq9/tinymce/5/tinymce.min.js"
+  referrerpolicy="origin"></script>
 <script src="{% static 'scripts/composeBlog.js' %}"></script>
 <script>
 

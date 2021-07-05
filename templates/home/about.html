@@ -1,3 +1,95 @@
 {% extends 'base.html' %}
 <title>{% block title %}Poster | About Us{% endblock title %}</title>
-{% block aboutactive %}active{% endblock aboutactive %}
+{% block aboutactive %}active{% endblock aboutactive %} {% load static %}
+{% block css %}
+<style>
+  .viewport {
+    height: 70vh;
+    /* width: 100%; */
+    background: url("https://images.pexels.com/photos/4492497/pexels-photo-4492497.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") no-repeat center center/cover;
+  }
+
+  .img-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+  }
+
+
+  .p-mod {
+    font-size: 1.4rem;
+  }
+</style>
+{% endblock css %}
+{% block body %}
+<section class="bg-dark text-light">
+  <div class="row viewport d-flex align-items-end justify-contents-center">
+      <h1 class="special mb-5">Post your thoughts through Poster</span></h1>
+  </div>
+  <div class="row border-top">
+    <div class="col-6 border-right">
+      <p class="p-4 p-mod">Poster enables you to reach the billions of people that use the Internet.
+        Poster can help you promote yourself or your business.
+        It works as a method for attracting an audience because it provides something of value to them before asking for
+        anything in return. Poster forces you to teach yourself what you don’t know and to articulate what you do know.
+        When you begin writing a blog post, you are forced to organize your thoughts.
+        If there are any gaps in the topic that you are writing about, you will have to learn about it.
+        Writing out and articulating your thoughts is a great way to internalize something you’ve learned or
+        experienced.
+        Writing helps you become more familiar with the topic you’re writing about. Poster enables you to be your own
+        media company.
+        You can tell your story the way you want to tell it without being dependent on journalists.
+        When you are writing about a topic of your own interest, you can decide how to portray a story, what information
+        to include, and what information to exclude.
+        Poster allows you to ensure that all information included in the blog is factual.The audience you attract
+        through Poster doesn’t have to just be your “audience.” They can become your friends, colleagues, partners, or
+        lovers.
+        I’ve had many people reach out to me directly after reading my blog.
+        Some of those people have become friends or good business contacts.
+      </p>
+    </div>
+    <div class="col-6 d-flex align-items-center justify-contents-center">
+      <div class="container img-container d-flex align-items-center justify-contents-center">
+        <img src="{% static 'logo/favicon.png' %}" alt="">
+      </div>
+    </div>
+  </div>
+  <div class="py-4 border-top d-flex align-items-center justify-contents-center">
+    <div class="container px-5">
+      <h1 class="mb-3">About The Developer</h1>
+      <div class="w-100 mb-3 border">
+        <div class="row g-0">
+          <div class="col-md-3">
+            <img src="{% static 'background/dp2.png'%}" alt="Developer image" class="w-100 h-100">
+          </div>
+          <div class="col-md-9">
+            <div class="card-body">
+              <h2 class="card-title">Rakesh Gombi</h2>
+              <p class="card-text m-0 p-2">I am a undergraduate Student at RV college of Engineering, Bangalore. I developed this site to help millions of Bloggers out there to provide a easy and simple to use application through which they can share their thoughts to the world </p>
+              <h4>Contact me on</h4>
+              <div class="col-md-5">
+                <p
+                  class="text-justify text-center m-0 p-0 d-flex align-items-center justify-content-around flex-wrap">
+                  <a href="mailto:rakeshgombi18@gmail.com" class="text-light p-2" target="_blank"
+                    title="mail me: rakeshgombi18@gmail.com"><i class="far fa-envelope"></i></a>
+                  <a href="https://www.facebook.com/people/Rakesh-Gombi/100007943115024/" class="text-light p-2 link" target="_blank"
+                    title="reach me through facebook"><i class="fab fa-facebook"></i></a>
+                  <a href="https://www.instagram.com/_.__no.one_.__/" class="text-light p-2 link" target="_blank"
+                    title="reach me through instagram"><i class="fab fa-instagram"></i></a>
+                  <a href="https://github.com/Rakeshgombi" class="text-light p-2 link" target="_blank"
+                    title="find me on Github "><i class="fab fa-github"></i></a>
+                  <a href="#" class="text-light p-2 link"
+                    title="reach me through my personal website"><i class="fas fa-globe-asia"></i></a>
+                    <a href="https://in.linkedin.com/in/rakesh-gombi-8b8412170" class="text-light p-2 link"
+                      title="reach me through Linkedin" target="_blank"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock body %}

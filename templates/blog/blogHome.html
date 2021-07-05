@@ -21,11 +21,12 @@
 {% endblock css %}
 
 {% block body %}
-<section class="bg-dark text-light d-flex justify-content-center py-5" id="blogs">
+<section class="bg-dark text-light d-flex justify-content-center py-5" id="blogs" style="min-height: 75vh">
   <div class="container mx-0 px-0">
     <div class="row g-5 position-relative d-flex align-items-start jusify-contents-center mx-auto">
-      <div class="col-12 col-md-9 px-0 mx-auto px-1">
-        <h3>All Posts</h3>
+      {% if allPosts.count > 0 %}
+      <div class="col-12 col-md-9 px-0">
+        <h3>Trending on Poster</h3>
         <hr>
         {% for post in allPosts %}
         <!-- <hr> -->
@@ -67,6 +68,11 @@
           {% endif %}
         </div>
       </div>
+      {% else %}
+      <div class="col-12 col-md-9 px-0">
+        <h3>No posts yet be the first one to post your blog here</h3>
+      </div>
+      {%endif%}
       <div class="d-sm-none d-md-block col-md-3 position-sticky p-3" style="top: 5.6rem;">
         <div class="col">
           <div class="text-center">
@@ -104,6 +110,7 @@
           {% endif %}
 
         </div>
+        {% if categories.coount > 0 %}
         <div class="col mt-4">
           <h3 class="fst-italic text-center">Search by category</h3>
           <hr>
@@ -115,6 +122,7 @@
             {% endfor %}
           </div>
         </div>
+        {% endif %}
       </div>
     </div>
   </div>
